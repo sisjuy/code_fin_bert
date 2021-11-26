@@ -1,0 +1,21 @@
+#leftreport {
+    
+    overflow-y: scroll; 
+    height:100%; 
+    margin-top: 100px;
+    margin-right: 50px;
+    
+}
+#reportrow {
+    margin-left: -50px;
+    margin-right: -50px;
+  }
+
+
+#rightreport {
+    right: 0; 
+    overflow-y: scroll; 
+    height:100%; 
+    margin-top: 100px;
+    margin-left: 50px;
+}

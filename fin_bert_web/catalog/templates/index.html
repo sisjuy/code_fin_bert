@@ -9,36 +9,15 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
 <body style="height:100%; overflow: hidden; background-color:#ffffff;">
-    <div id="app">
-        <ul>
-          <li v-for="(item, index) in list">
-            index: {{ index }}, name: {{ item.name }}, {{item.id}}
-          </li>
-        </ul>
-      </div>
-      <script>
-          var vm = new Vue({
-            el: '#app',
-            delimiters: ['{{', '}}'],
-            data: {
-                list: [
-                { id: '123456789', name: '選項 1' },
-                { id: '234567890', name: '選項 2' },
-                { id: '345678901', name: '選項 3' },
-                ],
-            },
-            });
-      </script>
-    
-    
+        
     
     
     
     
 
     <nav class="navbar navbar-dark" style="background-color:#2B5BF4;">
-        <a href="/" style="color:white; margin-left: 5vw;" >
-            <img src="/media/logo.svg" style="display:block;height:5vh;" />
+        <a href="/" style="color:white; margin-left: 1vw; size:40px" class="font-weight-bold">
+            Fin Bert
         </a>
     </nav>
     
@@ -69,11 +48,18 @@
                           <option value="2011">2011</option>
                           <option value="2012">2012</option>
                           <option value="2013">2013</option>
+                          <option value="2014">2014</option>
+                          <option value="2015">2015</option>
+                          <option value="2016">2016</option>
+                          <option value="2017">2017</option>
+                          <option value="2011">2011</option>
+                          <option value="2012">2012</option>
+                          <option value="2013">2013</option>
                         </select>
                         <select name="company" class="ui selection dropdown">
                             <option value="">Company List</option>
                             {% for item in names %}
-                            <option value="123">{{item}}</option>
+                            <option value={{item}}>{{item}}</option>
                             {% endfor %}
                         </select>
                         <select name="item" class="ui selection dropdown">
