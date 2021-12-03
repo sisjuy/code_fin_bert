@@ -18,8 +18,9 @@
 </head>
 <body style="background-color:#ffffff; margin:0;padding:0;">
     <link rel="stylesheet" type="text/css" href="{% static 'css/report.css' %}">
-
-
+    <link rel="stylesheet" type="text/css" href="{% static 'css/app.css' %}">
+    
+    
     <nav class="navbar navbar-dark" style="background-color:#2B5BF4;">
         <a href="/catalog" style="color:white; margin-left: 1vw; size:40px" class="font-weight-bold">
             Fin Bert
@@ -89,18 +90,22 @@
             
             <div class="col-lg" id="leftreport" style="width: 500px;height:1000px;" >
                 <div id="report" style="margin: 10px;">
-                    {{rooms}}
+                    {{data1}}
                 </div>
                 
             </div>
             
             <div class="col-lg" id="rightreport" style="width: 500px;height:1000px; ">
                 <div id="report" style="margin: 10px;">
-                    {{rooms}}
+                    {{data2}}
+                    
                 </div>
             </div>
         </div>
         
+        
+        
+
         
         
         
@@ -109,41 +114,61 @@
 
 
     </div>
-    
+    <div id="app">
+        <div>
+            <div class="wrap">
+                <transition name="slide">
+                  <div class="block" v-show="isShow">HELLO VUE<br>Slide</div>
+                </transition>
+            </div>
+        </div>
+        <button @click="isShow =! isShow">Toggle</button>
+    </div>
     <script>
         var vm = new Vue({
-            el: '#companylist',
-            delimiters: ['[[', ']]'],
-            data: {
-                list: [
-                    "abc","Apple","Netflix","cde"
-                ],
-            },
+        el: '#companylist',
+        delimiters: ['[[', ']]'],
+        data: {
+        list: [
+            "abc","Apple","Netflix","cde"
+        ],
+        },
         });
 
         var vm = new Vue({
-            el: '#itemlist',
-            delimiters: ['[[',']]'],
-            data: {
-                list:[
-                    "Item 1","Item 1A","Item 1B","Item 2",
-                    "Item 3","Item 4","Item 5","Item 6","Item 7",
-                    "Item 7A","Item 8","Item 9","Item 9A","Item 9B",
-                    "Item 10","Item 11","Item 12","Item 13","Item 14",
-                    "Item 15"
-                ],
-            },
+        el: '#itemlist',
+        delimiters: ['[[',']]'],
+        data: {
+        list:[
+            "Item 1","Item 1A","Item 1B","Item 2",
+            "Item 3","Item 4","Item 5","Item 6","Item 7",
+            "Item 7A","Item 8","Item 9","Item 9A","Item 9B",
+            "Item 10","Item 11","Item 12","Item 13","Item 14",
+            "Item 15"
+        ],
+        },
         });
+        
     </script>
-
+    <script type='module' src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.23/vue.esm-browser.min.js">
+        import {createApp} from 'https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.23/vue.esm-browser.min.js';
+        const app = Vue.createApp({
+            data() {
+                return {
+                isShow: true
+                }
+            }
+        });
+        app.mount('#app');
+    </script>
     
-
-
+  
 
 </body>
 
 <script>
     window.onload = function(){
     $('.ui.dropdown').dropdown();
+    $('#app').click();
 };
 </script>
