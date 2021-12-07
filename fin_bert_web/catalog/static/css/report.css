@@ -1,30 +1,42 @@
 #leftreport {
     
     overflow-y: scroll; 
-    right: 0;
-    
-    
+    align-items:"center";
     margin-top: 100px;
     
-   
+    
     
     
 }
 #rightreport {
     
     overflow-y: scroll; 
-    height:100%; 
+    align-items:"center";
     margin-top: 100px;
+    
+    
+}
+#reportrow {
+    
+    
+    margin-bottom: 100px;
+}
+mark {
+    background-color: yellow;
+    cursor: pointer;
+}
+#senB {
+    background-color: yellow;
+    cursor: pointer;
     
 }
 
+#leftbotton {
+    margin-top: 100 px;
+}
+#movingreport {
+    align-items: center;
+}
 
-
-#reportrow {
-    
-    margin-left: -50px;
-    margin-right: -50px;
-    margin-bottom: 100px;
-  }
 
 

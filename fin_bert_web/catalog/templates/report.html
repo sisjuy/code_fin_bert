@@ -1,9 +1,13 @@
 <!DOCTYPE html>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+
+
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
     integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
 
 
 
@@ -13,12 +17,15 @@
     <link rel='icon' href='https://www.iconninja.com/files/303/190/562/business-ratings-icon.png' type="image/png">
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
 </head>
 <body style="background-color:#ffffff; margin:0;padding:0;">
     <link rel="stylesheet" type="text/css" href="{% static 'css/report.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/app.css' %}">
-    
+    <link rel="stylesheet" type="text/css" href="{% static 'css/report.css' %}">
+    <style>
+        
+    </style>
     
     <nav class="navbar navbar-dark" style="background-color:#2B5BF4;">
         <a href="/catalog" style="color:white; margin-left: 1vw; size:40px" class="font-weight-bold">
@@ -84,45 +91,99 @@
         
 
 
-        
+        <!--report row-->
         <div class="row" id=reportrow>
             
             <div class="col-lg" id="leftreport" style="width: 500px;height:1000px;" >
-                <div id="report1" style="margin: 10px;">
+                <div id="report1" style="margin: 5px;">
                     {{data1}}
                 </div>
                 
             </div>
             
             <div class="col-lg" id="rightreport" style="width: 500px;height:1000px; ">
-                <div id="report2" style="margin: 10px;">
+                <div id="report2" style="margin: 5px;  ">
                     {{data2}}
-                    
                 </div>
             </div>
         </div>
-        
-        
-        
+        <!--report row end-->
 
         
         
         
+            
+                    
 
-
-
-
-    </div>
-    <div id="app">
-        <div>
-            <div class="wrap">
-                <transition name="slide">
-                  <div class="block" v-show="isShow">HELLO VUE<br>Slide</div>
-                </transition>
-            </div>
         </div>
-        <button @click="isShow =! isShow">Toggle</button>
+          
+        
+
+        
+        
+        
+
+
+
+
     </div>
+    <div class="container">
+        <div id="movingreport" class="row" >
+            <button class="ui icon button">
+                <i class="angle left icon"></i>
+            </button>
+            <div class="ui shape">
+             
+                <div class="sides">
+                    <div class="active side">
+                        <div class="row" id=reportrow>
+                
+                            <div class="col-lg" id="leftreport" style="width: 500px;height:1000px;" >
+                                <div id="report1" style="margin: 5px;">
+                                  {{data1}}
+                                </div>
+                            
+                            </div>
+                        
+                            <div class="col-lg" id="rightreport" style="width: 500px;height:1000px; ">
+                                <div id="report2" style="margin: 5px;  ">
+                                    {{data2}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="side">
+                        <div class="row" id=reportrow>
+                
+                            <div class="col-lg" id="leftreport" style="width: 500px;height:1000px;" >
+                                <div id="report1" style="margin: 5px;">
+                                    {{data1}}
+                                </div>
+                            
+                            </div>
+                        
+                            <div class="col-lg" id="rightreport" style="width: 500px;height:1000px; ">
+                                <div id="report2" style="margin: 5px;  ">
+                                    {{data2}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="ui icon button">
+                <i class="angle right icon"></i>
+            </button>
+        </div>
+    </div>
+    <script>
+        function a(){
+          $('.shape').shape('flip right');
+        }
+        function b(){
+            $('.shape').shape('flip left')
+        }
+    </script>
     <script>
         var vm = new Vue({
         el: '#companylist',
@@ -160,7 +221,7 @@
         });
         app.mount('#app');
     </script>
-    
+
   
 
 </body>
@@ -169,6 +230,8 @@
     result = result.replace(/'/g,"\"");
     const result1 = JSON.parse(result)
     let key = result1.keywordsB;
+    let label = result1.labels;
+    let labels = label.toString();
     console.log(key[0])
     key1 = key[0]
     let senA = result1.senA
@@ -183,13 +246,30 @@
         paragraph1.innerHTML += i + 1 >= broken1.length ? part : part + ' <mark style="background-color: #FFFF00">' + senA + '</mark>';
     });
     broken2.map((part, i) => {
-        paragraph2.innerHTML += i + 1 >= broken2.length ? part : part + ' <mark style="background-color: #FFFF00">' + senB + '</mark>';
+        paragraph2.innerHTML += i + 1 >= broken2.length ? part : part + 
+        '<mark id = "senB" tabindex="0" data-toggle="popover" title=" " onclick="fun()">' + senB + '</mark>';
+        //' <mark onmouseover="" onclick="fun()" >' + senB + '</mark>';
+        //
     });
+    function fun(){
+        
+        $('[data-toggle="popover"]').popover({
+            trigger : 'focus',
+            content : labels,
+            placement : "bottom"
+        });
+        
+    }
+    
+    
 </script>
 
 
 <script>
+    $(document).ready(function(){
+        fun();
+    });
     window.onload = function(){
-    $('.ui.dropdown').dropdown();
-};
+        $('.ui.dropdown').dropdown();
+    };
 </script>
