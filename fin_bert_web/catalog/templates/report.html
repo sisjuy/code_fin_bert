@@ -38,11 +38,11 @@
 
 
 
-    <div class="container">
-        
+    <div class="container-fluid">
+        <!--selectrow-->
         <div class="row">
             <div>
-                <div class="row" style="margin-top:3vh;">
+                <div id=topselect class="row" style="margin-top:3vh;">
                     <form role="form" method="POST" enctype="multipart/form-data" action="{% url 'report' %}">
                         {% csrf_token %}
                         <select name="year" class="ui selection dropdown" style="padding: 5px 5px;">
@@ -88,48 +88,39 @@
             </div>
             
         </div>
+        <!--end selectrow-->
         
-
 
         <!--report row-->
         <div class="row" id=reportrow>
-            
-            <div class="col-lg" id="leftreport" style="width: 500px;height:1000px;" >
-                <div id="report1" style="margin: 5px;">
-                    {{data1}}
+            <div class="col-md">
+                <div class="col-md" id="leftreport" style="width: 600px;height:1000px;" >
+                    <div id="report1" style="margin: 5px;">
+                        {% for line in data1%}
+                            {{line}}
+                        {% endfor %}
+                    </div>
+                    
                 </div>
-                
             </div>
-            
-            <div class="col-lg" id="rightreport" style="width: 500px;height:1000px; ">
-                <div id="report2" style="margin: 5px;  ">
-                    {{data2}}
+            <div class="col-md">
+                <div class="col-md" id="rightreport" style="width: 600px;height:1000px; ">
+                    <div id="report2" style="margin: 5px;  ">
+                        {% for line in data2%}
+                            {{line}}
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         </div>
         <!--report row end-->
 
-        
-        
-        
-            
-                    
-
-        </div>
-          
-        
-
-        
-        
-        
-
-
-
-
+    
     </div>
+    <!--movingreport-->
     <div class="container">
         <div id="movingreport" class="row" >
-            <button class="ui icon button">
+            <button class="ui icon button" onclick=a()>
                 <i class="angle left icon"></i>
             </button>
             <div class="ui shape">
@@ -171,11 +162,14 @@
                     </div>
                 </div>
             </div>
-            <button class="ui icon button">
+            <button class="ui icon button" onclick=b()>
                 <i class="angle right icon"></i>
             </button>
         </div>
     </div>
+    <!--movingreport end-->
+
+
     <script>
         function a(){
           $('.shape').shape('flip right');
@@ -190,7 +184,7 @@
         delimiters: ['[[', ']]'],
         data: {
         list: [
-            "abc","Apple","Netflix","cde"
+            "abc","Apple","Netflix","cde","1417663"
         ],
         },
         });
@@ -200,11 +194,11 @@
         delimiters: ['[[',']]'],
         data: {
         list:[
-            "Item 1","Item 1A","Item 1B","Item 2",
-            "Item 3","Item 4","Item 5","Item 6","Item 7",
-            "Item 7A","Item 8","Item 9","Item 9A","Item 9B",
-            "Item 10","Item 11","Item 12","Item 13","Item 14",
-            "Item 15"
+            "Item1","Item1A","Item1B","Item2",
+            "Item3","Item4","Item5","Item6","Item7",
+            "Item7A","Item8","Item9","Item9A","Item9B",
+            "Item10","Item11","Item12","Item13","Item14",
+            "Item15"
         ],
         },
         });

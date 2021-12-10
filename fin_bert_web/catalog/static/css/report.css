@@ -1,23 +1,29 @@
+#topselect {
+    margin-left: 50px;
+}
+
 #leftreport {
     
     overflow-y: scroll; 
     align-items:"center";
     margin-top: 100px;
-    
-    
-    
+    margin-left: 50px;
+    font-size: 15px;
     
 }
+
 #rightreport {
     
     overflow-y: scroll; 
     align-items:"center";
     margin-top: 100px;
-    
-    
+    margin-right:50px;
+    font-size: 15px;
+}
+#report1 {
+    line-height: 1.8px;
 }
 #reportrow {
-    
     
     margin-bottom: 100px;
 }
@@ -25,6 +31,8 @@ mark {
     background-color: yellow;
     cursor: pointer;
 }
+
+
 #senB {
     background-color: yellow;
     cursor: pointer;
