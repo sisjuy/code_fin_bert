@@ -1,5 +1,5 @@
 #topselect {
-    margin-left: 50px;
+    margin-left: 60px;
 }
 
 #leftreport {
@@ -7,8 +7,9 @@
     overflow-y: scroll; 
     align-items:"center";
     margin-top: 100px;
-    margin-left: 50px;
-    font-size: 15px;
+    margin-left: 5px;
+    font-size: 18px;
+    line-height: 40px;
     
 }
 
@@ -17,12 +18,12 @@
     overflow-y: scroll; 
     align-items:"center";
     margin-top: 100px;
-    margin-right:50px;
-    font-size: 15px;
+    margin-right:5px;
+    font-size: 18px;
+    line-height: 40px;
 }
-#report1 {
-    line-height: 1.8px;
-}
+
+
 #reportrow {
     
     margin-bottom: 100px;

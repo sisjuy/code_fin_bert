@@ -81,7 +81,7 @@
                             <option :value="item" v-for="(item,index) in list">[[item]]</option>
                         </select>
                         
-                        <input type="submit"  class="ui button"  style="margin-top:1vw;" value="Anlayse">
+                        <input type="submit"  id="submit1" class="ui button"  style="margin-top:1vw;" value="Anlayse" disabled="disabled">
                     </form>
                     
                 </div>  
@@ -94,18 +94,19 @@
         <!--report row-->
         <div class="row" id=reportrow>
             <div class="col-md">
-                <div class="col-md" id="leftreport" style="width: 600px;height:1000px;" >
-                    <div id="report1" style="margin: 5px;">
+                <div class="col-md" id="leftreport" style="width: 650px;height:1000px;" >
+                    <div id="report1" style="margin: 3px;">
                         {% for line in data1%}
                             {{line}}
                         {% endfor %}
+                        
                     </div>
                     
                 </div>
             </div>
             <div class="col-md">
-                <div class="col-md" id="rightreport" style="width: 600px;height:1000px; ">
-                    <div id="report2" style="margin: 5px;  ">
+                <div class="col-md" id="rightreport" style="width: 650px;height:1000px; ">
+                    <div id="report2" style="margin: 3px;  ">
                         {% for line in data2%}
                             {{line}}
                         {% endfor %}
@@ -257,11 +258,20 @@
     
     
 </script>
-
+<!--disable sumbit if select is empty-->
 
 <script>
     $(document).ready(function(){
         fun();
+        var count = 0;
+        $('.ui.dropdown').change(function() {
+            count++;
+            if (count >= 3) {
+                $('#submit1').removeAttr('disabled');
+            }
+        });
+
+        $('#submit1').attr('disabled','disabled');
     });
     window.onload = function(){
         $('.ui.dropdown').dropdown();

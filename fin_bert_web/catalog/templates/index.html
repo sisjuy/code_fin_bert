@@ -36,7 +36,7 @@
                 <div class="row" style="margin-top:3vh;">
                     <form role="form" method="POST" enctype="multipart/form-data" action="{% url 'report' %}">
                         {% csrf_token %}
-                        <select name="year" class="ui selection dropdown">
+                        <select id="year" name="year" class="ui selection dropdown">
                           <option value="">Report Year</option>
                           <option value="2001">2001</option>
                           <option value="2002">2002</option>
@@ -69,7 +69,7 @@
                             <option :value="item" v-for="(item,index) in list">[[item]]</option>
                         </select>
                         
-                        <input type="submit"  class="ui button"  style="margin-top:1vw;" value="Anlayse">
+                        <input type="submit"  id="submit1" class="ui button"  style="margin-top:1vw;" value="Anlayse" disabled="disabled">
                     </form>
                 </div>
             </div>
@@ -81,6 +81,7 @@
     
     
     <script>
+        
         var vm = new Vue({
                 el: '#companylist',
                 delimiters: ['[[', ']]'],
@@ -107,6 +108,20 @@
     
     
 </body>
+<!--disable sumbit if select is empty-->
+<script>
+    $(document).ready(function() {
+        var count = 0;
+        $('.ui.dropdown').change(function() {
+            count++;
+            if (count >= 3) {
+                $('#submit1').removeAttr('disabled');
+            }
+        });
+
+        $('#submit1').attr('disabled','disabled');
+    });
+</script>
 <script>
     window.onload = function(){
     $('.ui.dropdown').dropdown();

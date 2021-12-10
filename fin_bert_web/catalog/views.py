@@ -28,30 +28,38 @@ def filecontent(module_dir,company,year,item):
         textdic[line1[0]] = line1[1]
     
     textkeys = list(textdic.keys())
-    articleid=[]
-    article=[]
-    if (item=="Item15" and year=="2018"):
-        id1 = company+"_"+str(year.split("20")[1])+"_"+item.upper()+"_P"+str(0)+"_S"+str(0)
-        textkeys = list(textdic.keys())
-        for i in range(textkeys.index(id1),len(textkeys)):    
-            articleid.append(textkeys[i])
-    elif (item=="Item15"):
-        id1 = company+"_"+str(year.split("20")[1])+"_"+item.upper()+"_P"+str(0)+"_S"+str(0)
-        id2 = company+"_"+str(int(year)+1).split("20")[1]+"_"+itemlist[0].upper()+"_P"+str(0)+"_S"+str(0)
-        for i in range(textkeys.index(id1),textkeys.index(id2)):
-            articleid.append(textkeys[i])
+    id = company+"_"+str(year).split("20")[1]+"_"+item.upper()+"_P"+str(0)+"_S"+str(0)
+    if (id not in textkeys):
+        return ["there is no "+str(item)+" in "+str(year)]
     else:
-        item1 = item
-        item2 = itemlist[itemlist.index(item)+1]
-        id1 = company+"_"+str(year).split("20")[1]+"_"+item1.upper()+"_P"+str(0)+"_S"+str(0)
-        id2 = company+"_"+str(year).split("20")[1]+"_"+item2.upper()+"_P"+str(0)+"_S"+str(0)
-        for i in range(textkeys.index(id1),textkeys.index(id2)):
-            articleid.append(textkeys[i])
+        articleid=[]
+        article=[]
+        if (item=="Item15" and year=="2018"):
+            id1 = company+"_"+str(year).split("20")[1]+"_"+item.upper()+"_P"+str(0)+"_S"+str(0)
+            textkeys = list(textdic.keys())
+            for i in range(textkeys.index(id1),len(textkeys)):    
+                articleid.append(textkeys[i])
+        elif (item=="Item15"):
+            id1 = company+"_"+str(year).split("20")[1]+"_"+item.upper()+"_P"+str(0)+"_S"+str(0)
+            #id2 = company+"_"+str(int(year)+1).split("20")[1]+"_"+itemlist[0].upper()+"_P"+str(0)+"_S"+str(0)
+            for i in range(textkeys.index(id1),len(textkeys)):
+                articleid.append(textkeys[i])
+                if (textkeys[i+1].split("_")[2]!=item.upper()):
+                    break
+        else:
+            item1 = item
+            item2 = itemlist[itemlist.index(item)+1]
+            id1 = company+"_"+str(year).split("20")[1]+"_"+item1.upper()+"_P"+str(0)+"_S"+str(0)
+            #id2 = company+"_"+str(year).split("20")[1]+"_"+item2.upper()+"_P"+str(0)+"_S"+str(0)
+            for i in range(textkeys.index(id1),len(textkeys)):
+                articleid.append(textkeys[i])
+                if (textkeys[i+1].split("_")[2]!=item.upper()):
+                    break
 
-    for i in range(0,len(articleid)):
-        article.append(textdic[articleid[i]])
-    
-    return article
+        for i in range(0,len(articleid)):
+            article.append(textdic[articleid[i]])
+            
+        return article
 
 
 
