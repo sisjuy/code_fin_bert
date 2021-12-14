@@ -96,7 +96,8 @@
             <div class="col-md">
                 <div class="col-md" id="leftreport" style="width: 650px;height:1000px;" >
                     <div id="report1" style="margin: 3px;">
-                        {% for line in data1%}
+                        
+                        {% for line in data1%}    
                             {{line}}
                         {% endfor %}
                         
@@ -224,29 +225,34 @@
     result =  "{{ result|safe }}";
     result = result.replace(/'/g,"\"");
     const result1 = JSON.parse(result)
-    let key = result1.keywordsB;
-    let label = result1.labels;
-    let labels = label.toString();
-    console.log(key[0])
-    key1 = key[0]
-    let senA = result1.senA
-    let senB = result1.senB
-    let paragraph1 = document.getElementById('report1');
-    let paragraph2 = document.getElementById('report2');
-    let broken1 = paragraph1.innerHTML.split(senA)
-    let broken2 = paragraph2.innerHTML.split(senB);
-    paragraph1.innerHTML = '';
-    paragraph2.innerHTML = '';
-    broken1.map((part, i) => {
-        paragraph1.innerHTML += i + 1 >= broken1.length ? part : part + ' <mark style="background-color: #FFFF00">' + senA + '</mark>';
-    });
-    broken2.map((part, i) => {
-        paragraph2.innerHTML += i + 1 >= broken2.length ? part : part + 
-        '<mark id = "senB" tabindex="0" data-toggle="popover" title=" " onclick="fun()">' + senB + '</mark>';
-        //' <mark onmouseover="" onclick="fun()" >' + senB + '</mark>';
-        //
-    });
-    function fun(){
+    console.log(result1)
+    console.log(result1.length)
+    for (var i=0; i < result1.length;i++){
+        let key = result1[i].keywordsB;
+        let label = result1[i].labels;
+        let labels = label.toString();
+        console.log(key[0])
+        key1 = key[0]
+        let senA = result1[i].senA
+        console.log(senA)
+        let senB = result1[i].senB
+        let paragraph1 = document.getElementById('report1');
+        let paragraph2 = document.getElementById('report2');
+        let broken1 = paragraph1.innerHTML.split(senA);
+        let broken2 = paragraph2.innerHTML.split(senB);
+        
+        paragraph1.innerHTML = '';
+        paragraph2.innerHTML = '';
+        broken1.map((part, i) => {
+            paragraph1.innerHTML += i + 1 >= broken1.length ? part : part + ' <mark style="background-color: #FFFF00">' + senA + '</mark>';
+        });
+        broken2.map((part, i) => {
+            paragraph2.innerHTML += i + 1 >= broken2.length ? part : part + 
+            '<mark id = "senB" tabindex="0" data-toggle="popover"  onclick="fun()">' + senB + '</mark>';
+            //' <mark onmouseover="" onclick="fun()" >' + senB + '</mark>';
+            //
+        });
+        function fun(){
         
         $('[data-toggle="popover"]').popover({
             trigger : 'focus',
@@ -254,7 +260,11 @@
             placement : "bottom"
         });
         
+        }
     }
+    
+    
+    
     
     
 </script>

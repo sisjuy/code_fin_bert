@@ -16,16 +16,21 @@ itemlist = ["Item1","Item1A","Item1B","Item2",
             "Item15"]
 # create highlight sentence and score
 def teammate():
-    sen = {"senA":"The Company was incorporated on May 6, 2004.","senB":"The patients in the study were followed for a total of 24 weeks.","keywordsA":[],"keywordsB":["patients"],"labels":[0,0,0,1]}
+    sen = [{"senA":"The Company was incorporated on May 6, 2004.","senB":"The patients in the study were followed for a total of 24 weeks.","keywordsA":[],"keywordsB":["patients"],"labels":[0,0,0,1]},
+    {"senA":"We are an emerging global regenerative medicine company focused on the development and commercialization of non-invasive, biological response activating devices for the repair and regeneration of tissue, musculoskeletal and vascular structures.","senB":"We are an emerging global regenerative medicine company focused on the development and commercialization of noninvasive, biological response activating devices for the repair and regeneration of tissue, musculoskeletal and vascular structures.","keywordsA":[],"keywordsB":["structures"],"labels":[0,0,0,1]}]
     return sen
 def filecontent(module_dir,company,year,item):
     
+    #file name should change
     file_path = os.path.join(module_dir,"dataset","rand-10-collections.txt")
     data = open(file_path,'r')
     textdic = {}
     for line in data.readlines():
         line1 = line.split("\t")
         textdic[line1[0]] = line1[1]
+    #textdic = {id:sentence}
+    #articleid = selected year and company's id
+    #article = sentence combination correspond to articleid
     
     textkeys = list(textdic.keys())
     id = company+"_"+str(year).split("20")[1]+"_"+item.upper()+"_P"+str(0)+"_S"+str(0)
@@ -58,6 +63,12 @@ def filecontent(module_dir,company,year,item):
 
         for i in range(0,len(articleid)):
             article.append(textdic[articleid[i]])
+            nowp = articleid[i].split("_")[3]
+            if (i!=(len(articleid)-1)):
+                nextp = articleid[i+1].split("_")[3]
+                if(nextp!=nowp):
+                    article.append("----") 
+            
             
         return article
 
