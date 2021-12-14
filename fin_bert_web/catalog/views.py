@@ -62,12 +62,13 @@ def filecontent(module_dir,company,year,item):
                     break
 
         for i in range(0,len(articleid)):
-            article.append(textdic[articleid[i]])
+            article.append(textdic[articleid[i]].strip("\n"))
             nowp = articleid[i].split("_")[3]
             if (i!=(len(articleid)-1)):
                 nextp = articleid[i+1].split("_")[3]
                 if(nextp!=nowp):
-                    article.append("----") 
+                    article.append("\n")
+                    article.append("\n")
             
             
         return article

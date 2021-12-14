@@ -97,8 +97,8 @@
                 <div class="col-md" id="leftreport" style="width: 650px;height:1000px;" >
                     <div id="report1" style="margin: 3px;">
                         
-                        {% for line in data1%}    
-                            {{line}}
+                        {% for line in data1%} 
+                            {{line|linebreaksbr}} 
                         {% endfor %}
                         
                     </div>
@@ -109,7 +109,8 @@
                 <div class="col-md" id="rightreport" style="width: 650px;height:1000px; ">
                     <div id="report2" style="margin: 3px;  ">
                         {% for line in data2%}
-                            {{line}}
+                            
+                            {{line|linebreaksbr}}
                         {% endfor %}
                     </div>
                 </div>
