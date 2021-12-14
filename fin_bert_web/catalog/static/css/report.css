@@ -3,11 +3,13 @@
 }
 
 #leftreport {
+    position:absolute;
+    left:30px;
     
     overflow-y: scroll; 
     align-items:"center";
     margin-top: 100px;
-    margin-left: 5px;
+    margin-bottom: 100px;
     font-size: 18px;
     line-height: 40px;
     
@@ -16,32 +18,32 @@
 }
 
 #rightreport {
+    position:absolute;
+    right:30px;
     
     overflow-y: scroll; 
     align-items:"center";
     margin-top: 100px;
-    margin-right:5px;
+    margin-bottom: 100px;
     font-size: 18px;
     line-height: 40px;
 }
-
+#report2 {
+    margin-bottom:100px;
+}
 
 #reportrow {
     
     margin-bottom: 100px;
 }
 mark {
-    background-color: yellow;
+    background-color: #FFFF66;
+    border-radius: 25px;
     cursor: pointer;
 }
-
-
-#senB {
-    background-color: yellow;
-    cursor: pointer;
-    
+#senB:hover{
+    transform: scale(0.54);
 }
-
 #leftbotton {
     margin-top: 100 px;
 }

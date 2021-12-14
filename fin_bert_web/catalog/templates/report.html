@@ -48,16 +48,6 @@
                         <select name="year" class="ui selection dropdown" style="padding: 5px 5px;">
                             
                             <option value="">Report Year</option>
-                            <option value="2001">2001</option>
-                            <option value="2002">2002</option>
-                            <option value="2003">2003</option>
-                            <option value="2004">2004</option>
-                            <option value="2005">2005</option>
-                            <option value="2006">2006</option>
-                            <option value="2007">2007</option>
-                            <option value="2008">2008</option>
-                            <option value="2009">2009</option>
-                            <option value="2010">2010</option>
                             <option value="2011">2011</option>
                             <option value="2012">2012</option>
                             <option value="2013">2013</option>
@@ -65,9 +55,7 @@
                             <option value="2015">2015</option>
                             <option value="2016">2016</option>
                             <option value="2017">2017</option>
-                            <option value="2011">2011</option>
-                            <option value="2012">2012</option>
-                            <option value="2013">2013</option>
+                            <option value="2018">2018</option>
                         </select>
                         
                         <select id="companylist" name="company" class="ui selection dropdown" style="padding: 5px 5px;">
@@ -93,8 +81,9 @@
 
         <!--report row-->
         <div class="row" id=reportrow>
+
             <div class="col-md">
-                <div class="col-md" id="leftreport" style="width: 650px;height:1000px;" >
+                <div class="col-md" id="leftreport" style="width: 700px;height:1000px;" >
                     <div id="report1" style="margin: 3px;">
                         
                         {% for line in data1%} 
@@ -106,7 +95,7 @@
                 </div>
             </div>
             <div class="col-md">
-                <div class="col-md" id="rightreport" style="width: 650px;height:1000px; ">
+                <div class="col-md" id="rightreport" style="width: 700px;height:1000px; ">
                     <div id="report2" style="margin: 3px;  ">
                         {% for line in data2%}
                             
@@ -117,60 +106,10 @@
             </div>
         </div>
         <!--report row end-->
-
+        
     
     </div>
-    <!--movingreport-->
-    <div class="container">
-        <div id="movingreport" class="row" >
-            <button class="ui icon button" onclick=a()>
-                <i class="angle left icon"></i>
-            </button>
-            <div class="ui shape">
-             
-                <div class="sides">
-                    <div class="active side">
-                        <div class="row" id=reportrow>
-                
-                            <div class="col-lg" id="leftreport" style="width: 500px;height:1000px;" >
-                                <div id="report1" style="margin: 5px;">
-                                  {{data1}}
-                                </div>
-                            
-                            </div>
-                        
-                            <div class="col-lg" id="rightreport" style="width: 500px;height:1000px; ">
-                                <div id="report2" style="margin: 5px;  ">
-                                    {{data2}}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="side">
-                        <div class="row" id=reportrow>
-                
-                            <div class="col-lg" id="leftreport" style="width: 500px;height:1000px;" >
-                                <div id="report1" style="margin: 5px;">
-                                    {{data1}}
-                                </div>
-                            
-                            </div>
-                        
-                            <div class="col-lg" id="rightreport" style="width: 500px;height:1000px; ">
-                                <div id="report2" style="margin: 5px;  ">
-                                    {{data2}}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <button class="ui icon button" onclick=b()>
-                <i class="angle right icon"></i>
-            </button>
-        </div>
-    </div>
-    <!--movingreport end-->
+    
 
 
     <script>
@@ -245,7 +184,7 @@
         paragraph1.innerHTML = '';
         paragraph2.innerHTML = '';
         broken1.map((part, i) => {
-            paragraph1.innerHTML += i + 1 >= broken1.length ? part : part + ' <mark style="background-color: #FFFF00">' + senA + '</mark>';
+            paragraph1.innerHTML += i + 1 >= broken1.length ? part : part + ' <mark>' + senA + '</mark>';
         });
         broken2.map((part, i) => {
             paragraph2.innerHTML += i + 1 >= broken2.length ? part : part + 
