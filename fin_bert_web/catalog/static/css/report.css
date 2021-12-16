@@ -41,9 +41,7 @@ mark {
     border-radius: 25px;
     cursor: pointer;
 }
-#senB:hover{
-    transform: scale(0.54);
-}
+
 #leftbotton {
     margin-top: 100 px;
 }
