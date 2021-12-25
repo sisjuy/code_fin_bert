@@ -8,8 +8,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
-
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/3.1.2/fullpage.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/3.1.2/fullpage.css">
+    
 
 {% load static %}
 <head>
@@ -22,7 +23,7 @@
 </head>
 <body style="background-color:#ffffff; margin:0;padding:0;">
     <link rel="stylesheet" type="text/css" href="{% static 'css/report.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/report.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/scroll.css' %}">
     <style>
         
     </style>
@@ -82,42 +83,93 @@
         
 
         <!--report row-->
-        <div class="row" id=reportrow>
-
-            <div class="col-md">
-                <div class="col-md" id="leftreport" style="width: 700px;height:1000px;" >
-                    <div id="report1" style="margin: 3px;">
-                        
-                        {% for line in data1%} 
-                            {{line|linebreaksbr}} 
-                        {% endfor %}
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            <div class="col-md">
-                <div class="col-md" id="rightreport" style="width: 700px;height:1000px; ">
-                    <div id="report2" style="margin: 3px;  ">
-                        {% for line in data2%}  
-                            {{line|linebreaksbr}}
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-        </div>
+        
         <!--report row end-->
         
     
     </div>
+    <div id="fullpage">
+
+		<div class="section" data-anchor="S2" style="background-color: #fff;"> 
+			
+			<div class="slide" data-anchor="S2s1">
+				<h1>asdfasdfasasfasdfasdfsdf</h1>
+				<div class="caption"><p>Caption text for S2s1</p></div>
+			</div>
+			
+			<div class="active slide" data-anchor="S">
+                <h1>2011</h1>
+                <div class="row" id=reportrow>
+
+                    <div class="col-md">
+                        <div class="col-md" id="leftreport" style="width: 700px;height:1000px;" >
+                            <div id="report1" style="margin: 3px;">
+                                
+                                {% for line in data1%} 
+                                    {{line|linebreaksbr}} 
+                                {% endfor %}
+                                
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="col-md">
+                        <div class="col-md" id="rightreport" style="width: 700px;height:1000px; ">
+                            <div id="report2" style="margin: 3px;  ">
+                                {% for line in data2%}  
+                                    {{line|linebreaksbr}}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+			</div>
+            <div class="slide" data-anchor="S2s2">
+				<h1>S2s2</h1>
+				<div class="caption"><p>Caption text for S2s2</p></div>
+			</div>
+            <div class="slide" data-anchor="S2s2">
+				<h1>S2s2</h1>
+				<div class="caption"><p>Caption text for S2s2</p></div>
+			</div>
+            <div class="slide" data-anchor="S2s2">
+				<h1>S2s2</h1>
+				<div class="caption"><p>Caption text for S2s2</p></div>
+			</div>
+            <div class="slide" data-anchor="S2s2">
+				<h1>S2s2</h1>
+				<div class="caption"><p>Caption text for S2s2</p></div>
+			</div>
+
+		</div> 
+		
+	</div> 
+    <script>
+        $(document).ready(function() {
+            var myFullpage = new fullpage('#fullpage', {
+            verticalCentered: true,
+            autoScrolling: false,
+            controlArrows: true,
+            fitToSection: false,
+
+            
+        
+        
+            })
+        })
+    </script>
+    
     <div class="container">
-        <form id="yearform">
-            {% csrf_token %}
-            <button onclick=year()></button>
-        </form>
+        <div>  </div>
         
 
     </div>
+
+
+
+
+
+
     <!--get value of previous request-->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -181,17 +233,6 @@
         },
         });
         
-    </script>
-    <script type='module' src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.23/vue.esm-browser.min.js">
-        import {createApp} from 'https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.23/vue.esm-browser.min.js';
-        const app = Vue.createApp({
-            data() {
-                return {
-                isShow: true
-                }
-            }
-        });
-        app.mount('#app');
     </script>
 
   

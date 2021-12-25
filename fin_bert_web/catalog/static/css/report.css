@@ -8,7 +8,7 @@
     
     overflow-y: scroll; 
     align-items:"center";
-    margin-top: 100px;
+    margin-top: 35px;
     margin-bottom: 100px;
     font-size: 18px;
     line-height: 40px;
@@ -18,12 +18,14 @@
 }
 
 #rightreport {
-    position:absolute;
-    right:30px;
+    
+    position: absolute;
+    right:50px;
     
     overflow-y: scroll; 
     align-items:"center";
-    margin-top: 100px;
+    
+    margin-top: 35px;
     margin-bottom: 100px;
     font-size: 18px;
     line-height: 40px;
@@ -49,5 +51,8 @@ mark {
     align-items: center;
 }
 
+#fullpage{
+    margin-bottom:100px;
+}
 
 

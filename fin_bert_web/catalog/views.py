@@ -84,6 +84,7 @@ def report(request):
         item = request.POST.get("item")
         article1 = filecontent(module_dir,company,year1,item)
         article2 = filecontent(module_dir,company,year2,item)
+        
         #filename = company + '.txt'
         #file_path1 = os.path.join(module_dir,"dataset",str(year1),filename)   #full path to text.
         #file_path2 = os.path.join(module_dir,"dataset",str(year2),filename)
