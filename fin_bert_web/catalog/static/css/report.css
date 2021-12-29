@@ -2,18 +2,18 @@
     margin-left: 60px;
 }
 
+#section {
+    height:1000px !important;
+}
+
 #leftreport {
     
     left:30px;
-    
-    overflow-y: scroll; 
+    overflow-y: auto; 
     align-items:"center";
-    margin-top: 35px;
-    margin-bottom: 100px;
+    
     font-size: 18px;
     line-height: 40px;
-    
-    
     
 }
 
@@ -21,23 +21,15 @@
     
     position: absolute;
     right:50px;
-    
-    overflow-y: scroll; 
+    overflow-y: auto; 
     align-items:"center";
-    
-    margin-top: 35px;
-    margin-bottom: 100px;
     font-size: 18px;
     line-height: 40px;
 }
-#report2 {
-    margin-bottom:100px;
+#reportrow {
+    height:900px;
 }
 
-#reportrow {
-    
-    margin-bottom: 100px;
-}
 mark {
     background-color: #FFFF66;
     border-radius: 25px;
@@ -51,8 +43,5 @@ mark {
     align-items: center;
 }
 
-#fullpage{
-    margin-bottom:100px;
-}
 
 
