@@ -157,45 +157,60 @@
 	</div>
     <div class="row">
         <div>1111</div>
-        
-        <form id="rightform" method="POST" action="{% url 'report' %}">
+        <form id="leftform" method="POST" action="{% url 'report' %}" onsubmit="leftsubmit()">
             {%csrf_token %}
-            <input type="hidden" id="right_year" name="year" value="2013"/>
-            <input type="hidden" id="right_company" name="company" value="1417663"/>
-            <input type="hidden" id="right_item" name="item" value="Item1" />
-            <input type="submit" class="ui button"  style="margin-top:1vw;" value="nextyear" onsubmit="rightsubmit()">
-            
+            <input type="hidden" id="left_year" name="year" value=''/>
+            <input type="hidden" id="left_company" name="company" value=''/>
+            <input type="hidden" id="left_item" name="item" value=''/>
+            <input type="submit" class="ui button"  style="margin-top:1vw;" value="lastyear" >
+        </form>
+        <form id="rightform" method="POST" action="{% url 'report' %}" onsubmit="rightsubmit()">
+            {%csrf_token %}
+            <input type="hidden" id="right_year" name="year" value=''/>
+            <input type="hidden" id="right_company" name="company" value=''/>
+            <input type="hidden" id="right_item" name="item" value=''/>
+            <input type="submit" class="ui button"  style="margin-top:1vw;" value="nextyear" >
         </form>
             
         
     </div>
     <script>
-        var proceed = function(){
-            var form = document.getElementById('rightform');
+        function leftsubmit(){
             var curryear = localStorage.getItem("yearnow")
             var company = localStorage.getItem("companynow")
             var item = localStorage.getItem("itemnow")
-            var year = (parseInt(curryear) + 1).toString()
-            console.log(year)
-            //form.style.display = 'hidden';
-            form.setAttribute('method', 'post');
-            form.setAttribute('action', "{% url 'report' %}");
-            document.body.appendChild(form);
-            form.submit();
+            var year = (parseInt(curryear) - 1).toString()
+            if (curryear=="2012"){
+                event.preventDefault();
+            }
+            else{
+                document.getElementById("left_year").setAttribute('value',year); 
+                document.getElementById("left_company").setAttribute('value',company); 
+                document.getElementById("left_item").setAttribute('value',item); 
+                //localstorage has to change
+                localStorage.setItem("yearnow",year)    
+                return True;
+            }
         }
         function rightsubmit(){
             var curryear = localStorage.getItem("yearnow")
             var company = localStorage.getItem("companynow")
             var item = localStorage.getItem("itemnow")
             var year = (parseInt(curryear) + 1).toString()
-            document.getElementById("right_year").setAttribute('value',year); 
-            document.getElementById("right_company").setAttribute('value',company); 
-            document.getElementById("right_item").setAttribute('value',item); 
-            //localstorage has to change
-            localStorage.setItem("yearnow",year)    
-            return True;
+            if (curryear=="2018"){
+                event.preventDefault();
+            }
+            else{
+                document.getElementById("right_year").setAttribute('value',year); 
+                document.getElementById("right_company").setAttribute('value',company); 
+                document.getElementById("right_item").setAttribute('value',item); 
+                //localstorage has to change
+                localStorage.setItem("yearnow",year)    
+                return True;
+            }
         }
         
+        console.log(localStorage.getItem("yearnow"))
         
         
     </script>
