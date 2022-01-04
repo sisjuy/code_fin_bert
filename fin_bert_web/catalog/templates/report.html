@@ -48,7 +48,7 @@
         <div class="row">
             <div>
                 <div id=topselect class="row" style="margin-top:3vh;">
-                    <form role="form" method="POST" enctype="multipart/form-data" action="{% url 'report' %}">
+                    <form role="form" name="myform" method="POST" enctype="multipart/form-data" action="{% url 'report' %}">
                         {% csrf_token %}
                         <select id="yearlist" name="year" class="ui selection dropdown" style="padding: 5px 5px;">
                             <option value="">Report Year</option>
@@ -92,23 +92,31 @@
 
 		<div class="section" id="section" data-anchor="S2" style="background-color: #fff;"> 
 			
-			<div class="slide" data-anchor="S2s1">
-				<h1>asdfasdfasasfasdfasdfsdf</h1>
-				<div class="caption"><p>Caption text for S2s1</p></div>
-			</div>
-			
 			<div class="active slide" data-anchor="S">
-                <h1>2011</h1>
+                <h1 id="title"></h1>
                 <div class="row" id=reportrow>
-
                     <div class="col-md">
                         <div class="col-md" id="leftreport" style="width: 700px;height:900px;" >
                             <div id="report1" style="margin: 3px;">
-                                
-                                
-                                
                             </div>
-                            
+                        </div>
+                    </div>
+                    <div class="col-md">
+                        <div class="col-md" id="rightreport" style="width: 700px;height:900px; ">
+                            <div id="report2" style="margin: 3px;  ">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+			</div>
+			
+			<div class="active slide" data-anchor="S">
+                <h1 id="title"></h1>
+                <div class="row" id=reportrow>
+                    <div class="col-md">
+                        <div class="col-md" id="leftreport" style="width: 700px;height:900px;" >
+                            <div id="report1" style="margin: 3px;">
+                            </div>
                         </div>
                     </div>
                     <div class="col-md">
@@ -122,29 +130,76 @@
                     </div>
                 </div>
 			</div>
-            <div class="slide" data-anchor="S2s2">
-				<h1>S2s2</h1>
-				<div class="caption"><p>Caption text for S2s2</p></div>
+            <div class="active slide" data-anchor="S">
+                <h1 id="title"></h1>
+                <div class="row" id=reportrow>
+                    <div class="col-md">
+                        <div class="col-md" id="leftreport" style="width: 700px;height:900px;" >
+                            <div id="report1" style="margin: 3px;">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md">
+                        <div class="col-md" id="rightreport" style="width: 700px;height:900px; ">
+                            <div id="report2" style="margin: 3px;  ">
+                                {% for line in data2%}  
+                                    {{line|linebreaksbr}}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
 			</div>
-            <div class="slide" data-anchor="S2s2">
-				<h1>S2s2</h1>
-				<div class="caption"><p>Caption text for S2s2</p></div>
-			</div>
-            <div class="slide" data-anchor="S2s2">
-				<h1>S2s2</h1>
-				<div class="caption"><p>Caption text for S2s2</p></div>
-			</div>
-            <div class="slide" data-anchor="S2s2">
-				<h1>S2s2</h1>
-				<div class="caption"><p>Caption text for S2s2</p></div>
-			</div>
+            
 
 		</div> 
 		
 	</div>
     <div class="row">
         <div>1111</div>
+        
+        <form id="rightform" method="POST" action="{% url 'report' %}">
+            {%csrf_token %}
+            <input type="hidden" id="right_year" name="year" value="2013"/>
+            <input type="hidden" id="right_company" name="company" value="1417663"/>
+            <input type="hidden" id="right_item" name="item" value="Item1" />
+            <input type="submit" class="ui button"  style="margin-top:1vw;" value="nextyear" onsubmit="rightsubmit()">
+            
+        </form>
+            
+        
     </div>
+    <script>
+        var proceed = function(){
+            var form = document.getElementById('rightform');
+            var curryear = localStorage.getItem("yearnow")
+            var company = localStorage.getItem("companynow")
+            var item = localStorage.getItem("itemnow")
+            var year = (parseInt(curryear) + 1).toString()
+            console.log(year)
+            //form.style.display = 'hidden';
+            form.setAttribute('method', 'post');
+            form.setAttribute('action', "{% url 'report' %}");
+            document.body.appendChild(form);
+            form.submit();
+        }
+        function rightsubmit(){
+            var curryear = localStorage.getItem("yearnow")
+            var company = localStorage.getItem("companynow")
+            var item = localStorage.getItem("itemnow")
+            var year = (parseInt(curryear) + 1).toString()
+            document.getElementById("right_year").setAttribute('value',year); 
+            document.getElementById("right_company").setAttribute('value',company); 
+            document.getElementById("right_item").setAttribute('value',item); 
+            //localstorage has to change
+            localStorage.setItem("yearnow",year)    
+            return True;
+        }
+        
+        
+        
+    </script>
+    <!--fullpage-->
     <script>
         $(document).ready(function() {
             var myFullpage = new fullpage('#fullpage', {
@@ -154,14 +209,23 @@
             fitToSection: false,
             })
         })
-    </script>
-    
-    <div class="container">
-        <div></div>
+    //slide
+        $('.slide').each(function(){
+            var slide = $(this),
+                //sectionSlides = section.find('.slide'),
+                //totalItems = sectionSlides.length,
+                currentIndex = slide.filter('.active').index()+1,
+                numContainer = slide.find('#title'); 
+            
+            numContainer.html("123");
+        });
+
+        //var allslide = getElementsByClassName("slide");
         
 
-    </div>
-
+    </script>
+    
+  
 
 
 
@@ -169,7 +233,7 @@
 
     <!--get value of previous request-->
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        $(document).ready(function(){
             //var input = document.getElementById('yearlist');
             $("#yearlist").change(function(){
                 saveSettings1($(this).val());
@@ -189,8 +253,9 @@
             function saveSettings3(val) {
                 localStorage.setItem("itemnow",val);
             }
-            console.log(localStorage.getItem("yearnow"))
-            console.log(localStorage.getItem("companynow"))
+            //console.log(parseInt(localStorage.getItem("yearnow"))+1)
+            //console.log(localStorage.getItem("companynow"))
+
             function year(){
                 var yearform = getElementById("yearform")
                 yearnow = localStorage.getItem("yearnow");
@@ -198,10 +263,10 @@
                 itemnow = localStorage.getItem("itemnow");
                 console.log(yearnow)
                 yearform.insert(new element('input',{
-                    company:companynow, item:itemnow, year: toString(parseInt(yearnow)+1)
+                    company:companynow, item:itemnow, year: (parseInt(yearnow)+1).toString()
                 }))
-                //$(document.body).insert(yearform);
-                //yearform.submit();
+                $(document.body).insert(yearform);
+                yearform.submit();
             }
         });
     </script>
@@ -210,9 +275,9 @@
         el: '#companylist',
         delimiters: ['[[', ']]'],
         data: {
-        list: [
-            "abc","Apple","Netflix","cde","1417663"
-        ],
+            list: [
+              "abc","Apple","Netflix","cde","1417663"
+            ],
         },
         });
 
@@ -230,23 +295,41 @@
         },
         });
         
+        
     </script>
 
   
 
 </body>
 <script type="text/javascript">
-    arti = "{{ arti|safe }}";
-    
-    //arti = arti.replace(/\n/g,"\\n");
-    arti = arti.replace(/'/g,"\"");
+    var givevalue = function (dict,myKey) {
+        return dict[myKey];
+    };
+    //arti : all year article
+    data1 = "{{ data1|safe }}";
+    data2 = "{{ data2|safe }}";
+    data1 = data1.replace(/'/g,"\"");
+    data2 = data2.replace(/'/g,"\"");
     //type=string
-    const arti1 = JSON.parse([arti]);
-    let curyear = "year2011"
-    console.log(arti1.year2011)
+    const report1 = JSON.parse(data1);
+    const report2 = JSON.parse(data2);
+
+    //write content into slide
+    //var slide_content = function(arti1,active_slide_index)
+    //console.log(arti1.year2011)
     let paragraph1 = document.getElementById('report1');
     let paragraph2 = document.getElementById('report2');
-    paragraph1.innerHTML = arti1.year2011
+    paragraph1.innerHTML = ''
+    paragraph2.innerHTML = ''
+    //paragraph2.innerHTML = ''
+    
+    report1.map((part,i) => {
+        //console.log(part, i)
+        paragraph1.innerHTML += part //=== "\n" ? part : part + '<br>'
+    })
+    report2.map((part,i) => {
+        paragraph2.innerHTML += part
+    }) 
 </script>
 <script type="text/javascript">
     result =  "{{ result|safe }}";

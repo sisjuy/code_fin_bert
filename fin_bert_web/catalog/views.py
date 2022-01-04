@@ -113,7 +113,8 @@ def report(request):
         #keywordsB = result['keywordsB']
         #labels = result['labels']
         #'senA':senA, 'senB':senB, 'keywordsB':keywordsB,'labels':labels
-        context = {'data1': article1, 'data2':article2, 'result':result, 'arti':arti}
+        #'arti':arti
+        context = {'data1': article1, 'data2':article2, 'result':result}
         return render(request, 'report.html',context)
     
     return render(request, 'report.html')
