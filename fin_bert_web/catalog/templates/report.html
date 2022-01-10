@@ -349,12 +349,12 @@
     result =  "{{ result|safe }}";
     result = result.replace(/'/g,"\"");
     const result1 = JSON.parse(result)
-    console.log(result1)
+    //console.log(result1)
     //console.log(result1.length)
     for (var i=0; i < result1.length;i++){
         let key = result1[i].keywordsB;
         let label = result1[i].labels;
-        let labels = label.toString();
+        
         //console.log(key[0])
         key1 = key[0]
         let senA = result1[i].senA
@@ -364,7 +364,8 @@
         let paragraph2 = document.getElementById('report2');
         let broken1 = paragraph1.innerHTML.split(senA);
         let broken2 = paragraph2.innerHTML.split(senB);
-        
+        //let brokensenb = senB.split(" ")
+        //console.log(brokensenb)
         paragraph1.innerHTML = '';
         paragraph2.innerHTML = '';
         // mark
@@ -382,6 +383,7 @@
         
     }
     // jump to corresponding sena id
+    /* give senB id */
     var senb = document.getElementsByClassName("senB");
     var sena = document.getElementsByClassName("senA");
     var senb_item = [];
@@ -390,14 +392,35 @@
     for (var n = 0; n < result1.length; n++) {
         senb[n].id = "senb_" + n;
         sena[n].id = "sena_" + n;
+        
+        
+        
+        senbword = document.getElementById(senb[n].id)
+        let senbcontent = senbword.innerHTML
+        let brokensenb = senbcontent.split(" ");
+        senbword.innerHTML = ''
+        brokensenb.map((part,i) => {
+            //senbwords += '<span class=senbwords>' + part + '</span>' + ' '
+            senbword.innerHTML += '<span class=senbwords>' + part + '</span>' + ' '
+        })
+        for(var m=0;m<brokensenb.length;m++){
+            let senbword1 = document.querySelectorAll('#'+senb[n].id+ ' .senbwords')
+            //console.log(senbword1[m])
+            senbword1[m].id = senb[n].id+"_"+m
+        }
+
         senb_item.push(senb[n].id)
         sena_item.push(sena[n].id)
         senabdic[senb[n].id] = sena[n].id;
         
         //console.log(senb[n].id)
     }
+    console.log(document.getElementById('senb_0_0'))
+    
     function fun(ele){
-        //console.log(window.pageYOffset)
+        /* --------------------------------------------*/
+        /* jump to corresponding senA if clicking senB */
+        //console.log(ele)
         var leftreport = document.querySelector('#leftreport');
         var rightreport = document.querySelector('#rightreport')
         //console.log(leftreport)
@@ -414,9 +437,9 @@
         function getRelativePos(elm){
             var pPos = elm.parentNode.getBoundingClientRect(), // parent pos leftreport
             cPos = elm.getBoundingClientRect(); // target pos senb
-            console.log(pPos.top,elm)
+            //console.log(pPos.top,elm)
             winy = window.pageYOffset;
-            console.log(winy)
+            //console.log(winy)
             pos = {};
 
             pos.top    = cPos.top    - pPos.top + elm.parentNode.scrollTop,
@@ -450,6 +473,44 @@
             animateScroll();
         }
         function easeInOutQuad(t){ return t<.5 ? 2*t*t : -1+(4-2*t)*t };
+
+        /* ---------------------------*/
+        /* words color change in senB */
+        
+        
+        
+        //get the score
+        //console.log(result1.labels)
+        //console.log(senbcontent)
+        
+        //the order should be true or it will cause problem
+        let score = {}
+        for (var i=0; i < result1.length;i++){
+            let key = result1[i].keywordsB;
+            let label = result1[i].labels;
+            id = "senb_" + i
+            score[id] = label
+        }
+        //console.log(score2color(0.4))
+        //console.log(Object.keys(score[ele.id]).length)
+        //get score2color
+        let color = []
+        for(var j=0; j<Object.keys(score[ele.id]).length;j++){
+            c = score2color(score[ele.id][j])
+            color.push(c)
+        }
+        //console.log(color[1])
+        
+        
+        
+        //console.log('.'+ele.id +' .senbwords')
+        let senbword1 = document.querySelectorAll('#'+ele.id+ ' .senbwords')
+        //console.log(senbword1[0])
+        for (var i=0; i < color.length;i++){
+            senbword1[i].style.backgroundColor = "#"+color[i];
+            senbword1[i].style.borderRadius = '25 px'
+        }
+
     }
     
     
@@ -524,11 +585,12 @@
     //function to return color index according to score
     function score2color(score){
         //generate color
-        var tmp = generateColor('#ffedbc','#ed4264',100);
-        var scorecolor = tmp[score*100-1]
+        var tmp = generateColor('#ffedbc','#ed4264',101);
+        //console.log(tmp)
+        var scorecolor = tmp[score*100]
         return(scorecolor)
     }
-    
+
 </script>
 
 
