@@ -58,7 +58,7 @@ def filecontent(module_dir,company,year,item):
             #        break
         else:
             item1 = item
-            item2 = itemlist[itemlist.index(item)+1]
+            #item2 = itemlist[itemlist.index(item)+1]
             id1 = company+"_"+str(year).split("20")[1]+"_"+item1.upper()+"_P"+str(0)+"_S"+str(0)
             #id2 = company+"_"+str(year).split("20")[1]+"_"+item2.upper()+"_P"+str(0)+"_S"+str(0)
             for i in range(textkeys.index(id1),len(textkeys)):
