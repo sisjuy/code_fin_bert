@@ -376,8 +376,7 @@
         broken2.map((part, i) => {
             paragraph2.innerHTML += i + 1 >= broken2.length ? part : part + 
             '<mark class="senB"  tabindex="0" onclick=fun(this)>' + senB + '</mark>';
-            //' <mark onmouseover="" onclick="fun()" >' + senB + '</mark>';
-            //
+            
         });
 
         
@@ -401,7 +400,7 @@
         senbword.innerHTML = ''
         brokensenb.map((part,i) => {
             //senbwords += '<span class=senbwords>' + part + '</span>' + ' '
-            senbword.innerHTML += '<span class=senbwords>' + part + '</span>' + ' '
+            senbword.innerHTML += '<span class=senbwords>' + part + '</span>' + '<span class=senbwords>' + ' ' + '</span>' 
         })
         for(var m=0;m<brokensenb.length;m++){
             let senbword1 = document.querySelectorAll('#'+senb[n].id+ ' .senbwords')
@@ -505,10 +504,23 @@
         
         //console.log('.'+ele.id +' .senbwords')
         let senbword1 = document.querySelectorAll('#'+ele.id+ ' .senbwords')
-        //console.log(senbword1[0])
+        console.log(senbword1[1])
         for (var i=0; i < color.length;i++){
-            senbword1[i].style.backgroundColor = "#"+color[i];
-            senbword1[i].style.borderRadius = '25 px'
+            //background: linear-gradient(90deg, #FFC0CB 50%, #00FFFF 50%)
+            // senbword1 : 0, 2, 4, 6, 8 -> n
+            // space : 1,3,5,7,9 -> n-1
+            // color index : 0,1,2,3,4,5 
+            // i am a student : color length=4, space length=3, 
+            let c1 = "#"+color[i];
+            let c2 = "#"+color[i+1];
+            console.log(c1)
+            senbword1[i*2].style.backgroundColor = "#"+color[i];
+            senbword1[i*2].style.borderRadius = '25 px'
+            if(i*2+1 < color.length)
+                
+                senbword1[i*2+1].style.background =  'linear-gradient(to right, ' + c1 + ' 50%, ' + c2 + ' 50%)';
+                senbword1[i*2+1 ].style.borderRadius = '25 px'
+                //'linear-gradient(90deg,'+c1+' 50%, '+c2+'50%)'
         }
 
     }
