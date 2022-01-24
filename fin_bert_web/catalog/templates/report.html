@@ -516,10 +516,10 @@
             console.log(c1)
             senbword1[i*2].style.backgroundColor = "#"+color[i];
             senbword1[i*2].style.borderRadius = '25 px'
-            if(i*2+1 < color.length)
+            if(i*2+1 < 2*color.length-2)
                 
                 senbword1[i*2+1].style.background =  'linear-gradient(to right, ' + c1 + ' 50%, ' + c2 + ' 50%)';
-                senbword1[i*2+1 ].style.borderRadius = '25 px'
+                senbword1[i*2+1].style.borderRadius = '25 px'
                 //'linear-gradient(90deg,'+c1+' 50%, '+c2+'50%)'
         }
 
