@@ -28,11 +28,17 @@
 #reportrow {
     height:900px;
 }
-
-mark {
+.senA {
     background-color: #FFFF66;
     border-radius: 25px;
     cursor: pointer;
+    padding: 0.25em 0;
+}
+.senB {
+    background-color: #FFFF66;
+    border-radius: 25px;
+    cursor: pointer;
+    padding: 0.25em 0;
 }
 
 #leftbotton {

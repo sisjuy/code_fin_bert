@@ -371,12 +371,12 @@
         // mark
         broken1.map((part, i) => {
             paragraph1.innerHTML += i + 1 >= broken1.length ? part : part + 
-            ' <mark class="senA" tabindex="0">' + senA + '</mark>';
+            ' <span class="senA" tabindex="0">' + senA + '</span>';
         });
         broken2.map((part, i) => {
             paragraph2.innerHTML += i + 1 >= broken2.length ? part : part + 
-            '<mark class="senB"  tabindex="0" onclick=fun(this)>' + senB + '</mark>';
-            
+            '<span class="senB"  tabindex="0" onclick=fun(this) onmouseover=onmouse(this) onmouseout=outmouse(this)>' + senB + '</span>';
+            //onmouseover=onmouse(this) onmouseout=outmouse(this)
         });
 
         
@@ -400,9 +400,12 @@
         senbword.innerHTML = ''
         brokensenb.map((part,i) => {
             //senbwords += '<span class=senbwords>' + part + '</span>' + ' '
+            //console.log(i)
+            //console.log(brokensenb)
             senbword.innerHTML += '<span class=senbwords>' + part + '</span>' + '<span class=senbwords>' + ' ' + '</span>' 
         })
-        for(var m=0;m<brokensenb.length;m++){
+        
+        for(var m=0;m<(brokensenb.length*2);m++){
             let senbword1 = document.querySelectorAll('#'+senb[n].id+ ' .senbwords')
             //console.log(senbword1[m])
             senbword1[m].id = senb[n].id+"_"+m
@@ -414,7 +417,7 @@
         
         //console.log(senb[n].id)
     }
-    console.log(document.getElementById('senb_0_0'))
+    //console.log(document.getElementById('senb_0_0'))
     
     function fun(ele){
         /* --------------------------------------------*/
@@ -483,50 +486,88 @@
         //console.log(senbcontent)
         
         //the order should be true or it will cause problem
-        let score = {}
-        for (var i=0; i < result1.length;i++){
-            let key = result1[i].keywordsB;
-            let label = result1[i].labels;
-            id = "senb_" + i
-            score[id] = label
-        }
-        //console.log(score2color(0.4))
-        //console.log(Object.keys(score[ele.id]).length)
-        //get score2color
-        let color = []
-        for(var j=0; j<Object.keys(score[ele.id]).length;j++){
-            c = score2color(score[ele.id][j])
-            color.push(c)
-        }
-        //console.log(color[1])
-        
-        
-        
-        //console.log('.'+ele.id +' .senbwords')
-        let senbword1 = document.querySelectorAll('#'+ele.id+ ' .senbwords')
-        console.log(senbword1[1])
-        for (var i=0; i < color.length;i++){
-            //background: linear-gradient(90deg, #FFC0CB 50%, #00FFFF 50%)
-            // senbword1 : 0, 2, 4, 6, 8 -> n
-            // space : 1,3,5,7,9 -> n-1
-            // color index : 0,1,2,3,4,5 
-            // i am a student : color length=4, space length=3, 
-            let c1 = "#"+color[i];
-            let c2 = "#"+color[i+1];
-            console.log(c1)
-            senbword1[i*2].style.backgroundColor = "#"+color[i];
-            senbword1[i*2].style.borderRadius = '25 px'
-            if(i*2+1 < 2*color.length-2)
-                
-                senbword1[i*2+1].style.background =  'linear-gradient(to right, ' + c1 + ' 50%, ' + c2 + ' 50%)';
-                senbword1[i*2+1].style.borderRadius = '25 px'
-                //'linear-gradient(90deg,'+c1+' 50%, '+c2+'50%)'
-        }
+        changecolor(ele.id)
 
     }
+    function changecolor(eleid){
+            let score = {}
+            for (var i=0; i < result1.length;i++){
+                let key = result1[i].keywordsB;
+                let label = result1[i].labels;
+                id = "senb_" + i
+                score[id] = label
+            }
+            //console.log(score2color(0.4))
+            //console.log(Object.keys(score[ele.id]).length)
+            //get score2color
+            let color = []
+            //console.log(score[eleid])
+            for(var j=0; j<Object.keys(score[eleid]).length;j++){
+                c = score2color(score[eleid][j])
+                color.push(c)
+            }
+            //console.log(color[1])
+            
+            
+            
+            //console.log('.'+ele.id +' .senbwords')
+            let senbword1 = document.querySelectorAll('#'+eleid+ ' .senbwords')
+            //console.log(senbword1)
+            for (var i=0; i < color.length;i++){
+                //background: linear-gradient(90deg, #FFC0CB 50%, #00FFFF 50%)
+                // senbword1 : 0, 2, 4, 6, 8 -> n
+                // space : 1,3,5,7,9 -> n
+                // color index : 0,1,2,3,4,5 
+                // i am a student : color length=4, space length=3, 
+                let c1 = "#"+color[i];
+                let c2 = "#"+color[i+1];
+                //console.log(c1)
+                senbword1[i*2].style.backgroundColor = "#"+color[i];
+                senbword1[i*2].style.padding = '0.25em 0'
+                senbword1[i*2].style.borderRadius = '10 px'
+                if(i*2+1 < 2*color.length-2)
+                    
+                    senbword1[i*2+1].style.background =  'linear-gradient(to right, ' + c1 + ' 50%, ' + c2 + ' 50%)';
+                    senbword1[i*2+1].style.padding = '0.25em 0'
+                    senbword1[i*2+1].style.borderRadius = '25 px'
+                    //'linear-gradient(90deg,'+c1+' 50%, '+c2+'50%)'
+                if(i*2+1 == 2*color.length-1)
+                    senbword1[i*2+1].style.backgroundColor = "#"+color[color.length-1]
+                    senbword1[i*2+1].style.padding = '0.25em 0'
+                    senbword1[i*2+1].style.borderRadius = '25 px'
+            }
+            console.log(senbword1)
+            //console.log(i*2+1)
+            //console.log(senbword1.length)
+            
+        }
+    function cancelcolor(eleid){
+        let senbword1 = document.querySelectorAll('#'+eleid+ ' .senbwords')
+        //console.log(senbword1.length)
+        for (var i=0; i < senbword1.length;i++){
+            if(i%2==1){
+                senbword1[i].style.background = null;
+                senbword1[i].style.backgroundColor = "#FFFF66";
+            }
+            else{
+                senbword1[i].style.backgroundColor = "#FFFF66";
+            }
+            
+            //console.log(senbword1[i])
+        }
+    }
+    function onmouse(ele){
+        eleid = ele.id
+        changecolor(eleid)
+    }
+
     
-    
-    
+
+
+    function outmouse(ele){
+        eleid = ele.id
+        cancelcolor(eleid)
+    }
     
 </script>
 
@@ -597,7 +638,7 @@
     //function to return color index according to score
     function score2color(score){
         //generate color
-        var tmp = generateColor('#ffedbc','#ed4264',101);
+        var tmp = generateColor('#ed4264','#ffedbc',101);
         //console.log(tmp)
         var scorecolor = tmp[score*100]
         return(scorecolor)
