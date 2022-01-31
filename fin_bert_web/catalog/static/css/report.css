@@ -29,23 +29,23 @@
 
 
 #leftreport {
-    position: absolute;
-    left:50px;
+    position: relative;
+    left: 15px;
     overflow-y: auto; 
     align-items:"center";
     font-size: 18px;
     line-height: 40px;
-    border-top:1px solid black;
-    border-left:1px solid black;
-    border-bottom:1px solid black;
+    border-top:1px solid grey;
+    border-left:1px solid grey;
+    border-bottom:1px solid grey;
     border-radius: 5px;
     
 }
 
 #rightreport {
     
-    position: absolute;
-    right:50px;
+    position: relative;
+    left: 15px;
     overflow-y: auto; 
     align-items:"center";
     font-size: 18px;
@@ -58,15 +58,24 @@
 
 .senA {
     background-color: #FFFF66;
-    /*border-radius: 25px;*/
+    border-radius: 25px;
     cursor: pointer;
     padding: 0.25em 0;
 }
 .senB {
     background-color: #FFFF66;
-    /*border-radius: 25px;*/
+    border-radius: 25px;
     cursor: pointer;
     padding: 0.25em 0;
+    transition: transform .2s;
+}
+
+.senB:hover{
+    transition-duration: 0.8s;
+    transform: scale(1.1);
+    animation-duration: 0.8s;
+    opacity:1;
+    box-shadow:0 8px 20px 0px rgba(0,0,0,0.125);
 }
 #yearchange_botton {
     position: relative;
