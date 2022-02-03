@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 
 
@@ -24,6 +25,7 @@
 <body style="background-color:#ffffff; margin:0;padding:0;">
     <link rel="stylesheet" type="text/css" href="{% static 'css/report.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/scroll.css' %}">
+    
     <style>
         
     </style>
@@ -40,7 +42,8 @@
         })
     </script>
     
-
+   
+    
 
 
     <div class="container-fluid">
@@ -63,7 +66,7 @@
                         
                         <select id="companylist" name="company" class="ui selection dropdown" style="padding: 5px 5px;">
                             <option value="">Company List</option>
-                            <option :value="item" v-for="(item,index) in list">[[item]]</option>
+                            <option :value="key" v-for="(item,key,index) in list">[[item.name]] ([[key]])</option>
                             
                         </select>
                         
@@ -136,6 +139,8 @@
 
         </div>
         <!--report row end-->
+
+
         <div class="row" id="yearchange_button">
             <form id="leftform" method="POST" action="{% url 'report' %}" onsubmit="leftsubmit()">
                 {%csrf_token %}
@@ -255,7 +260,7 @@
             }
         }
         
-        console.log(localStorage.getItem("yearnow"))
+        //console.log(localStorage.getItem("yearnow"))
         
         
     </script>
@@ -297,6 +302,7 @@
             });
             $("#companylist").change(function(){
                 saveSettings2($(this).val());
+                
             });
             $("#itemlist").change(function(){
                 saveSettings3($(this).val());
@@ -318,25 +324,28 @@
             let leftyear = (parseInt(rightyear) - 1).toString()
             console.log(document.getElementById("leftinfo_year"))
             document.getElementById("leftinfo_year").innerHTML = leftyear
-            document.getElementById("leftinfo_company").innerHTML = company
+            document.getElementById("leftinfo_company").innerHTML = vm1.$data.list[company].name + " " + "(" + company + ")"
             document.getElementById("leftinfo_item").innerHTML = item
             document.getElementById("rightinfo_year").innerHTML = rightyear
-            document.getElementById("rightinfo_company").innerHTML = company
+            document.getElementById("rightinfo_company").innerHTML = vm1.$data.list[company].name + " " + "(" + company + ")"
             document.getElementById("rightinfo_item").innerHTML = item
         });
     </script>
     <script>
-        var vm = new Vue({
+        var vm1 = new Vue({
         el: '#companylist',
         delimiters: ['[[', ']]'],
         data: {
-            list: [
-              "abc","Apple","Netflix","cde","1417663"
-            ],
+            list: { 
+                "1417663" : {name:"company1"},
+                "1234123" : {name:"company2"}
+            }
+            ,
         },
         });
-
-        var vm = new Vue({
+        //let company = "1417663"
+        //console.log(vm1.$data.list[company].name)
+        var vm2 = new Vue({
         el: '#itemlist',
         delimiters: ['[[',']]'],
         data: {
@@ -453,8 +462,8 @@
             //senbwords += '<span class=senbwords>' + part + '</span>' + ' '
             //console.log(i)
             //console.log(brokensenb)
-            console.log(part,i)
-            console.log(brokensenb.length)
+            //console.log(part,i)
+            //console.log(brokensenb.length)
             senbword.innerHTML += i+1==brokensenb.length ? '<span class=senbwords>' + part + '</span>' : '<span class=senbwords>' + part + '</span>' + '<span class=senbwords>' + ' ' + '</span>' 
         })
         
@@ -649,7 +658,7 @@
                 let c1 = "#"+color[i];
                 let c2 = "#"+color[i+1];
                 //console.log(c1)
-                senbword1[i*2].style.transitionDuration = "0.8s"
+                senbword1[i*2].style.transitionDuration = "0.5s"
                 senbword1[i*2].style.backgroundColor = "#"+color[i];
                 senbword1[i*2].style.padding = '0.25em 0'
                 senbword1[i*2].style.borderRadius = '0px' 
@@ -659,7 +668,7 @@
                 }
                     
                 if(i*2+1 < 2*color.length-2){
-                    senbword1[i*2+1].style.transitionDuration = "0.8s"
+                    senbword1[i*2+1].style.transitionDuration = "0.5s"
                     senbword1[i*2+1].style.background =  'linear-gradient(to right, ' + c1 + ' 50%, ' + c2 + ' 50%)';
                     senbword1[i*2+1].style.padding = '0.25em 0'
                     senbword1[i*2+1].style.borderRadius = '0px' 
@@ -691,17 +700,20 @@
         for (var i=0; i < senbword1.length;i++){
               
             if(i%2==1){
+                senbword1[i].style.transitionDuration = "0.5s"
                 senbword1[i].style.background = null;
                 senbword1[i].style.backgroundColor = "#FFFF66";
                 senbword1[i].style.borderRadius = '0 px'
             }
             else{
                 if(i==0 && i==senbword1.length-1){
+                    senbword1[i].style.transitionDuration = "0.5s"
                     senbword1[i].style.backgroundColor = "#FFFF66";
                     senbword1[i].style.borderTopLeftRadius = '25px' 
                     senbword1[i].style.borderBottomLeftRadius = '25px' 
                 }
                 else{
+                    senbword1[i].style.transitionDuration = "0.5s"
                     senbword1[i].style.backgroundColor = "#FFFF66";
                     senbword1[i].style.borderRadius = '0 px'
                 }
@@ -815,5 +827,16 @@
     });
     window.onload = function(){
         $('.ui.dropdown').dropdown();  
-    };
+        
+    }
 </script>
+<!--
+<script>
+     <div id="loading">
+        <img id="loading-image" src="{% static 'pic&gif/loading1.gif' %}" alt="Loading..." />
+    </div>
+    $(window).on('load', function () {
+      $('#loading').hide();
+    }) 
+</script>
+-->

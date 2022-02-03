@@ -87,6 +87,7 @@ def report(request):
     if request.method == "POST":
         module_dir = os.path.dirname(__file__)
         company = request.POST.get("company")
+        print(company)
         year2 = int(request.POST.get("year"))
         year1 = year2-1
         item = request.POST.get("item")
