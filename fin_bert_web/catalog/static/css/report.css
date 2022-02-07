@@ -54,6 +54,7 @@
     border-left:1px solid grey;
     border-bottom:1px solid grey;
     border-radius: 5px;
+    z-index: 1;
 }
 
 .senA {
@@ -77,9 +78,40 @@
     font-size: 18.075px;
     box-shadow:0 5px 15px 0px rgba(0,0,0,0.125);
 }
+
+/*change year form*/
+input[type=submit] {
+    border: 1px solid black;
+    color: black;
+    width: 70px;
+    height: 70px;
+    border-radius: 100%;
+    opacity: 0.3;
+    cursor: pointer;
+}
+input[type=submit]:hover {
+    background: rgb(41, 33, 33);
+    color: white;
+    opacity: 1;
+}
+
+
 #yearchange_botton {
     position: relative;
     top: 50px;
+}
+
+#leftform {
+    position: absolute;
+    left: 10px;
+    bottom: 450px;
+    z-index: 2;
+}
+#rightform {
+    position: absolute;
+    right: 10px;
+    bottom: 450px;
+    z-index: 2;
 }
 
 /*

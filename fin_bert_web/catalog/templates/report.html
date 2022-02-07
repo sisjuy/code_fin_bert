@@ -83,6 +83,8 @@
             
         </div>
         <!--end selectrow-->
+
+        <!--info row-->
         <div class="row">
             <div class="col-sm">
                 <div class="ui list" id="leftinfo">
@@ -118,22 +120,39 @@
             </div>
             
         </div>
+        <!--info row end-->
 
         <!--report row-->
         <div class="row" id=reportrow >
+
             <div class="col-md" id="parent_leftreport">
                 <div class="col-md" id="leftreport" style="width: 700px;height:900px;">
                     <div id="report1" style="margin: 3px;">
                         
                     </div>
                 </div>
+                <form id="leftform" method="POST" action="{% url 'report' %}" onsubmit="leftsubmit()">
+                    {%csrf_token %}
+                    <input type="hidden" id="left_year" name="year" value=''/>
+                    <input type="hidden" id="left_company" name="company" value=''/>
+                    <input type="hidden" id="left_item" name="item" value=''/>
+                    <input type="submit"   style="margin-top:1vw;" value="<" />
+                </form>
             </div>
             <div class="col-md">
                 <div class="col-md" id="rightreport" style="width: 700px;height:900px; ">
                     <div id="report2" style="margin: 3px;  ">
                     </div>
                 </div>
+                <form id="rightform" method="POST" action="{% url 'report' %}" onsubmit="rightsubmit()">
+                    {%csrf_token %}
+                    <input type="hidden" id="right_year" name="year" value=''/>
+                    <input type="hidden" id="right_company" name="company" value=''/>
+                    <input type="hidden" id="right_item" name="item" value=''/>
+                    <input type="submit"  style="margin-top:1vw;" value=">" >
+                </form>
             </div>
+            
 
 
 
@@ -142,20 +161,8 @@
 
 
         <div class="row" id="yearchange_button">
-            <form id="leftform" method="POST" action="{% url 'report' %}" onsubmit="leftsubmit()">
-                {%csrf_token %}
-                <input type="hidden" id="left_year" name="year" value=''/>
-                <input type="hidden" id="left_company" name="company" value=''/>
-                <input type="hidden" id="left_item" name="item" value=''/>
-                <input type="submit" class="ui button"  style="margin-top:1vw;" value="lastyear" >
-            </form>
-            <form id="rightform" method="POST" action="{% url 'report' %}" onsubmit="rightsubmit()">
-                {%csrf_token %}
-                <input type="hidden" id="right_year" name="year" value=''/>
-                <input type="hidden" id="right_company" name="company" value=''/>
-                <input type="hidden" id="right_item" name="item" value=''/>
-                <input type="submit" class="ui button"  style="margin-top:1vw;" value="nextyear" >
-            </form>
+            
+            
                 
             
         </div>
