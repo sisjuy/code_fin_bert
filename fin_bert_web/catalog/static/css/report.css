@@ -80,7 +80,7 @@
 }
 
 /*change year form*/
-input[type=submit] {
+#year_submit {
     border: 1px solid black;
     color: black;
     width: 70px;
@@ -89,7 +89,7 @@ input[type=submit] {
     opacity: 0.3;
     cursor: pointer;
 }
-input[type=submit]:hover {
+#year_submit:hover {
     background: rgb(41, 33, 33);
     color: white;
     opacity: 1;
