@@ -422,7 +422,7 @@
         let label = result1[i].labels;
         
         //console.log(key[0])
-        key1 = key[0]
+        //key1 = key[0]
         let senA = result1[i].senA
         //console.log(senA)
         let senB = result1[i].senB
@@ -508,7 +508,7 @@
         function getRelativePos(elm){
             var pPos = elm.parentNode.getBoundingClientRect(), // parent pos leftreport
             cPos = elm.getBoundingClientRect(); // target pos senb
-            //console.log(pPos.top,elm)
+        
             winy = window.pageYOffset;
             //console.log(winy)
             pos = {};
@@ -570,17 +570,27 @@
         console.log(senb)
         scrollToElm(rightreport,senb,600)
         scrollToElm(leftreport,sena,600);   
+        if(window.pageYOffset>120){
+            window.scrollTo({
+                top : 120,
+                behavior : "smooth"
+            });
+        }
+        
+
 
         function scrollToElm(container, elm, duration){
             var pos = getRelativePos(elm);
             scrollTo( container, pos.top , 0.87);  // duration in seconds
+            
         }
         function getRelativePos(elm){
-            var pPos = elm.parentNode.getBoundingClientRect(), // parent pos leftreport
+            var pPos = elm.parentNode.getBoundingClientRect(), // parent pos report1
             cPos = elm.getBoundingClientRect(); // target pos senb
-            //console.log(pPos.top,elm)
+            //console.log(pPos,elm.parentNode)
+            console.log(cPos)
             winy = window.pageYOffset;
-            //console.log(winy)
+            console.log(winy)
             pos = {};
 
             pos.top    = cPos.top    - pPos.top + elm.parentNode.scrollTop,
@@ -591,7 +601,25 @@
 
             return pos;
         }
-        
+        function scrollwin(element, to, duration){
+            var start = window.pageYOffset;
+            change = to - start;
+            startTime = performance.now();
+            function animateScroll(){
+                now = performance.now();
+                elapsed = (now - startTime)/1000;
+                t = (elapsed/duration);
+
+                element.scrollTop = start + change * easeInOutQuad(t);
+
+                if( t < 1 )
+                    window.requestAnimationFrame(animateScroll);
+                else
+                    onDone && onDone();
+            };
+
+            animateScroll();
+        }
         function scrollTo(element, to, duration, onDone) {
             var start = element.scrollTop,
             change = to - start,

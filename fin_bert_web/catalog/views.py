@@ -16,8 +16,12 @@ itemlist = ["Item1","Item1A","Item1B","Item2",
             "Item15"]
 # create highlight sentence and score
 def teammate():
-    sen = [{"senA":"We are an emerging global regenerative medicine company focused on the development and commercialization of non-invasive, biological response activating devices for the repair and regeneration of tissue, musculoskeletal and vascular structures.","senB":"We are an emerging global regenerative medicine company focused on the development and commercialization of noninvasive, biological response activating devices for the repair and regeneration of tissue, musculoskeletal and vascular structures.","keywordsA":[],"keywordsB":["structures"],"labels":[0,0,0,1]},
-        {"senA":"The Company was incorporated on May 6, 2004.","senB":"The patients in the study were followed for a total of 24 weeks.","keywordsA":[],"keywordsB":["patients","weeks"],"labels":[0,0,0,1,0,0.67,0.5,0,1,0,0,0,0]}]
+    sen = [
+        {"senA":"We are an emerging global regenerative medicine company focused on the development and commercialization of non-invasive, biological response activating devices for the repair and regeneration of tissue, musculoskeletal and vascular structures.","senB":"We are an emerging global regenerative medicine company focused on the development and commercialization of noninvasive, biological response activating devices for the repair and regeneration of tissue, musculoskeletal and vascular structures.","keywordsA":[],"keywordsB":["structures"],"labels":[0,0,0,1]},
+        {"senA":"The Company was incorporated on May 6, 2004.","senB":"The patients in the study were followed for a total of 24 weeks.","keywordsA":[],"keywordsB":["patients","weeks"],"labels":[0,0,0,1,0,0.67,0.5,0,1,0,0,0,0]},
+        {"senA":"We believe our relationship with our employees is good.","senB":"We believe our relationship with our employees is good.","labels":[0,0,0,0.5,0.3,0.4,0.8,0.9,0.1]}
+        
+        ]
     
     
     return sen
