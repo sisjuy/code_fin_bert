@@ -372,6 +372,16 @@
   
 
 </body>
+<!--testarti-->
+<script>
+    testarti = "{{ testarti|safe }}";
+    console.log(testarti)
+    testarti = testarti.replace(/'/g,"\"");
+    const test1 = JSON.parse(testarti);
+    console.log(test1)
+</script>
+
+<!--end testarti-->
 
 <!--js report1 and report2-->
 
@@ -388,7 +398,7 @@
     //type=string
     const report1 = JSON.parse(data1);
     const report2 = JSON.parse(data2);
-
+    console.log(report1)
     //write content into slide
     //var slide_content = function(arti1,active_slide_index)
     //console.log(arti1.year2011)

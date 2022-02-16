@@ -20,11 +20,14 @@ def teammate():
         {"senA":"We are an emerging global regenerative medicine company focused on the development and commercialization of non-invasive, biological response activating devices for the repair and regeneration of tissue, musculoskeletal and vascular structures.","senB":"We are an emerging global regenerative medicine company focused on the development and commercialization of noninvasive, biological response activating devices for the repair and regeneration of tissue, musculoskeletal and vascular structures.","keywordsA":[],"keywordsB":["structures"],"labels":[0,0,0,1]},
         {"senA":"The Company was incorporated on May 6, 2004.","senB":"The patients in the study were followed for a total of 24 weeks.","keywordsA":[],"keywordsB":["patients","weeks"],"labels":[0,0,0,1,0,0.67,0.5,0,1,0,0,0,0]},
         {"senA":"We believe our relationship with our employees is good.","senB":"We believe our relationship with our employees is good.","labels":[0,0,0,0.5,0.3,0.4,0.8,0.9,0.1]}
-        
         ]
-    
-    
     return sen
+# create test article
+
+
+
+    
+    
 def filecontent(module_dir,company,year,item):
     
     #file name should change
@@ -98,10 +101,14 @@ def report(request):
         article1 = filecontent(module_dir,company,year1,item)
         article2 = filecontent(module_dir,company,year2,item)
         #2011~2018
-        arti = {}
+        #arti = {}
+        #for year in range(2011,2012):
+        #    arti["year"+str(year)] = filecontent(module_dir, company, year, item)
+        testarti = {}
         for year in range(2011,2012):
-            arti["year"+str(year)] = filecontent(module_dir, company, year, item)
-
+            testarti[str(year)] = {}
+            for item in itemlist:
+                testarti[str(year)][item] = filecontent(module_dir, company, year, item)
 
         #filename = company + '.txt'
         #file_path1 = os.path.join(module_dir,"dataset",str(year1),filename)   #full path to text.
@@ -119,7 +126,7 @@ def report(request):
         #labels = result['labels']
         #'senA':senA, 'senB':senB, 'keywordsB':keywordsB,'labels':labels
         #'arti':arti
-        context = {'data1': article1, 'data2':article2, 'result':result}
+        context = {'data1': article1, 'data2':article2, 'result':result, 'testarti' :testarti}
         return render(request, 'report.html',context)
     
     return render(request, 'report.html')
