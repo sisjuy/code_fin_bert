@@ -105,7 +105,7 @@ def report(request):
         #for year in range(2011,2012):
         #    arti["year"+str(year)] = filecontent(module_dir, company, year, item)
         testarti = {}
-        for year in range(2011,2012):
+        for year in range(2011,2013):
             testarti[str(year)] = {}
             for item in itemlist:
                 testarti[str(year)][item] = filecontent(module_dir, company, year, item)

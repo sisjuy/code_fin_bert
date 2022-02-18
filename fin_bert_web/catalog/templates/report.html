@@ -97,8 +97,14 @@
                       <div id="leftinfo_company"></div>
                     </div>
                     <div class="item">
-                      <div class="header">Item</div>
-                      <div id="leftinfo_item"></div>
+                        <div class="header">Item</div>
+                        <div id="leftinfo_item"></div>
+                        <div class=itembutton id="itemlist1">
+                            
+                            <button value="item" v-for="(item,index) in list" >
+                                [[item]]
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -115,6 +121,12 @@
                     <div class="item">
                       <div class="header">Item</div>
                       <div id="rightinfo_item"></div>
+                      <div class=itembutton id="itemlist2">
+                            
+                        <button  value="item" v-for="(item,index) in list" >
+                            [[item]]
+                        </button>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -159,8 +171,27 @@
         </div>
         <!--report row end-->
 
+        <div class="row" id=reportrow >
 
-        <div class="row" id="yearchange_button">
+            <div class="col-md" id="parent_leftreport">
+                <div class="col-md" id="leftreport" style="width: 700px;height:900px;">
+                    <div id="report1_Item1" style="margin: 3px;">
+                        
+                    </div>
+                </div>
+                
+            </div>
+            <div class="col-md">
+                <div class="col-md" id="rightreport" style="width: 700px;height:900px; ">
+                    <div id="report2_Item1" style="margin: 3px;  ">
+                    </div>
+                </div>
+            </div>
+            
+
+
+
+        </div>
             
             
                 
@@ -365,8 +396,32 @@
         ],
         },
         });
-        
-        
+        new Vue({
+        el: '#itemlist1',
+        delimiters: ['[[',']]'],
+        data: {
+        list:[
+            "Item1","Item1A","Item1B","Item2",
+            "Item3","Item4","Item5","Item6","Item7",
+            "Item7A","Item8","Item9","Item9A","Item9B",
+            "Item10","Item11","Item12","Item13","Item14",
+            "Item15"
+        ],
+        },
+        });
+        new Vue({
+        el: '#itemlist2',
+        delimiters: ['[[',']]'],
+        data: {
+        list:[
+            "Item1","Item1A","Item1B","Item2",
+            "Item3","Item4","Item5","Item6","Item7",
+            "Item7A","Item8","Item9","Item9A","Item9B",
+            "Item10","Item11","Item12","Item13","Item14",
+            "Item15"
+        ],
+        },
+        });
     </script>
 
   
@@ -374,11 +429,44 @@
 </body>
 <!--testarti-->
 <script>
+    var givevalue = function (dict,myKey) {
+        return dict[myKey];
+    };
+    function writereport(data1,data2,item){
+        let report1 = data1
+        let report2 = data2
+        let paragraph1 = document.getElementById('report1_'+item);
+        let paragraph2 = document.getElementById('report2_'+item);
+        paragraph1.innerHTML = ''
+        paragraph2.innerHTML = ''
+        //paragraph2.innerHTML = ''
+        
+        report1.map((part,i) => {
+            //console.log(part, i)
+            paragraph1.innerHTML += part == "\n" ? '<br>' : part + ' '
+        })
+        report2.map((part,i) => {
+            paragraph2.innerHTML += part == "\n" ? '<br>' : part + ' '
+        }) 
+    }
     testarti = "{{ testarti|safe }}";
-    console.log(testarti)
+    //console.log(testarti)
     testarti = testarti.replace(/'/g,"\"");
     const test1 = JSON.parse(testarti);
-    console.log(test1)
+    
+      //get  2011 all item
+    var curryear = localStorage.getItem("yearnow")
+    var company = localStorage.getItem("companynow")
+    var item = localStorage.getItem("itemnow").toString()
+    var lastyear = (parseInt(curryear) - 1).toString()
+    console.log(givevalue(givevalue(test1,curryear),item))
+    let data1 = givevalue(givevalue(test1,2011),item)
+    let data2 = givevalue(givevalue(test1,2012),item)
+    writereport(data1,data2,item)
+
+
+
+
 </script>
 
 <!--end testarti-->
@@ -386,10 +474,24 @@
 <!--js report1 and report2-->
 
 <script type="text/javascript">
+    function writereport(data1,data2,item){
+        let report1 = data1
+        let report2 = data2
+        let paragraph1 = document.getElementById('report1_'+item);
+        let paragraph2 = document.getElementById('report2_'+item);
+        paragraph1.innerHTML = ''
+        paragraph2.innerHTML = ''
+        //paragraph2.innerHTML = ''
+        
+        report1.map((part,i) => {
+            //console.log(part, i)
+            paragraph1.innerHTML += part == "\n" ? '<br>' : part + ' '
+        })
+        report2.map((part,i) => {
+            paragraph2.innerHTML += part == "\n" ? '<br>' : part + ' '
+        }) 
+    }
     
-    var givevalue = function (dict,myKey) {
-        return dict[myKey];
-    };
     //arti : all year article
     data1 = "{{ data1|safe }}";
     data2 = "{{ data2|safe }}";
@@ -398,7 +500,7 @@
     //type=string
     const report1 = JSON.parse(data1);
     const report2 = JSON.parse(data2);
-    console.log(report1)
+    //console.log(report1)
     //write content into slide
     //var slide_content = function(arti1,active_slide_index)
     //console.log(arti1.year2011)
@@ -492,6 +594,7 @@
 
         senb_item.push(senb[n].id)
         sena_item.push(sena[n].id)
+        //adjust
         sendic_b2a[senb[n].id] = sena[n].id;
         sendic_a2b[sena[n].id] = senb[n].id;
         
