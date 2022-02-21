@@ -135,7 +135,8 @@
         <!--info row end-->
 
         <!--report row-->
-        <div class="row" id=reportrow >
+        <!--
+            <div class="row" id=reportrow >
 
             <div class="col-md" id="parent_leftreport">
                 <div class="col-md" id="leftreport" style="width: 700px;height:900px;">
@@ -151,7 +152,7 @@
                     <input type="submit" id="year_submit"  style="margin-top:1vw;" value="<" />
                 </form>
             </div>
-            <div class="col-md">
+            <div class="col-md" id="parent_rightreport">
                 <div class="col-md" id="rightreport" style="width: 700px;height:900px; ">
                     <div id="report2" style="margin: 3px;  ">
                     </div>
@@ -169,34 +170,16 @@
 
 
         </div>
+        -->
+        
         <!--report row end-->
 
-        <div class="row" id=reportrow >
-
-            <div class="col-md" id="parent_leftreport">
-                <div class="col-md" id="leftreport" style="width: 700px;height:900px;">
-                    <div id="report1_Item1" style="margin: 3px;">
-                        
-                    </div>
-                </div>
-                
-            </div>
-            <div class="col-md">
-                <div class="col-md" id="rightreport" style="width: 700px;height:900px; ">
-                    <div id="report2_Item1" style="margin: 3px;  ">
-                    </div>
-                </div>
-            </div>
-            
-
-
-
-        </div>
+        
             
             
                 
             
-        </div>
+        
     
     </div>
     <!--fullpage closed-->
@@ -449,21 +432,91 @@
             paragraph2.innerHTML += part == "\n" ? '<br>' : part + ' '
         }) 
     }
-    testarti = "{{ testarti|safe }}";
-    //console.log(testarti)
-    testarti = testarti.replace(/'/g,"\"");
-    const test1 = JSON.parse(testarti);
-    
-      //get  2011 all item
-    var curryear = localStorage.getItem("yearnow")
-    var company = localStorage.getItem("companynow")
-    var item = localStorage.getItem("itemnow").toString()
-    var lastyear = (parseInt(curryear) - 1).toString()
-    console.log(givevalue(givevalue(test1,curryear),item))
-    let data1 = givevalue(givevalue(test1,2011),item)
-    let data2 = givevalue(givevalue(test1,2012),item)
-    writereport(data1,data2,item)
+    function create_reportrow(item){
+        var reportrow = document.createElement("div");
 
+        var parent_leftreport = document.createElement("div");
+        var leftreport = document.createElement("div")
+        var report1 = document.createElement("div")
+
+        var parent_rightreport = document.createElement("div");
+        var rightreport = document.createElement("div")
+        var report2 = document.createElement("div")
+
+        reportrow.className = "row"
+        reportrow.id = "reportrow_" + item
+        reportrow.style.position = "relative"
+        reportrow.style.top = "50px"
+        reportrow.style.height = "900px"
+        reportrow.style.marginTop = "100px"
+        reportrow.style.display = "none";
+
+
+        parent_leftreport.className = "col-md"
+        parent_leftreport.id = "parent_leftreport"
+        leftreport.className = "col-md"
+        leftreport.id = "leftreport"
+        leftreport.style.width = "700px"
+        leftreport.style.height = "900px"
+        report1.id = "report1_" + item
+        report1.style.margin = "3px"
+
+        parent_rightreport.className = "col-md"
+        parent_rightreport.id = "parent_rightreport"
+        rightreport.className = "col-md"
+        rightreport.id = "rightreport"
+        rightreport.style.width = "700px"
+        rightreport.style.height = "900px"
+        report2.id = "report2_" + item
+        report2.style.margin = "3px"
+
+
+        var frag1 = document.createDocumentFragment();
+        var frag2 = document.createDocumentFragment();
+        frag1.appendChild(parent_leftreport)
+        parent_leftreport.appendChild(leftreport)
+        leftreport.appendChild(report1)
+
+        frag2.appendChild(parent_rightreport)
+        parent_rightreport.appendChild(rightreport)
+        rightreport.appendChild(report2)
+        reportrow.appendChild(frag1)
+        
+        reportrow.appendChild(frag2)
+        $('.container-fluid').append(
+            reportrow
+        );
+
+    }
+    
+    
+    
+    $(document).ready(function() {
+        testarti = "{{ testarti|safe }}";
+        //console.log(testarti)
+        testarti = testarti.replace(/'/g,"\"");
+        const test1 = JSON.parse(testarti);
+        
+        //get  2011 all item
+        var curryear = localStorage.getItem("yearnow")
+        var company = localStorage.getItem("companynow")
+        var item = localStorage.getItem("itemnow").toString()
+        var lastyear = (parseInt(curryear) - 1).toString()
+        console.log(givevalue(givevalue(test1,curryear),item))
+        
+        //all of item in two years
+        for (var i=0; i < 3;i++){
+            let data1 = givevalue(givevalue(test1,lastyear),vm2.$data.list[i])
+            let data2 = givevalue(givevalue(test1,curryear),vm2.$data.list[i])
+            create_reportrow(vm2.$data.list[i])
+            writereport(data1,data2,vm2.$data.list[i])
+
+        }
+        curritemid = "reportrow_" + item
+        curr = document.getElementById(curritemid)
+        curr.style.display = "block"
+    });
+   
 
 
 
@@ -474,23 +527,7 @@
 <!--js report1 and report2-->
 
 <script type="text/javascript">
-    function writereport(data1,data2,item){
-        let report1 = data1
-        let report2 = data2
-        let paragraph1 = document.getElementById('report1_'+item);
-        let paragraph2 = document.getElementById('report2_'+item);
-        paragraph1.innerHTML = ''
-        paragraph2.innerHTML = ''
-        //paragraph2.innerHTML = ''
-        
-        report1.map((part,i) => {
-            //console.log(part, i)
-            paragraph1.innerHTML += part == "\n" ? '<br>' : part + ' '
-        })
-        report2.map((part,i) => {
-            paragraph2.innerHTML += part == "\n" ? '<br>' : part + ' '
-        }) 
-    }
+ 
     
     //arti : all year article
     data1 = "{{ data1|safe }}";
