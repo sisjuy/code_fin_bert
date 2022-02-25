@@ -455,18 +455,38 @@
         parent_leftreport.className = "col-md"
         parent_leftreport.id = "parent_leftreport"
         leftreport.className = "col-md"
-        leftreport.id = "leftreport"
+        leftreport.id = "leftreport_" + item
         leftreport.style.width = "700px"
         leftreport.style.height = "900px"
+        leftreport.style.position = "relative"
+        leftreport.style.left = "15px"
+        leftreport.style.overflowY = "auto"
+        leftreport.style.alignItems = "center"
+        leftreport.style.fontSize = "18px"
+        leftreport.style.lineHeight = "40px"
+        leftreport.style.borderTop = "1px solid grey"
+        leftreport.style.borderLeft = "1px solid grey"
+        leftreport.style.borderBottom = "1px solid grey"
+        leftreport.style.borderRadius = "5px"
         report1.id = "report1_" + item
         report1.style.margin = "3px"
 
         parent_rightreport.className = "col-md"
         parent_rightreport.id = "parent_rightreport"
         rightreport.className = "col-md"
-        rightreport.id = "rightreport"
+        rightreport.id = "rightreport_" + item
         rightreport.style.width = "700px"
         rightreport.style.height = "900px"
+        rightreport.style.position = "relative"
+        rightreport.style.left = "15px"
+        rightreport.style.overflowY = "auto"
+        rightreport.style.alignItems = "center"
+        rightreport.style.fontSize = "18px"
+        rightreport.style.lineHeight = "40px"
+        rightreport.style.borderTop = "1px solid grey"
+        rightreport.style.borderLeft = "1px solid grey"
+        rightreport.style.borderBottom = "1px solid grey"
+        rightreport.style.borderRadius = "5px"
         report2.id = "report2_" + item
         report2.style.margin = "3px"
 
@@ -488,168 +508,22 @@
         );
 
     }
-    
-    
-    
-    $(document).ready(function() {
-        testarti = "{{ testarti|safe }}";
-        //console.log(testarti)
-        testarti = testarti.replace(/'/g,"\"");
-        const test1 = JSON.parse(testarti);
+    function click_a(ele,sendic_a2b){
+    /* --------------------------------------------*/
+    /* jump to corresponding senA if clicking senB */
+        console.log(ele)
         
-        //get  2011 all item
-        var curryear = localStorage.getItem("yearnow")
-        var company = localStorage.getItem("companynow")
         var item = localStorage.getItem("itemnow").toString()
-        var lastyear = (parseInt(curryear) - 1).toString()
-        console.log(givevalue(givevalue(test1,curryear),item))
-        
-        //all of item in two years
-        for (var i=0; i < 3;i++){
-            let data1 = givevalue(givevalue(test1,lastyear),vm2.$data.list[i])
-            let data2 = givevalue(givevalue(test1,curryear),vm2.$data.list[i])
-            create_reportrow(vm2.$data.list[i])
-            writereport(data1,data2,vm2.$data.list[i])
-
-        }
-        curritemid = "reportrow_" + item
-        curr = document.getElementById(curritemid)
-        curr.style.display = "block"
-    });
-   
-
-
-
-</script>
-
-<!--end testarti-->
-
-<!--js report1 and report2-->
-
-<script type="text/javascript">
- 
-    
-    //arti : all year article
-    data1 = "{{ data1|safe }}";
-    data2 = "{{ data2|safe }}";
-    data1 = data1.replace(/'/g,"\"");
-    data2 = data2.replace(/'/g,"\"");
-    //type=string
-    const report1 = JSON.parse(data1);
-    const report2 = JSON.parse(data2);
-    //console.log(report1)
-    //write content into slide
-    //var slide_content = function(arti1,active_slide_index)
-    //console.log(arti1.year2011)
-    let paragraph1 = document.getElementById('report1');
-    let paragraph2 = document.getElementById('report2');
-    paragraph1.innerHTML = ''
-    paragraph2.innerHTML = ''
-    //paragraph2.innerHTML = ''
-    
-    report1.map((part,i) => {
-        //console.log(part, i)
-        paragraph1.innerHTML += part == "\n" ? '<br>' : part + ' '
-    })
-    report2.map((part,i) => {
-        paragraph2.innerHTML += part == "\n" ? '<br>' : part + ' '
-    }) 
-</script>
-
-
-
-
-<!--js highlight sentence-->
-<script type="text/javascript">
-    result =  "{{ result|safe }}";
-    result = result.replace(/'/g,"\"");
-    const result1 = JSON.parse(result)
-    //console.log(result1)
-    //console.log(result1.length)
-    for (var i=0; i < result1.length;i++){
-        let key = result1[i].keywordsB;
-        let label = result1[i].labels;
-        
-        //console.log(key[0])
-        //key1 = key[0]
-        let senA = result1[i].senA
-        //console.log(senA)
-        let senB = result1[i].senB
-        let paragraph1 = document.getElementById('report1');
-        let paragraph2 = document.getElementById('report2');
-        let broken1 = paragraph1.innerHTML.split(senA);
-        let broken2 = paragraph2.innerHTML.split(senB);
-        //let brokensenb = senB.split(" ")
-        //console.log(brokensenb)
-        paragraph1.innerHTML = '';
-        paragraph2.innerHTML = '';
-        // mark
-        broken1.map((part, i) => {
-            paragraph1.innerHTML += i + 1 >= broken1.length ? part : part + 
-            ' <span class="senA" tabindex="0" onclick=click_a(this)>' + senA + '</span>';
-        });
-        broken2.map((part, i) => {
-            paragraph2.innerHTML += i + 1 >= broken2.length ? part : part + 
-            '<span class="senB"  tabindex="0" onclick=click_b(this) onmouseover=onmouse(this) onmouseout=outmouse(this)>' + senB + '</span>';
-            //onmouseover=onmouse(this) onmouseout=outmouse(this)
-        });
-
-        
-    }
-    // jump to corresponding sena id
-    /* give senB id */
-    var senb = document.getElementsByClassName("senB");
-    var sena = document.getElementsByClassName("senA");
-    var senb_item = [];
-    var sena_item = [];
-    var sendic_a2b = {};
-    var sendic_b2a = {};
-    for (var n= 0; n < result1.length; n++) {
-        senb[n].id = "senb_" + n;
-        sena[n].id = "sena_" + n;
-        
-        
-        
-        senbword = document.getElementById(senb[n].id)
-        let senbcontent = senbword.innerHTML
-        let brokensenb = senbcontent.split(" ");
-        senbword.innerHTML = ''
-        brokensenb.map((part,i) => {
-            //senbwords += '<span class=senbwords>' + part + '</span>' + ' '
-            //console.log(i)
-            //console.log(brokensenb)
-            //console.log(part,i)
-            //console.log(brokensenb.length)
-            senbword.innerHTML += i+1==brokensenb.length ? '<span class=senbwords>' + part + '</span>' : '<span class=senbwords>' + part + '</span>' + '<span class=senbwords>' + ' ' + '</span>' 
-        })
-        
-        for(var m=0;m<(brokensenb.length*2-1);m++){
-            let senbword1 = document.querySelectorAll('#'+senb[n].id+ ' .senbwords')
-            //console.log(senbword1[m])
-            senbword1[m].id = senb[n].id+"_"+m
-        }
-
-        senb_item.push(senb[n].id)
-        sena_item.push(sena[n].id)
-        //adjust
-        sendic_b2a[senb[n].id] = sena[n].id;
-        sendic_a2b[sena[n].id] = senb[n].id;
-        
-        //console.log(senb[n].id)
-    }
-    //console.log(document.getElementById('senb_0_0'))
-    function click_a(ele){
-        /* --------------------------------------------*/
-        /* jump to corresponding senA if clicking senB */
-        //console.log(ele)
-        var leftreport = document.querySelector('#leftreport');
-        var rightreport = document.querySelector('#rightreport')
+        let leftreportid = '#leftreport_' + item
+        let rightreportid = '#rightreport_' + item
+        var leftreport = document.querySelector(leftreportid);
+        var rightreport = document.querySelector(rightreportid)
         //console.log(leftreport)
-        senb = document.getElementById(sendic_a2b[ele.id])
+        senb = document.getElementById(sendic_a2b[item][ele.id])
         sena = document.getElementById(ele.id); // <-- Scroll to here within ".box"
         scrollToElm(leftreport,sena,600); 
         scrollToElm(rightreport,senb,600)
-          
+        
 
         function scrollToElm(container, elm, duration){
             var pos = getRelativePos(elm);
@@ -708,104 +582,393 @@
         //changecolor(ele.id)
 
     }
-    function click_b(ele){
-        /* --------------------------------------------*/
-        /* jump to corresponding senA if clicking senB */
-        //console.log(ele)
-        var leftreport = document.querySelector('#leftreport');
-        var rightreport = document.querySelector('#rightreport')
-        //console.log(leftreport)
-        senb = document.getElementById(ele.id)
-        sena = document.getElementById(sendic_b2a[ele.id]); // <-- Scroll to here within ".box"
-        console.log(senb)
-        scrollToElm(rightreport,senb,600)
-        scrollToElm(leftreport,sena,600);   
-        if(window.pageYOffset>120){
-            window.scrollTo({
-                top : 120,
-                behavior : "smooth"
-            });
-        }
-        
-
-
-        function scrollToElm(container, elm, duration){
-            var pos = getRelativePos(elm);
-            scrollTo( container, pos.top , 0.87);  // duration in seconds
+    function click_b(ele,sendic_b2a){
+            /* --------------------------------------------*/
+            /* jump to corresponding senA if clicking senB */
+            //console.log(ele)
+            var item = localStorage.getItem("itemnow").toString()
+            let leftreportid = '#leftreport_' + item
+            let rightreportid = '#rightreport_' + item
+            var leftreport = document.querySelector(leftreportid);
+            var rightreport = document.querySelector(rightreportid)
+            //console.log(leftreport)
             
+            senb = document.getElementById(ele.id)
+            sena = document.getElementById(sendic_b2a[item][ele.id]); // <-- Scroll to here within ".box"
+            //console.log(senb)
+            scrollToElm(rightreport,senb,600)
+            scrollToElm(leftreport,sena,600);   
+            if(window.pageYOffset>120){
+                window.scrollTo({
+                    top : 120,
+                    behavior : "smooth"
+                });
+            }
+            
+
+
+            function scrollToElm(container, elm, duration){
+                var pos = getRelativePos(elm);
+                scrollTo( container, pos.top , 0.87);  // duration in seconds
+                
+            }
+            function getRelativePos(elm){
+                var pPos = elm.parentNode.getBoundingClientRect(), // parent pos report1
+                cPos = elm.getBoundingClientRect(); // target pos senb
+                //console.log(pPos,elm.parentNode)
+                console.log(cPos)
+                winy = window.pageYOffset;
+                console.log(winy)
+                pos = {};
+
+                pos.top    = cPos.top    - pPos.top + elm.parentNode.scrollTop,
+                pos.right  = cPos.right  - pPos.right,
+                pos.bottom = cPos.bottom - pPos.bottom,
+                pos.left   = cPos.left   - pPos.left;
+
+
+                return pos;
+            }
+            function scrollwin(element, to, duration){
+                var start = window.pageYOffset;
+                change = to - start;
+                startTime = performance.now();
+                function animateScroll(){
+                    now = performance.now();
+                    elapsed = (now - startTime)/1000;
+                    t = (elapsed/duration);
+
+                    element.scrollTop = start + change * easeInOutQuad(t);
+
+                    if( t < 1 )
+                        window.requestAnimationFrame(animateScroll);
+                    else
+                        onDone && onDone();
+                };
+
+                animateScroll();
+            }
+            function scrollTo(element, to, duration, onDone) {
+                var start = element.scrollTop,
+                change = to - start,
+                startTime = performance.now(),
+                val, now, elapsed, t;
+            
+                function animateScroll(){
+                    now = performance.now();
+                    elapsed = (now - startTime)/1000;
+                    t = (elapsed/duration);
+
+                    element.scrollTop = start + change * easeInOutQuad(t);
+
+                    if( t < 1 )
+                        window.requestAnimationFrame(animateScroll);
+                    else
+                        onDone && onDone();
+                };
+
+                animateScroll();
+            }
+            function easeInOutQuad(t){ return t<.5 ? 2*t*t : -1+(4-2*t)*t };
+
+            /* ---------------------------*/
+            /* words color change in senB */
+            
+            
+            
+            //get the score
+            //console.log(result1.labels)
+            //console.log(senbcontent)
+            
+            //the order should be true or it will cause problem
+            //changecolor(ele.id)
+
         }
-        function getRelativePos(elm){
-            var pPos = elm.parentNode.getBoundingClientRect(), // parent pos report1
-            cPos = elm.getBoundingClientRect(); // target pos senb
-            //console.log(pPos,elm.parentNode)
-            console.log(cPos)
-            winy = window.pageYOffset;
-            console.log(winy)
-            pos = {};
+    
+    
+    $(document).ready(function() {
+        testarti = "{{ testarti|safe }}";
+        //console.log(testarti)
+        testarti = testarti.replace(/'/g,"\"");
+        const test1 = JSON.parse(testarti);
+        
+        //get  2011 all item
+        var curryear = localStorage.getItem("yearnow")
+        var company = localStorage.getItem("companynow")
+        var item = localStorage.getItem("itemnow").toString()
+        var lastyear = (parseInt(curryear) - 1).toString()
+        //console.log(givevalue(givevalue(test1,curryear),item))
+        
+        //all of item in two years
+        for (var i=0; i < 3;i++){
+            let data1 = givevalue(givevalue(test1,lastyear),vm2.$data.list[i])
+            let data2 = givevalue(givevalue(test1,curryear),vm2.$data.list[i])
+            create_reportrow(vm2.$data.list[i])
+            writereport(data1,data2,vm2.$data.list[i])
 
-            pos.top    = cPos.top    - pPos.top + elm.parentNode.scrollTop,
-            pos.right  = cPos.right  - pPos.right,
-            pos.bottom = cPos.bottom - pPos.bottom,
-            pos.left   = cPos.left   - pPos.left;
-
-
-            return pos;
         }
-        function scrollwin(element, to, duration){
-            var start = window.pageYOffset;
-            change = to - start;
-            startTime = performance.now();
-            function animateScroll(){
-                now = performance.now();
-                elapsed = (now - startTime)/1000;
-                t = (elapsed/duration);
+        curritemid = "reportrow_" + item
+        curr = document.getElementById(curritemid)
+        curr.style.display = "block"
+        result =  "{{ result|safe }}";
+        result = result.replace(/'/g,"\"");
+        const result1 = JSON.parse(result)
+        //console.log(givevalue(givevalue(result1,curryear),item))
+        //console.log(result1.length)
+        var senb_item = {}; //{"item1":[]}
+        var sena_item = {};
+        var sendic_a2b = {};
+        var sendic_b2a = {};
+        //for every item
+        for (var ii=0; ii < 3;ii++){
+            result = givevalue(givevalue(result1,curryear),vm2.$data.list[ii])
+            let id1 = "report1_" + vm2.$data.list[ii]
+            let id2 = "report2_" + vm2.$data.list[ii]
+            console.log(result.length,ii)
+            //highlight sentence
+            for (var i=0; i < result.length;i++){
+                let key = result[i].keywordsB;
+                let label = result[i].labels;
+                
+                //console.log(key[0])
+                //key1 = key[0]
+                let senA = result[i].senA
+                let senB = result[i].senB
+                
+                let paragraph1 = document.getElementById(id1);
+                let paragraph2 = document.getElementById(id2);
+                //console.log(paragraph1)
+                let broken1 = paragraph1.innerHTML.split(senA);
+                let broken2 = paragraph2.innerHTML.split(senB);
+                //let brokensenb = senB.split(" ")
+                //console.log(brokensenb)
+                paragraph1.innerHTML = '';
+                paragraph2.innerHTML = '';
+                //create span
+                
+                
+                // mark
+                broken1.map((part, i) => {
+                    
+                    var sena = document.createElement("span");
+                    
+                    sena.className = "senA_" + vm2.$data.list[ii]
+                    sena.setAttribute("onclick","click_a(this,sendic_a2b)")
+                    
+                    sena.innerHTML = senA
+                    sena.style.backgroundColor = "#FFFF66"
+                    sena.style.borderRadius = "25px"
+                    sena.style.cursor = "pointer"
+                    sena.style.padding = "0.25em 0"
+                    //console.log(sena)
+                    paragraph1.innerHTML += i + 1 >= broken1.length ? part : part + sena.outerHTML
+                });
+                broken2.map((part, i) => {
+                    
+                    var senb = document.createElement("span");
+                    senb.className = "senB_" + vm2.$data.list[ii]
+                    senb.setAttribute("onclick","click_b(this,sendic_b2a)")
+                    senb.setAttribute("onmouse","onmouse(this)")
+                    senb.setAttribute("outmouse","outmouse(this)")
+                    
+                    senb.innerHTML = senB
+                    senb.style.backgroundColor = "#FFFF66"
+                    senb.style.borderRadius = "25px"
+                    senb.style.cursor = "pointer"
+                    senb.style.padding = "0.25em 0"
+                    paragraph2.innerHTML += i + 1 >= broken2.length ? part : part + senb.outerHTML
+                });  
+            }
+        
+            //highlight words in sen
+            senaid = "senA_" + vm2.$data.list[ii]
+            senbid = "senB_" + vm2.$data.list[ii]
+            var senb = document.getElementsByClassName(senbid);
+            var sena = document.getElementsByClassName(senaid);
+            //console.log(sena[1])
+            
+            
+            senb_item[vm2.$data.list[ii]] = []
+            sena_item[vm2.$data.list[ii]] = []
+            
+            sendic_b2a[vm2.$data.list[ii]] = {}
+            sendic_a2b[vm2.$data.list[ii]] = {}
+            //highlight words in sen
+            for (var n= 0; n < result.length; n++) {
+                senb[n].id = "senb_" + vm2.$data.list[ii] + "_" + n;
+                sena[n].id = "sena_" + vm2.$data.list[ii] + "_" + n;
+                
+                
+                
+                senbword = document.getElementById(senb[n].id)
+                let senbcontent = senbword.innerHTML
+                let brokensenb = senbcontent.split(" ");
+                
+                senbword.innerHTML = ''
+                brokensenb.map((part,i) => {
+                    var word = document.createElement("span");
+                    var space = document.createElement("span");
+                    word.className = "senbwords_" + vm2.$data.list[ii]
+                    word.innerHTML = part
+                    space.className = "senbwords_" + vm2.$data.list[ii]
+                    space.innerHTML = ' '
+                    //console.log(word)
+                    senbword.innerHTML += i+1==brokensenb.length ? word.outerHTML : word.outerHTML + space.outerHTML
+                })
+                
+                for(var m=0;m<(brokensenb.length*2-1);m++){
+                    let senbword1 = document.querySelectorAll('#'+senb[n].id+ ' .senbwords_' + vm2.$data.list[ii])
+                    
+                    senbword1[m].id = senb[n].id + "_" + m
+                    //console.log(senbword1[m])
+                }
 
-                element.scrollTop = start + change * easeInOutQuad(t);
+                
+                senb_item[vm2.$data.list[ii]].push(senb[n].id)
+                
+                sena_item[vm2.$data.list[ii]].push(sena[n].id)
+                
+                //adjust
+                
+                sendic_b2a[vm2.$data.list[ii]][senb[n].id] = sena[n].id;
+                sendic_a2b[vm2.$data.list[ii]][sena[n].id] = senb[n].id;
+                
+                
+                //console.log(senb[n].id)
+            }
+            
 
-                if( t < 1 )
-                    window.requestAnimationFrame(animateScroll);
-                else
-                    onDone && onDone();
-            };
-
-            animateScroll();
         }
-        function scrollTo(element, to, duration, onDone) {
-            var start = element.scrollTop,
-            change = to - start,
-            startTime = performance.now(),
-            val, now, elapsed, t;
+        console.log(sendic_a2b)
         
-            function animateScroll(){
-                now = performance.now();
-                elapsed = (now - startTime)/1000;
-                t = (elapsed/duration);
+        
+ 
+    });
+   
 
-                element.scrollTop = start + change * easeInOutQuad(t);
 
-                if( t < 1 )
-                    window.requestAnimationFrame(animateScroll);
-                else
-                    onDone && onDone();
-            };
 
-            animateScroll();
+</script>
+
+<!--end testarti-->
+
+<!--js report1 and report2
+
+<script type="text/javascript">
+ 
+    
+    //arti : all year article
+    data1 = "{{ data1|safe }}";
+    data2 = "{{ data2|safe }}";
+    data1 = data1.replace(/'/g,"\"");
+    data2 = data2.replace(/'/g,"\"");
+    //type=string
+    const report1 = JSON.parse(data1);
+    const report2 = JSON.parse(data2);
+    //console.log(report1)
+    //write content into slide
+    //var slide_content = function(arti1,active_slide_index)
+    //console.log(arti1.year2011)
+    let paragraph1 = document.getElementById('report1');
+    let paragraph2 = document.getElementById('report2');
+    paragraph1.innerHTML = ''
+    paragraph2.innerHTML = ''
+    //paragraph2.innerHTML = ''
+    
+    report1.map((part,i) => {
+        //console.log(part, i)
+        paragraph1.innerHTML += part == "\n" ? '<br>' : part + ' '
+    })
+    report2.map((part,i) => {
+        paragraph2.innerHTML += part == "\n" ? '<br>' : part + ' '
+    }) 
+</script>
+-->
+
+
+
+
+<!--js highlight sentence-->
+<script type="text/javascript">
+    //one item
+    /*
+    for (var i=0; i < result1.length;i++){
+        let key = result1[i].keywordsB;
+        let label = result1[i].labels;
+        
+        //console.log(key[0])
+        //key1 = key[0]
+        let senA = result1[i].senA
+        //console.log(senA)
+        let senB = result1[i].senB
+        let paragraph1 = document.getElementById('report1');
+        let paragraph2 = document.getElementById('report2');
+        let broken1 = paragraph1.innerHTML.split(senA);
+        let broken2 = paragraph2.innerHTML.split(senB);
+        //let brokensenb = senB.split(" ")
+        //console.log(brokensenb)
+        paragraph1.innerHTML = '';
+        paragraph2.innerHTML = '';
+        // mark
+        broken1.map((part, i) => {
+            paragraph1.innerHTML += i + 1 >= broken1.length ? part : part + 
+            ' <span class="senA" tabindex="0" onclick=click_a(this)>' + senA + '</span>';
+        });
+        broken2.map((part, i) => {
+            paragraph2.innerHTML += i + 1 >= broken2.length ? part : part + 
+            '<span class="senB"  tabindex="0" onclick=click_b(this) onmouseover=onmouse(this) onmouseout=outmouse(this)>' + senB + '</span>';
+            //onmouseover=onmouse(this) onmouseout=outmouse(this)
+        });
+
+        
+    }*/
+
+
+
+    // jump to corresponding sena id
+    /* give senB id 
+    var senb = document.getElementsByClassName("senB");
+    var sena = document.getElementsByClassName("senA");
+    var senb_item = [];
+    var sena_item = [];
+    var sendic_a2b = {};
+    var sendic_b2a = {};
+    for (var n= 0; n < result1.length; n++) {
+        senb[n].id = "senb_" + n;
+        sena[n].id = "sena_" + n;
+        
+        
+        
+        senbword = document.getElementById(senb[n].id)
+        let senbcontent = senbword.innerHTML
+        let brokensenb = senbcontent.split(" ");
+        senbword.innerHTML = ''
+        brokensenb.map((part,i) => {
+            //senbwords += '<span class=senbwords>' + part + '</span>' + ' '
+            //console.log(i)
+            //console.log(brokensenb)
+            //console.log(part,i)
+            //console.log(brokensenb.length)
+            senbword.innerHTML += i+1==brokensenb.length ? '<span class=senbwords>' + part + '</span>' : '<span class=senbwords>' + part + '</span>' + '<span class=senbwords>' + ' ' + '</span>' 
+        })
+        
+        for(var m=0;m<(brokensenb.length*2-1);m++){
+            let senbword1 = document.querySelectorAll('#'+senb[n].id+ ' .senbwords')
+            //console.log(senbword1[m])
+            senbword1[m].id = senb[n].id+"_"+m
         }
-        function easeInOutQuad(t){ return t<.5 ? 2*t*t : -1+(4-2*t)*t };
 
-        /* ---------------------------*/
-        /* words color change in senB */
+        senb_item.push(senb[n].id)
+        sena_item.push(sena[n].id)
+        //adjust
+        sendic_b2a[senb[n].id] = sena[n].id;
+        sendic_a2b[sena[n].id] = senb[n].id;
         
-        
-        
-        //get the score
-        //console.log(result1.labels)
-        //console.log(senbcontent)
-        
-        //the order should be true or it will cause problem
-        //changecolor(ele.id)
-
-    }
+        //console.log(senb[n].id)
+    }*/
+    //console.log(document.getElementById('senb_0_0'))
+    
+   
     function changecolor(eleid){
             let score = {}
             for (var i=0; i < result1.length;i++){
