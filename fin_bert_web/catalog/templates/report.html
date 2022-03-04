@@ -246,24 +246,29 @@
     <!--timeline-->
     
     <script>
-        var s = document.getElementsByClassName("left_itembutton")
-        for(let i=0;i<s.length;i++){
-            s[i].id = "left_itembutton_" + i
-            s[i].setAttribute("onclick","click_item(this)")
-        }
+        $(document).ready(function(){
+            var s = document.querySelectorAll(".left_itembutton")
+            
+            for(var i=0;i<20;i++){
+                s[i].id = "left_itembutton_" + i
+                s[i].setAttribute("onclick","click_item(this)")
+            }
+        })
+        
         function click_item(ele){
-            let item = localStorage.getItem("itemnow")
+            let item = localStorage.getItem("itemnow")   
             curritemid = "reportrow_" + item
-            curr = document.getElementById(curritemid)
-            curr.style.display = "none"
+            curritem = document.getElementById(curritemid)
+            curritem.style.display = "none"
             
             localStorage.setItem("itemnow",$("#"+ele.id).val())
-            
-            
+                        
             let item1 = localStorage.getItem("itemnow")
             curritemid = "reportrow_" + item1
-            curr = document.getElementById(curritemid)
-            curr.style.display = "flex"
+            curritem = document.getElementById(curritemid)
+            curritem.style.display = "flex"
+            
+                       
         }
         
         
@@ -838,7 +843,7 @@
         //console.log(givevalue(givevalue(test1,curryear),item))
         
         //all of item in two years
-        for (var i=0; i < 3;i++){
+        for (var i=0; i < 20;i++){
             let data1 = givevalue(givevalue(test1,lastyear),vm2.$data.list[i])
             let data2 = givevalue(givevalue(test1,curryear),vm2.$data.list[i])
             create_reportrow(vm2.$data.list[i])
@@ -852,10 +857,10 @@
         result = result.replace(/'/g,"\"");
         const result1 = JSON.parse(result)
         //console.log(givevalue(givevalue(result1,curryear),item))
-        //console.log(result1.length)
+        console.log(result1)
         
         //for every item
-        for (var ii=0; ii < 3;ii++){
+        for (var ii=0; ii < 10;ii++){
             result = givevalue(givevalue(result1,curryear),vm2.$data.list[ii])
             let id1 = "report1_" + vm2.$data.list[ii]
             let id2 = "report2_" + vm2.$data.list[ii]
@@ -988,6 +993,7 @@
                 $(name).css("fontSize","18")
                 $(name).css("box-shadow","0 0 0 0 rgba(0,0,0,0)")
             })
+            
             /*
             const mouseTarget = document.getElementsByClassName(name)
             mouseTarget.addEventListener('mouseenter', e => {
