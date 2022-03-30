@@ -20,9 +20,9 @@ def teammate():
     {
     "Item1":
     [
-        {"senA":"We are an emerging global regenerative medicine company focused on the development and commercialization of non-invasive, biological response activating devices for the repair and regeneration of tissue, musculoskeletal and vascular structures.","senB":"We are an emerging global regenerative medicine company focused on the development and commercialization of noninvasive, biological response activating devices for the repair and regeneration of tissue, musculoskeletal and vascular structures.","keywordsA":[],"keywordsB":["structures"],"labels":[0,0,0,1]},
+        {"senA":"Item 1 . We are an emerging global regenerative medicine company focused on the development and commercialization of non-invasive, biological response activating devices for the repair and regeneration of tissue, musculoskeletal and vascular structures.","senB":"Item 1 . We are an emerging global regenerative medicine company focused on the development and commercialization of noninvasive, biological response activating devices for the repair and regeneration of tissue, musculoskeletal and vascular structures.","keywordsA":[],"keywordsB":["structures"],"labels":[0,0,0,1]},
         {"senA":"The Company was incorporated on May 6, 2004.","senB":"The patients in the study were followed for a total of 24 weeks.","keywordsA":[],"keywordsB":["patients","weeks"],"labels":[0,0,0,1,0,0.67,0.5,0,1,0,0,0,0]},
-        {"senA":"We believe our relationship with our employees is good.","senB":"We believe our relationship with our employees is good.","labels":[0,0,0,0.5,0.3,0.4,0.8,0.9,0.1]}
+        {"senA":"Of these 28 full-time employees, 12 were engaged in research and development, including clinical, regulatory and quality. None of our employees are represented by a labor union or covered by a collective bargaining agreement. We believe our relationship with our employees is good.","senB":"We believe our relationship with our employees is good.","labels":[0,0,0,0.5,0.3,0.4,0.8,0.9,0.1]}
     ],
     "Item1A":
     [
@@ -37,19 +37,19 @@ def teammate():
     return sen
 # create test article
 
-
-
+module_dir = os.path.dirname(__file__)
+file_path = os.path.join(module_dir,"dataset","rand-10-collections.txt")
+data = open(file_path,'r')
+textdic = {}
+for line in data.readlines():
+    line1 = line.split("\t")
+    textdic[line1[0]] = line1[1]
     
     
-def filecontent(module_dir,company,year,item):
+def filecontent(textdic,company,year,item):
     
     #file name should change
-    file_path = os.path.join(module_dir,"dataset","rand-10-collections.txt")
-    data = open(file_path,'r')
-    textdic = {}
-    for line in data.readlines():
-        line1 = line.split("\t")
-        textdic[line1[0]] = line1[1]
+    
     #textdic = {id:sentence}
     #articleid = selected year and company's id
     #article = sentence combination correspond to articleid
@@ -111,8 +111,8 @@ def report(request):
         year2 = int(request.POST.get("year"))
         year1 = year2-1
         item = request.POST.get("item")
-        article1 = filecontent(module_dir,company,year1,item)
-        article2 = filecontent(module_dir,company,year2,item)
+        #article1 = filecontent(module_dir,company,year1,item)
+        #article2 = filecontent(module_dir,company,year2,item)
         #2011~2018
         #arti = {}
         #for year in range(2011,2012):
@@ -121,7 +121,7 @@ def report(request):
         for year in range(2011,2013):
             testarti[str(year)] = {}
             for item in itemlist:
-                testarti[str(year)][item] = filecontent(module_dir, company, year, item)
+                testarti[str(year)][item] = filecontent(textdic, company, year, item)
 
         #filename = company + '.txt'
         #file_path1 = os.path.join(module_dir,"dataset",str(year1),filename)   #full path to text.
@@ -139,7 +139,7 @@ def report(request):
         #labels = result['labels']
         #'senA':senA, 'senB':senB, 'keywordsB':keywordsB,'labels':labels
         #'arti':arti
-        context = {'data1': article1, 'data2':article2, 'result':result, 'testarti' :testarti}
+        context = {'result':result, 'testarti' :testarti}
         return render(request, 'report.html',context)
     
     return render(request, 'report.html')
