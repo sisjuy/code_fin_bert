@@ -38,7 +38,7 @@ def teammate():
 # create test article
 
 module_dir = os.path.dirname(__file__)
-file_path = os.path.join(module_dir,"dataset","rand-10-collections.txt")
+file_path = os.path.join(module_dir,"dataset","rand100_collections.txt")
 data = open(file_path,'r')
 textdic = {}
 for line in data.readlines():
