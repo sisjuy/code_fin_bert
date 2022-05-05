@@ -572,7 +572,12 @@
         let rightreportid = '#rightreport_' + item
         var leftreport = document.querySelector(leftreportid);
         var rightreport = document.querySelector(rightreportid)
-        //console.log(leftreport)
+        
+        //click change sentence's color
+       
+
+
+
         senb = document.getElementById(sendic_a2b[item][ele.id])
         sena = document.getElementById(ele.id); // <-- Scroll to here within ".box"
         scrollToElm(leftreport,sena,600); 
@@ -651,28 +656,31 @@
             
             
         var lastclick = localStorage.getItem("lastclick")
-        console.log(lastclick,eleid)
+        
+        //console.log(lastclick,eleid)
         if (lastclick == 0){
-            localStorage.setItem("lastclick",eleid)
-            senb = document.getElementById(eleid)
-            sena = document.getElementById(sendic_b2a[item][eleid]);
+            localStorage.setItem("lastclick",ele.id)
+            senb = document.getElementById(ele.id)
+            sena = document.getElementById(sendic_b2a[item][ele.id]);
             senb.style.backgroundColor = "#ed4264"
             senb.style.padding = "0.25em 0"
             sena.style.backgroundColor = "#ed4264"
             sena.style.padding = "0.25em 0"
-        }else if(lastclick != eleid){
-            localStorage.setItem("lastclick",eleid)
-            //lastclick cancel color
+        }else if(lastclick != ele.id){
             
+            //lastclick cancel color
+            var lastitem = lastclick.split('_')[1];
+            //console.log(lastitem)
             lastsenb = document.getElementById(lastclick)
-            lastsena = document.getElementById(sendic_b2a[item][lastclick])
+            lastsena = document.getElementById(sendic_b2a[lastitem][lastclick])
+            localStorage.setItem("lastclick",ele.id)
             lastsenb.style.backgroundColor = "#FFFF66"
             lastsenb.style.padding = "0.25em 0"
             lastsena.style.backgroundColor = "#FFFF66"
             lastsena.style.padding = "0.25em 0"
             //eleid change color
-            senb = document.getElementById(eleid)
-            sena = document.getElementById(sendic_b2a[item][eleid]);
+            senb = document.getElementById(ele.id)
+            sena = document.getElementById(sendic_b2a[item][ele.id]);
             senb.style.backgroundColor = "#ed4264"
             senb.style.padding = "0.25em 0"
             sena.style.backgroundColor = "#ed4264"
