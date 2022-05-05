@@ -463,7 +463,7 @@
     var sendic_a2b = {};
     var sendic_b2a = {};
     var score = {}
-    
+    localStorage.setItem("lastclick",0)
     function writereport(data1,data2,item){
         let report1 = data1
         let report2 = data2
@@ -637,27 +637,62 @@
 
     }
     function click_b(ele){
-            /* --------------------------------------------*/
-            /* jump to corresponding senA if clicking senB */
-            //console.log(ele)
-            var item = localStorage.getItem("itemnow").toString()
-            let leftreportid = '#leftreport_' + item
-            let rightreportid = '#rightreport_' + item
-            var leftreport = document.querySelector(leftreportid);
-            var rightreport = document.querySelector(rightreportid)
-            //console.log(leftreport)
+
+        /* --------------------------------------------*/
+        /* jump to corresponding senA if clicking senB */
+        //console.log(ele)
+        var item = localStorage.getItem("itemnow").toString()
+        let leftreportid = '#leftreport_' + item
+        let rightreportid = '#rightreport_' + item
+        var leftreport = document.querySelector(leftreportid);
+        var rightreport = document.querySelector(rightreportid)
+        //console.log(leftreport)
             
-            senb = document.getElementById(ele.id)
-            sena = document.getElementById(sendic_b2a[item][ele.id]); // <-- Scroll to here within ".box"
+            
+            
+        var lastclick = localStorage.getItem("lastclick")
+        console.log(lastclick,eleid)
+        if (lastclick == 0){
+            localStorage.setItem("lastclick",eleid)
+            senb = document.getElementById(eleid)
+            sena = document.getElementById(sendic_b2a[item][eleid]);
+            senb.style.backgroundColor = "#ed4264"
+            senb.style.padding = "0.25em 0"
+            sena.style.backgroundColor = "#ed4264"
+            sena.style.padding = "0.25em 0"
+        }else if(lastclick != eleid){
+            localStorage.setItem("lastclick",eleid)
+            //lastclick cancel color
+            
+            lastsenb = document.getElementById(lastclick)
+            lastsena = document.getElementById(sendic_b2a[item][lastclick])
+            lastsenb.style.backgroundColor = "#FFFF66"
+            lastsenb.style.padding = "0.25em 0"
+            lastsena.style.backgroundColor = "#FFFF66"
+            lastsena.style.padding = "0.25em 0"
+            //eleid change color
+            senb = document.getElementById(eleid)
+            sena = document.getElementById(sendic_b2a[item][eleid]);
+            senb.style.backgroundColor = "#ed4264"
+            senb.style.padding = "0.25em 0"
+            sena.style.backgroundColor = "#ed4264"
+            sena.style.padding = "0.25em 0"
+        }else{
+            event.preventDefault()
+        }
+            
+        senb = document.getElementById(ele.id)
+        sena = document.getElementById(sendic_b2a[item][ele.id]); // <-- Scroll to here within ".box"
+            
             //console.log(senb)
-            scrollToElm(rightreport,senb,600)
-            scrollToElm(leftreport,sena,600);   
-            if(window.pageYOffset>120){
-                window.scrollTo({
-                    top : 120,
-                    behavior : "smooth"
-                });
-            }
+        scrollToElm(rightreport,senb,600)
+        scrollToElm(leftreport,sena,600);   
+        if(window.pageYOffset>120){
+            window.scrollTo({
+                top : 120,
+                behavior : "smooth"
+            });
+        }
             
 
 
@@ -818,10 +853,14 @@
     }
     function cancelcolor(eleid){
         var item = localStorage.getItem("itemnow").toString()
+        var lastclick = localStorage.getItem("lastclick")
         let senbword1 = document.querySelectorAll('#'+eleid+ ' .senbwords_' + item)
         //console.log(senbword1.length)
         for (var i=0; i < senbword1.length;i++){
-              
+            senbword1[i].style.transitionDuration = "0.5s"
+            senbword1[i].style.background = null;
+            senbword1[i].style.backgroundColor = null;
+            /*
             if(i%2==1){
                 senbword1[i].style.transitionDuration = "0.5s"
                 senbword1[i].style.background = null;
@@ -841,9 +880,22 @@
                     senbword1[i].style.borderRadius = '0 px'
                 }
                 
-            }
+            }*/
             
             //console.log(senbword1[i])
+        }
+        let senb = document.getElementById(eleid)
+        if(lastclick == eleid){
+            //senb keep red color
+            senb.style.backgroundColor = "#ed4264"
+            senb.style.borderRadius = "25px"
+            senb.style.cursor = "pointer"
+            senb.style.padding = "0.25em 0"
+        }else{
+            senb.style.backgroundColor = "#FFFF66"
+            senb.style.borderRadius = "25px"
+            senb.style.cursor = "pointer"
+            senb.style.padding = "0.25em 0"
         }
     }
     $(document).ready(function() {
