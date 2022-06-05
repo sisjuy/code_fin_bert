@@ -16,7 +16,8 @@ itemlist = ["Item1","Item1A","Item1B","Item2",
             "Item15"]
 # create highlight sentence and score
 def teammate():
-    sen = {"2012":
+    sen = {
+    "2012":
     {
     "Item1":
     [
@@ -32,7 +33,16 @@ def teammate():
     "Item1B":
     [
         {"senA":"there is no Item1B in 2011","senB":"there is no Item1B in 2012","labels":[0,0,0,0,1,1]}
-    ]}
+    ]},
+
+    "2013":
+    {
+        "Item1":
+    [
+        {"senA":"Item 1 . We are an emerging global regenerative medicine company focused on the development and commercialization of noninvasive, biological response activating devices for the repair and regeneration of tissue, musculoskeletal and vascular structures.","senB":"Item 1 . We are a shockwave technology company using noninvasive, high-energy, acoustic shockwaves for regenerative medicine and other applications.","labels":[1,0,0,0,1]}
+    ]
+    }
+    
     }
     
     return sen
@@ -109,9 +119,12 @@ def report(request):
         module_dir = os.path.dirname(__file__)
         company = request.POST.get("company")
         print(company)
+        #print(type(company))
         year2 = int(request.POST.get("year"))
         year1 = year2-1
         item = request.POST.get("item")
+        print(year2,item)
+        
         #article1 = filecontent(module_dir,company,year1,item)
         #article2 = filecontent(module_dir,company,year2,item)
         #2011~2018
@@ -119,11 +132,11 @@ def report(request):
         #for year in range(2011,2012):
         #    arti["year"+str(year)] = filecontent(module_dir, company, year, item)
         testarti = {}
-        for year in range(2011,2013):
+        for year in range(year1,year2+1):
             testarti[str(year)] = {}
             for item in itemlist:
                 testarti[str(year)][item] = filecontent(textdic, company, year, item)
-
+        #print(testarti)
         #filename = company + '.txt'
         #file_path1 = os.path.join(module_dir,"dataset",str(year1),filename)   #full path to text.
         #file_path2 = os.path.join(module_dir,"dataset",str(year2),filename)
