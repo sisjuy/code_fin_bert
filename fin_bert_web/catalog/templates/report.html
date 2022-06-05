@@ -25,17 +25,12 @@
 <body style="background-color:#ffffff; margin:0;padding:0;">
     <link rel="stylesheet" type="text/css" href="{% static 'css/report.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/scroll.css' %}">
-    
+    <link rel="stylesheet" type="text/css" href="{% static 'css/submit.css' %}">
     <style>
         
     </style>
     
-    <nav class="navbar navbar-dark" style="background-color:#2B5BF4;">
-        <a href="/catalog/report" style="color:white; margin-left: 1vw; size:40px" class="font-weight-bold">
-            Fin Bert
-        </a>
-            
-    </nav>
+    
     <script>
         $('a').click(function(){
             localStorage.clear();
@@ -47,6 +42,11 @@
 
 
     <div class="container-fluid">
+        <div class="row">
+            <a href="/catalog" style="color:#28dd89; margin-left: 3vw;margin-top: 2vw; font-size:25px; font-weight: bold;" class="font-weight-bold">
+                Fin Bert    
+            </a>
+        </div>
         <!--selectrow-->
         <div class="row">
             <div>
@@ -133,56 +133,40 @@
             
         </div>
         <!--info row end-->
-        <form id="leftform" method="POST" action="{% url 'report' %}" onsubmit="leftsubmit()">
+        <form id="leftform" method="POST" action="{% url 'report' %}" enctype="multipart/form-data" role="form">
             {%csrf_token %}
             <input type="hidden" id="left_year" name="year" value=''/>
             <input type="hidden" id="left_company" name="company" value=''/>
             <input type="hidden" id="left_item" name="item" value=''/>
-            <input type="submit" id="year_submit"  style="margin-top:1vw;" value="<" />
+
+            <a href="#" class="cta" onclick="anchor_submit_left()">
+                <span>Last year</span>
+                <svg width="13px" height="10px" viewBox="0 0 13 10">
+                  <path d="M1,5 L11,5"></path>
+                  <polyline points="8 1 12 5 8 9"></polyline>
+                </svg>
+            </a>
+            <!--
+                <input type="submit" id="year_submit"  style="margin-top:1vw;" value="<" />
+            -->
+            
         </form>
-        <form id="rightform" method="POST" action="{% url 'report' %}" onsubmit="rightsubmit()">
+        <form id="rightform" method="POST" action="{% url 'report' %}" enctype="multipart/form-data" role="form">
+            <!--onsubmit="rightsubmit()"-->
             {%csrf_token %}
             <input type="hidden" id="right_year" name="year" value=''/>
             <input type="hidden" id="right_company" name="company" value=''/>
             <input type="hidden" id="right_item" name="item" value=''/>
-            <input type="submit" id="year_submit" style="margin-top:1vw;" value=">" >
+            <a href="#" class="cta" onclick="anchor_submit_right()">
+                <span>Next year</span>
+                <svg width="13px" height="10px" viewBox="0 0 13 10">
+                  <path d="M1,5 L11,5"></path>
+                  <polyline points="8 1 12 5 8 9"></polyline>
+                </svg>
+            </a>           
+            
         </form>
-        <!--report row-->
-        <!--
-            
         
-        <div class="row" id=reportrow >
-
-            <div class="col-md" id="parent_leftreport">
-                <div class="col-md" id="leftreport" style="width: 700px;height:900px;">
-                    <div id="report1" style="margin: 3px;">
-                        
-                    </div>
-                </div>
-                <form id="leftform" method="POST" action="{% url 'report' %}" onsubmit="leftsubmit()">
-                    {%csrf_token %}
-                    <input type="hidden" id="left_year" name="year" value=''/>
-                    <input type="hidden" id="left_company" name="company" value=''/>
-                    <input type="hidden" id="left_item" name="item" value=''/>
-                    <input type="submit" id="year_submit"  style="margin-top:1vw;" value="<" />
-                </form>
-            </div>
-            <div class="col-md" id="parent_rightreport">
-                <div class="col-md" id="rightreport" style="width: 700px;height:900px; ">
-                    <div id="report2" style="margin: 3px;  ">
-                    </div>
-                </div>
-                <form id="rightform" method="POST" action="{% url 'report' %}" onsubmit="rightsubmit()">
-                    {%csrf_token %}
-                    <input type="hidden" id="right_year" name="year" value=''/>
-                    <input type="hidden" id="right_company" name="company" value=''/>
-                    <input type="hidden" id="right_item" name="item" value=''/>
-                    <input type="submit" id="year_submit" style="margin-top:1vw;" value=">" >
-                </form>
-            </div>
-            
-            -->
-
 
         </div>
         
@@ -197,66 +181,7 @@
         
     
     </div>
-    <!--fullpage closed-->
-    <!--
-    <div id="fullpage">
-
-		<div class="section" id="section" data-anchor="S2" style="background-color: #fff;"> 
-			
-			<div class="active slide" data-anchor="S">
-                <h1 id="title"></h1>
-                
-			</div>
-			
-			<div class="active slide" data-anchor="S">
-                <h1 id="title"></h1>
-                <div class="row" id=reportrow>
-                    <div class="col-md">
-                        <div class="col-md" id="leftreport" style="width: 700px;height:900px;" >
-                            <div id="report1" style="margin: 3px;">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md">
-                        <div class="col-md" id="rightreport" style="width: 700px;height:900px; ">
-                            <div id="report2" style="margin: 3px;  ">
-                                {% for line in data2%}  
-                                    {{line|linebreaksbr}}
-                                {% endfor %}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-			</div>
-            <div class="active slide" data-anchor="S">
-                <h1 id="title"></h1>
-                <div class="row" id=reportrow>
-                    <div class="col-md">
-                        <div class="col-md" id="leftreport" style="width: 700px;height:900px;" >
-                            <div id="report1" style="margin: 3px;">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md">
-                        <div class="col-md" id="rightreport" style="width: 700px;height:900px; ">
-                            <div id="report2" style="margin: 3px;  ">
-                                {% for line in data2%}  
-                                    {{line|linebreaksbr}}
-                                {% endfor %}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-			</div>
-            
-
-		</div> 
-		
-	</div>
-    -->
     
-
-    <!--timeline-->
     
     <script>
         $(document).ready(function(){
@@ -269,11 +194,24 @@
                 t[i].setAttribute("onclick","click_item(this)")
             }
         })
-        
+        function anchor_submit_left(){
+            leftsubmit()
+            document.getElementById("leftform").setAttribute('method',"post");
+            document.getElementById("leftform").submit();
+        }
+        function anchor_submit_right(){
+            rightsubmit()
+            document.getElementById("rightform").setAttribute('method',"post");
+            document.getElementById("rightform").submit();
+        }
+
         function click_item(ele){
-            let item = localStorage.getItem("itemnow")   
+            let item = localStorage.getItem("itemnow")
+            console.log(item)
             curritemid = "reportrow_" + item
+            console.log(curritemid)
             curritem = document.getElementById(curritemid)
+            console.log(curritem)
             curritem.style.display = "none"
             
             localStorage.setItem("itemnow",$("#"+ele.id).val())
@@ -303,14 +241,17 @@
                 document.getElementById("left_item").setAttribute('value',item); 
                 //localstorage has to change
                 localStorage.setItem("yearnow",year)    
-                return True;
+                //return True;
             }
+            document.getElementById("leftinfo_item").innerHTML = item
+            document.getElementById("rightinfo_item").innerHTML = item
         }
         function rightsubmit(){
             var curryear = localStorage.getItem("yearnow")
             var company = localStorage.getItem("companynow")
             var item = localStorage.getItem("itemnow")
             var year = (parseInt(curryear) + 1).toString()
+            console.log("hereeeeeee")
             if (curryear=="2018"){
                 event.preventDefault();
             }
@@ -319,9 +260,12 @@
                 document.getElementById("right_company").setAttribute('value',company); 
                 document.getElementById("right_item").setAttribute('value',item); 
                 //localstorage has to change
-                localStorage.setItem("yearnow",year)    
-                return True;
+                localStorage.setItem("yearnow",year)
+                console.log(document.getElementById("right_item"))
+                //return True;
             }
+            document.getElementById("leftinfo_item").innerHTML = item
+            document.getElementById("rightinfo_item").innerHTML = item
         }
         
         //console.log(localStorage.getItem("yearnow"))
@@ -361,6 +305,11 @@
     <script>
         $(document).ready(function(){
             //var input = document.getElementById('yearlist');
+
+
+            //previous page
+            //console.log(document.referrer)
+
             $("#yearlist").change(function(){
                 saveSettings1($(this).val());
             });
@@ -372,12 +321,15 @@
                 saveSettings3($(this).val());
             });
             function saveSettings1(val) {
+                console.log(val)
                 localStorage.setItem("yearnow",val);
             }
             function saveSettings2(val) {
+                console.log(val)
                 localStorage.setItem("companynow",val);
             }
             function saveSettings3(val) {
+                console.log(val)
                 localStorage.setItem("itemnow",val);
             }
             //console.log(parseInt(localStorage.getItem("yearnow"))+1)
@@ -514,10 +466,10 @@
         leftreport.style.alignItems = "center"
         leftreport.style.fontSize = "18px"
         leftreport.style.lineHeight = "40px"
-        leftreport.style.borderTop = "1px solid grey"
-        leftreport.style.borderLeft = "1px solid grey"
-        leftreport.style.borderBottom = "1px solid grey"
-        leftreport.style.borderRadius = "5px"
+        //leftreport.style.borderTop = "1px solid grey"
+        leftreport.style.borderLeft = "3px solid #DCDCDC"
+        //leftreport.style.borderBottom = "1px solid grey"
+        //leftreport.style.borderRadius = "5px"
         report1.id = "report1_" + item
         report1.style.margin = "3px"
 
@@ -534,10 +486,10 @@
         rightreport.style.alignItems = "center"
         rightreport.style.fontSize = "18px"
         rightreport.style.lineHeight = "40px"
-        rightreport.style.borderTop = "1px solid grey"
-        rightreport.style.borderLeft = "1px solid grey"
-        rightreport.style.borderBottom = "1px solid grey"
-        rightreport.style.borderRadius = "5px"
+        //rightreport.style.borderTop = "1px solid grey"
+        rightreport.style.borderLeft = "3px solid #DCDCDC"
+        //rightreport.style.borderBottom = "1px solid grey"
+        //rightreport.style.borderRadius = "5px"
         report2.id = "report2_" + item
         report2.style.margin = "3px"
 
@@ -763,10 +715,10 @@
         function getRelativePos(elm){
             var pPos = elm.parentNode.getBoundingClientRect(), // parent pos report1
             cPos = elm.getBoundingClientRect(); // target pos senb
-            console.log(elm.parentNode)
-            console.log(pPos)
-            console.log(cPos)
-            console.log("parent's scrollTop:",elm.parentNode.scrollTop)
+            //console.log(elm.parentNode)
+            //console.log(pPos)
+            //console.log(cPos)
+            //console.log("parent's scrollTop:",elm.parentNode.scrollTop)
             winy = window.pageYOffset;
             //console.log(winy)
             pos = {};
@@ -975,11 +927,22 @@
         testarti = testarti.replace(/'/g,"\"");
         const test1 = JSON.parse(testarti);
         
+        /*
+        var curryear = "{{ curryear }}"
+        var company = "{{ company }}"
+        var item = "{{ item }}"
+        */
+
         //get  2011 all item
+        
         var curryear = localStorage.getItem("yearnow")
         var company = localStorage.getItem("companynow")
-        var item = localStorage.getItem("itemnow").toString()
+        console.log(company,curryear)
         
+        var item = localStorage.getItem("itemnow").toString()
+    
+
+
         var lastyear = (parseInt(curryear) - 1).toString()
         //console.log(givevalue(givevalue(test1,curryear),item))
         result =  "{{ result|safe }}";
