@@ -32,7 +32,9 @@
                     <p>introduction for the system introduction for the system introduction for the system</p>
                 </div>    
                 <div class="row" style="margin-top:8vh;">
-                    <form role="form" method="POST" enctype="multipart/form-data" action="{% url 'report' %}">
+                    <!--
+                        <form role="form" method="POST" enctype="multipart/form-data" action="{% url 'report' %}">
+                        
                         {% csrf_token %}
                         <div class="row">
                             <div class="col" style="width:250px">
@@ -51,7 +53,6 @@
                                 <select  id="companylist" name="company" class="ui fluid search selection dropdown" >
                                     <option value="">Company List</option>
                                     <option :value="item" v-for="(item,index) in list">[[item]]</option>
-                                
                                 </select>
                             </div>
                             <div class="col" style="width:250px">
@@ -68,6 +69,49 @@
                         
                         
                     </form>
+                    -->
+                    
+                    <form role="form" name="myform" method="POST" enctype="multipart/form-data" action="{% url 'report' %}">
+                        {% csrf_token %}
+                        <select id="yearlist" name="year" class="ui selection dropdown" style="padding: 5px 5px;">
+                            <option value="">Report Year</option>
+                            <option value="2012">2012</option>
+                            <option value="2013">2013</option>
+                            <option value="2014">2014</option>
+                            <option value="2015">2015</option>
+                            <option value="2016">2016</option>
+                            <option value="2017">2017</option>
+                            <option value="2018">2018</option>
+                        </select>
+
+                        
+                        <select id="companylist" name="company" class="ui selection dropdown" style="padding: 5px 5px;">
+                            <option value="">Company List</option>
+                            <option :value="key" v-for="(item,key,index) in list">[[item.name]] ([[key]])</option>
+                            
+                        </select>
+                        
+                        
+                        
+                        
+                        <!--
+                            <select id="companylist" name="company" class="ui fluid search selection dropdown" style="padding: 5px 5px;">
+                            <option value="">Company List</option>
+                            <option :value="item" v-for="(item,index) in list">[[item]]</option>
+                    
+                        </select>
+                        
+                        -->
+                        
+                        
+                        
+                        <select id="itemlist" name="item" class="ui selection dropdown" style="padding: 5px 5px;">
+                            <option value="">Item</option>
+                            <option :value="item" v-for="(item,index) in list">[[item]]</option>
+                        </select>
+                        
+                        <input type="submit"  id="submit1" class="ui button"  style="margin-top:1vw;" value="Anlayse" disabled="disabled">
+                    </form>
                 </div>
             </div>
             
@@ -78,16 +122,29 @@
     
     
     <script>
-        
+        /*
         var vm = new Vue({
-                el: '#companylist',
-                delimiters: ['[[', ']]'],
-                data: {
-                    list: [
-                        "abc","Apple","Netflix","cde","1417663"
-                    ],
-                },
-            });
+            el: '#companylist',
+            delimiters: ['[[', ']]'],
+            data: {
+                list: [
+                    "abc","Apple","Netflix","cde","1417663"
+                ],
+            },
+        });
+        */
+        
+        var vm1 = new Vue({
+        el: '#companylist',
+        delimiters: ['[[', ']]'],
+        data: {
+            list: { 
+                "1417663" : {name:"company1"},
+                "1234123" : {name:"company2"}
+            }
+            ,
+        },
+        });
         var vm = new Vue({
                 el: '#itemlist',
                 delimiters: ['[[',']]'],

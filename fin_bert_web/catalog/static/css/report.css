@@ -104,13 +104,13 @@
 #leftform {
     position: absolute;
     left: 10px;
-    bottom: 450px;
+    
     z-index: 2;
 }
 #rightform {
     position: absolute;
     right: 10px;
-    bottom: 450px;
+    
     z-index: 2;
 }
 
