@@ -8,6 +8,24 @@ fin_bert_web/catalog/view.py
 senA / senB / labels(score) format:
 ```python
 
+output = {
+"year2" : {
+
+"Item1":
+[ 
+{"senA": ".....", "senB": ".....", "labels": [0,1,0.5,....]},
+{.......},
+{.......}
+],
+
+"Item1A":
+[....],
+
+}
+}
+
+
+#example
 sen = {
 
 "2012":{
@@ -21,19 +39,7 @@ sen = {
 [{"senA": "it is a bird", "senB": "it is a cat", "labels": "[0,0,0.5,0.6]"},
 {....},
 {....}]
-},
 
-"2013":{
-
-"Item1":
-[{"senA": "i am a student", "senB": "i am a teacher", "labels": "[0,0,0.5,0.6]"},
-{....},
-{....}],
-
-"Item1A":
-[{....},
-{....},
-{....}]
 }
 
 }
@@ -43,9 +49,7 @@ sen = {
 path:
 ```python
 fin_bert_web/catalog/templates/report.html
-
-#search
-"var vm1 = new Vue"
-
-#add company cik&name based on previous format
 ```
+- find code position by searching "var vm1 = new Vue"
+- add company's cik & name based on previous format
+
