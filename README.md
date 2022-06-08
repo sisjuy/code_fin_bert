@@ -1,4 +1,4 @@
-### put dataset in the folder
+### put dataset in this path
 ```python
 fin_bert_web/catalog/dataset
 ```
@@ -7,6 +7,12 @@ fin_bert_web/catalog/dataset
 rand100_collections
 ```
 
+### open web
+
+under "fin_bert_web" folder and type the line below in cmd
+```
+python manage.py runserver
+```
 
 ### teammate function
 path
@@ -63,9 +69,4 @@ fin_bert_web/catalog/templates/report.html
 - find code position by searching "var vm1 = new Vue"
 - add company's cik & name based on previous format
 
-### open web
 
-under "fin_bert_web" folder and type
-```
-python manage.py runserver
-```
