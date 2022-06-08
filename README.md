@@ -63,3 +63,9 @@ fin_bert_web/catalog/templates/report.html
 - find code position by searching "var vm1 = new Vue"
 - add company's cik & name based on previous format
 
+### open web
+
+under "fin_bert_web" folder and type
+```
+python manage.py runserver
+```
