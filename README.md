@@ -1,3 +1,13 @@
+### put dataset in the folder
+```python
+fin_bert_web/catalog/dataset
+```
+#### filename
+```
+rand100_collections
+```
+
+
 ### teammate function
 path
 
