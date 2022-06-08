@@ -40,10 +40,12 @@ sen = {
 ```
 
 ### add company list
+path:
 ```python
 fin_bert_web/catalog/templates/report.html
-```
-##### search
-```
-var vm1 = new Vue
+
+#search
+"var vm1 = new Vue"
+
+#add company cik&name based on previous format
 ```
