@@ -32,9 +32,7 @@
     
     
     <script>
-        $('a').click(function(){
-            localStorage.clear();
-        })
+        
     </script>
     
    
@@ -43,7 +41,7 @@
 
     <div class="container-fluid">
         <div class="row">
-            <a href="/catalog/report" style="color:#28dd89; margin-left: 3vw;margin-top: 2vw; font-size:25px; font-weight: bold;" class="font-weight-bold">
+            <a href="/catalog" id="topword" style="color:#28dd89; margin-left: 3vw;margin-top: 2vw; font-size:25px; font-weight: bold;" class="font-weight-bold">
                 Fin Bert    
             </a>
         </div>
@@ -142,6 +140,7 @@
 
 
     </div>
+    <!--last & next year buttom-->
     <div class="row">
         <form id="leftform" method="POST" action="{% url 'report' %}" enctype="multipart/form-data" role="form">
             {%csrf_token %}
@@ -178,11 +177,17 @@
             
         </form> 
     </div>
-
+    <!--last & next year buttom end-->
     
     
     <script>
         $(document).ready(function(){
+            $('#topword').click(function(){
+                localStorage.clear();
+                
+            })
+
+
             var s = document.querySelectorAll(".left_itembutton")
             var t = document.querySelectorAll(".right_itembutton")
             for(var i=0;i<20;i++){
@@ -193,14 +198,58 @@
             }
         })
         function anchor_submit_left(){
-            leftsubmit()
-            document.getElementById("leftform").setAttribute('method',"post");
-            document.getElementById("leftform").submit();
+            //leftsubmit()
+            var curryear = localStorage.getItem("yearnow")
+            var company = localStorage.getItem("companynow")
+            var item = localStorage.getItem("itemnow")
+            var year = (parseInt(curryear) - 1).toString()
+            if (curryear=="2012"|curryear==null){
+                //alert("AFDSFASDF")
+                event.preventDefault();
+            }
+            else{
+                document.getElementById("left_year").setAttribute('value',year); 
+                document.getElementById("left_company").setAttribute('value',company); 
+                document.getElementById("left_item").setAttribute('value',item); 
+                //localstorage has to change
+                localStorage.setItem("yearnow",year)    
+                document.getElementById("leftinfo_item").innerHTML = item
+                document.getElementById("rightinfo_item").innerHTML = item
+                //submit
+                document.getElementById("leftform").setAttribute('method',"post");
+                document.getElementById("leftform").submit();
+            }
+            
+
         }
         function anchor_submit_right(){
-            rightsubmit()
-            document.getElementById("rightform").setAttribute('method',"post");
-            document.getElementById("rightform").submit();
+            //rightsubmit()
+            var curryear = localStorage.getItem("yearnow")
+            var company = localStorage.getItem("companynow")
+            var item = localStorage.getItem("itemnow")
+            var year = (parseInt(curryear) + 1).toString()
+            //console.log("hereeeeeee")
+            if (curryear=="2018" | curryear==null){
+                event.preventDefault();
+            }
+            else{
+                document.getElementById("right_year").setAttribute('value',year); 
+                document.getElementById("right_company").setAttribute('value',company); 
+                document.getElementById("right_item").setAttribute('value',item); 
+                //localstorage has to change
+                localStorage.setItem("yearnow",year)
+                document.getElementById("leftinfo_item").innerHTML = item
+                document.getElementById("rightinfo_item").innerHTML = item
+                //submit
+                document.getElementById("rightform").setAttribute('method',"post");
+                document.getElementById("rightform").submit();
+        
+                //console.log(document.getElementById("right_item"))
+                //return True;
+            }
+            
+            
+            
         }
 
         function click_item(ele){
@@ -230,7 +279,9 @@
             var company = localStorage.getItem("companynow")
             var item = localStorage.getItem("itemnow")
             var year = (parseInt(curryear) - 1).toString()
-            if (curryear=="2012"){
+            //alert(curryear)
+            if (curryear=="2012"|curryear==null){
+                alert("AFDSFASDF")
                 event.preventDefault();
             }
             else{
@@ -239,10 +290,11 @@
                 document.getElementById("left_item").setAttribute('value',item); 
                 //localstorage has to change
                 localStorage.setItem("yearnow",year)    
-                //return True;
+                return True;
             }
             document.getElementById("leftinfo_item").innerHTML = item
             document.getElementById("rightinfo_item").innerHTML = item
+            
         }
         function rightsubmit(){
             var curryear = localStorage.getItem("yearnow")
@@ -250,7 +302,7 @@
             var item = localStorage.getItem("itemnow")
             var year = (parseInt(curryear) + 1).toString()
             console.log("hereeeeeee")
-            if (curryear=="2018"){
+            if (curryear=="2018" | curryear==null){
                 event.preventDefault();
             }
             else{
@@ -1131,200 +1183,7 @@
 
 
 
-<!--js highlight sentence-->
-<script type="text/javascript">
-    //one item
-    /*
-    for (var i=0; i < result1.length;i++){
-        let key = result1[i].keywordsB;
-        let label = result1[i].labels;
-        
-        //console.log(key[0])
-        //key1 = key[0]
-        let senA = result1[i].senA
-        //console.log(senA)
-        let senB = result1[i].senB
-        let paragraph1 = document.getElementById('report1');
-        let paragraph2 = document.getElementById('report2');
-        let broken1 = paragraph1.innerHTML.split(senA);
-        let broken2 = paragraph2.innerHTML.split(senB);
-        //let brokensenb = senB.split(" ")
-        //console.log(brokensenb)
-        paragraph1.innerHTML = '';
-        paragraph2.innerHTML = '';
-        // mark
-        broken1.map((part, i) => {
-            paragraph1.innerHTML += i + 1 >= broken1.length ? part : part + 
-            ' <span class="senA" tabindex="0" onclick=click_a(this)>' + senA + '</span>';
-        });
-        broken2.map((part, i) => {
-            paragraph2.innerHTML += i + 1 >= broken2.length ? part : part + 
-            '<span class="senB"  tabindex="0" onclick=click_b(this) onmouseover=onmouse(this) onmouseout=outmouse(this)>' + senB + '</span>';
-            //onmouseover=onmouse(this) onmouseout=outmouse(this)
-        });
 
-        
-    }*/
-
-
-
-    // jump to corresponding sena id
-    /* give senB id 
-    var senb = document.getElementsByClassName("senB");
-    var sena = document.getElementsByClassName("senA");
-    var senb_item = [];
-    var sena_item = [];
-    var sendic_a2b = {};
-    var sendic_b2a = {};
-    for (var n= 0; n < result1.length; n++) {
-        senb[n].id = "senb_" + n;
-        sena[n].id = "sena_" + n;
-        
-        
-        
-        senbword = document.getElementById(senb[n].id)
-        let senbcontent = senbword.innerHTML
-        let brokensenb = senbcontent.split(" ");
-        senbword.innerHTML = ''
-        brokensenb.map((part,i) => {
-            //senbwords += '<span class=senbwords>' + part + '</span>' + ' '
-            //console.log(i)
-            //console.log(brokensenb)
-            //console.log(part,i)
-            //console.log(brokensenb.length)
-            senbword.innerHTML += i+1==brokensenb.length ? '<span class=senbwords>' + part + '</span>' : '<span class=senbwords>' + part + '</span>' + '<span class=senbwords>' + ' ' + '</span>' 
-        })
-        
-        for(var m=0;m<(brokensenb.length*2-1);m++){
-            let senbword1 = document.querySelectorAll('#'+senb[n].id+ ' .senbwords')
-            //console.log(senbword1[m])
-            senbword1[m].id = senb[n].id+"_"+m
-        }
-
-        senb_item.push(senb[n].id)
-        sena_item.push(sena[n].id)
-        //adjust
-        sendic_b2a[senb[n].id] = sena[n].id;
-        sendic_a2b[sena[n].id] = senb[n].id;
-        
-        //console.log(senb[n].id)
-    }*/
-    //console.log(document.getElementById('senb_0_0'))
-    
-   /*
-    function changecolor(eleid){
-            let score = {}
-            for (var i=0; i < result1.length;i++){
-                //let key = result1[i].keywordsB;
-                let label = result1[i].labels;
-                id = "senb_" + i
-                score[id] = label
-            }
-            //console.log(score2color(0.4))
-            //console.log(Object.keys(score[ele.id]).length)
-            //get score2color
-            let color = []
-            //console.log(score[eleid])
-            for(var j=0; j<Object.keys(score[eleid]).length;j++){
-                c = score2color(score[eleid][j])
-                color.push(c)
-            }
-            //console.log(color[1])
-            
-            
-            
-            //console.log('.'+ele.id +' .senbwords')
-            let senbword1 = document.querySelectorAll('#'+eleid+ ' .senbwords')
-            //float up? 
-            //senbword1.style.transform = "rotate(7deg)"
-
-
-            //console.log(senbword1)
-            for (var i=0; i < color.length;i++){
-                //background: linear-gradient(90deg, #FFC0CB 50%, #00FFFF 50%)
-                // senbword1 : 0, 2, 4, 6, 8 -> n
-                // space : 1,3,5,7,9 -> n
-                // color index : 0,1,2,3,4,5 
-                // i am a student : color length=4, space length=3, 
-                let c1 = "#"+color[i];
-                let c2 = "#"+color[i+1];
-                //console.log(c1)
-                senbword1[i*2].style.transitionDuration = "0.5s"
-                senbword1[i*2].style.backgroundColor = "#"+color[i];
-                senbword1[i*2].style.padding = '0.25em 0'
-                senbword1[i*2].style.borderRadius = '0px' 
-                if(i==0){
-                    senbword1[i*2].style.borderTopLeftRadius = '25px' 
-                    senbword1[i*2].style.borderBottomLeftRadius = '25px' 
-                }
-                    
-                if(i*2+1 < 2*color.length-2){
-                    senbword1[i*2+1].style.transitionDuration = "0.5s"
-                    senbword1[i*2+1].style.background =  'linear-gradient(to right, ' + c1 + ' 50%, ' + c2 + ' 50%)';
-                    senbword1[i*2+1].style.padding = '0.25em 0'
-                    senbword1[i*2+1].style.borderRadius = '0px' 
-                }
-                if(i==(color.length-1)){
-                    senbword1[i*2].style.borderTopRightRadius = '25px' 
-                    senbword1[i*2].style.borderBottomRightRadius = '25px' 
-                }
-                    //'linear-gradient(90deg,'+c1+' 50%, '+c2+'50%)'
-                /*
-                if(i*2+1 == 2*color.length-1){
-                    senbword1[i*2+1].style.animationDuration = "0.5s"
-                    senbword1[i*2+1].style.backgroundColor = "#"+color[color.length-1]
-                    senbword1[i*2+1].style.padding = '0.25em 0'
-                    senbword1[i*2+1].style.borderTopRightRadius = '10px' 
-                    senbword1[i*2+1].style.borderBottomRightRadius = '10px' 
-                }
-                    
-                
-            }
-            //console.log(senbword1)
-            //console.log(i*2+1)
-            //console.log(senbword1.length)
-            
-        }
-    function cancelcolor(eleid){
-        let senbword1 = document.querySelectorAll('#'+eleid+ ' .senbwords')
-        //console.log(senbword1.length)
-        for (var i=0; i < senbword1.length;i++){
-              
-            if(i%2==1){
-                senbword1[i].style.transitionDuration = "0.5s"
-                senbword1[i].style.background = null;
-                senbword1[i].style.backgroundColor = "#FFFF66";
-                senbword1[i].style.borderRadius = '0 px'
-            }
-            else{
-                if(i==0 && i==senbword1.length-1){
-                    senbword1[i].style.transitionDuration = "0.5s"
-                    senbword1[i].style.backgroundColor = "#FFFF66";
-                    senbword1[i].style.borderTopLeftRadius = '25px' 
-                    senbword1[i].style.borderBottomLeftRadius = '25px' 
-                }
-                else{
-                    senbword1[i].style.transitionDuration = "0.5s"
-                    senbword1[i].style.backgroundColor = "#FFFF66";
-                    senbword1[i].style.borderRadius = '0 px'
-                }
-                
-            }
-            
-            //console.log(senbword1[i])
-        }
-    }
-    function onmouse(ele){
-        eleid = ele.id
-        changecolor(eleid)
-    }
-    function outmouse(ele){
-        eleid = ele.id
-        cancelcolor(eleid)
-    }
-    */
-    
-</script>
 
 <!--js highlight words based on scores-->
 <script>
