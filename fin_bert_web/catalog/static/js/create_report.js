@@ -29,22 +29,22 @@ function create_reportrow(item){
     reportrow.className = "row"
     reportrow.id = "reportrow_" + item
     reportrow.style.position = "relative"
-    reportrow.style.top = "50px"
-    reportrow.style.height = "900px"
-    reportrow.style.marginTop = "100px"
+    //reportrow.style.top = "50px"
+    //reportrow.style.height = "900px"
+    //reportrow.style.marginTop = "100px"
     reportrow.style.display = "none";
 
 
     parent_leftreport.className = "col-md"
     parent_leftreport.id = "parent_leftreport"
-    parent_leftreport.style.width = "700px"
+    parent_leftreport.style.width = "750px"
     leftreport.className = "col-md"
     leftreport.id = "leftreport_" + item
-    leftreport.style.width = "700px"
+    leftreport.style.width = "750px"
     leftreport.style.height = "900px"
     leftreport.style.position = "relative"
     leftreport.style.left = "15px"
-    leftreport.style.marginBottom = "100px"
+    //leftreport.style.marginBottom = "100px"
     leftreport.style.overflowY = "auto"
     leftreport.style.alignItems = "center"
     leftreport.style.fontSize = "18px"
@@ -58,14 +58,14 @@ function create_reportrow(item){
 
     parent_rightreport.className = "col-md"
     parent_rightreport.id = "parent_rightreport"
-    parent_rightreport.style.width = "700px"
+    parent_rightreport.style.width = "750px"
     rightreport.className = "col-md"
     rightreport.id = "rightreport_" + item
-    rightreport.style.width = "700px"
+    rightreport.style.width = "750px"
     rightreport.style.height = "900px"
     rightreport.style.position = "relative"
     rightreport.style.left = "15px"
-    rightreport.style.marginBottom = "100px"
+    //rightreport.style.marginBottom = "100px"
     rightreport.style.overflowY = "auto"
     rightreport.style.alignItems = "center"
     rightreport.style.fontSize = "18px"
@@ -93,7 +93,7 @@ function create_reportrow(item){
     reportrow.appendChild(frag1)
     
     reportrow.appendChild(frag2)
-    $('.container-fluid').append(
+    $('#report_outline').append(
         reportrow
     );
 

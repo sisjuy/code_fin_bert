@@ -27,6 +27,12 @@
     left:50px;
 }
 
+#report_outline{
+    justify-content: center;
+    align-items: center;
+    margin-top:100px;
+}
+
 #reportrow {
     
     position: relative;
@@ -108,6 +114,11 @@
 #yearchange_botton {
     position: relative;
     top: 50px;
+}
+
+#year_button{
+    position: relative;
+    margin-top: 50px;
 }
 
 #leftform {
