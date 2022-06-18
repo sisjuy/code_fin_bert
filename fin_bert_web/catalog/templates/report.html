@@ -77,7 +77,7 @@
                                 <option :value="item" v-for="(item,index) in list">[[item]]</option>
                             </select>
                             
-                            <input type="submit"  id="submit1" class="ui button"  value="Anlayse" disabled="disabled"></button>
+                            <input type="submit"  id="submit1" class="ui button"  value="Anlayse"  ></button>
                         
                         
                     </form>
@@ -262,11 +262,11 @@
 
         function click_item(ele){
             let item = localStorage.getItem("itemnow")
-            console.log(item)
+            //console.log(item)
             curritemid = "reportrow_" + item
-            console.log(curritemid)
+            //console.log(curritemid)
             curritem = document.getElementById(curritemid)
-            console.log(curritem)
+            //console.log(curritem)
             curritem.style.display = "none"
             
             localStorage.setItem("itemnow",$("#"+ele.id).val())
@@ -319,7 +319,7 @@
                 document.getElementById("right_item").setAttribute('value',item); 
                 //localstorage has to change
                 localStorage.setItem("yearnow",year)
-                console.log(document.getElementById("right_item"))
+                //console.log(document.getElementById("right_item"))
                 //return True;
             }
             document.getElementById("leftinfo_item").innerHTML = item
@@ -404,15 +404,15 @@
                 saveSettings3($(this).val());
             });
             function saveSettings1(val) {
-                console.log(val)
+                //console.log(val)
                 localStorage.setItem("yearnow",val);
             }
             function saveSettings2(val) {
-                console.log(val)
+                //console.log(val)
                 localStorage.setItem("companynow",val);
             }
             function saveSettings3(val) {
-                console.log(val)
+                //console.log(val)
                 localStorage.setItem("itemnow",val);
             }
             //console.log(parseInt(localStorage.getItem("yearnow"))+1)
@@ -654,17 +654,29 @@
 
 <!--disable sumbit if select is empty-->
 <script>
+    
     $(document).ready(function(){
-        
+        $('#submit1').attr('disabled','disabled');
+        /*
+        $("#submit1").click(function(){
+            
+        })*/
         var count = 0;
         $('.ui.dropdown').change(function() {
-            count++;
-            if (count >= 3) {
-                $('#submit1').removeAttr('disabled');
+            let a = $("#yearlist").val();
+            let b = $("#companylist").val();
+            let c = $("#itemlist").val();
+            //count++;
+            //console.log(a,b=="",c)
+            if (a!="" && b!="" && c!="") {
+                console.log("werqwerqwerqewr")
+                $("#submit1").removeAttr("disabled")
             }
+            
         });
+        
 
-        $('#submit1').attr('disabled','disabled');
+        
     });
     window.onload = function(){
         $('.ui.dropdown').dropdown();  
