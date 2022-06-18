@@ -498,146 +498,160 @@
 
             //every item's highlight sentence
             result = givevalue(givevalue(result1,curryear),vm2.$data.list[ii])
-            //console.log(result)
-            let id1 = "report1_" + vm2.$data.list[ii]
-            let id2 = "report2_" + vm2.$data.list[ii]
-            var indexA = []
-            var indexB = []
-
-            //collect all of highlight sentence's index
-            for (var j=0; j < result.length;j++){
-                let label = result[j].labels;
-                
-                id = "senb_" + vm2.$data.list[ii] + "_" + j
-                score[id] = label
-                
-                let senA = result[j].senA
-                let senB = result[j].senB
-                //console.log(senA,senB)
-                //console.log(data1)
-                indexA.push(data1.indexOf(senA))
-                indexB.push(data2.indexOf(senB))
-                
-            }
-            //console.log(indexA,indexB)
-            let paragraph1 = document.getElementById(id1);
-            let paragraph2 = document.getElementById(id2);
-            //console.log(paragraph1)
-            data1.map((part,i) => {
-                if (indexA.includes(i)){
-                    var sena = document.createElement("span");
+            console.log(result==null)
+            //if result==null : create report only
+            if(result==null){
+                let id1 = "report1_" + vm2.$data.list[ii]
+                let id2 = "report2_" + vm2.$data.list[ii]
+                var indexA = []
+                var indexB = []
+                let paragraph1 = document.getElementById(id1);
+                let paragraph2 = document.getElementById(id2);
+                //console.log(paragraph1)
+                data1.map((part,i) => {
                     
-                    sena.className = "senA_" + vm2.$data.list[ii]
-                    sena.setAttribute("onclick","click_a(this)")
-                    
-                    sena.innerHTML = part
-                    sena.style.backgroundColor = "#FFFF66"
-                    sena.style.borderRadius = "25px"
-                    sena.style.cursor = "pointer"
-                    sena.style.padding = "0.25em 0"
-                    paragraph1.innerHTML += sena.outerHTML
-                }else{
                     paragraph1.innerHTML += part == "\n" ? '<br>' : part + ' '
-                }
-            })
-            data2.map((part,i) => {
-	
-                if (indexB.includes(i)){
-                    var senb = document.createElement("span");
-                    senb.className = "senB_" + vm2.$data.list[ii]
-                    senb.setAttribute("onclick","click_b(this)")
-                    senb.setAttribute("onmouseover","onmouse(this)")
-                    senb.setAttribute("onmouseout","outmouse(this)")
                 
-                    senb.innerHTML = part
-                    senb.style.backgroundColor = "#FFFF66"
-                    senb.style.borderRadius = "25px"
-                    senb.style.cursor = "pointer"
-                    senb.style.padding = "0.25em 0"
-                    paragraph2.innerHTML += senb.outerHTML
-                }else{
+                })
+                data2.map((part,i) => {
+
                     paragraph2.innerHTML += part == "\n" ? '<br>' : part + ' '
-                }	
-            
-            })
-            
-            
-            
-            senaid = "senA_" + vm2.$data.list[ii]
-            senbid = "senB_" + vm2.$data.list[ii]
-            var senb = document.getElementsByClassName(senbid);
-            var sena = document.getElementsByClassName(senaid);
-            //console.log(sena[1])
-            
-            
-            senb_item[vm2.$data.list[ii]] = []
-            sena_item[vm2.$data.list[ii]] = []
-            
-            sendic_b2a[vm2.$data.list[ii]] = {}
-            sendic_a2b[vm2.$data.list[ii]] = {}
-            //highlight words in sen
-            for (var n= 0; n < result.length; n++) {
-                senb[n].id = "senb_" + vm2.$data.list[ii] + "_" + n;
-                sena[n].id = "sena_" + vm2.$data.list[ii] + "_" + n;
                 
                 
+                })
+            }else{
+                let id1 = "report1_" + vm2.$data.list[ii]
+                let id2 = "report2_" + vm2.$data.list[ii]
+                var indexA = []
+                var indexB = []
+
+                //collect all of highlight sentence's index
+                for (var j=0; j < result.length;j++){
+                    let label = result[j].labels;
+                    
+                    id = "senb_" + vm2.$data.list[ii] + "_" + j
+                    score[id] = label
+                    
+                    let senA = result[j].senA
+                    let senB = result[j].senB
+                    //console.log(senA,senB)
+                    //console.log(data1)
+                    indexA.push(data1.indexOf(senA))
+                    indexB.push(data2.indexOf(senB))
+                    
+                }
+                //console.log(indexA,indexB)
+                let paragraph1 = document.getElementById(id1);
+                let paragraph2 = document.getElementById(id2);
+                //console.log(paragraph1)
+                data1.map((part,i) => {
+                    if (indexA.includes(i)){
+                        var sena = document.createElement("span");
+                        
+                        sena.className = "senA_" + vm2.$data.list[ii]
+                        sena.setAttribute("onclick","click_a(this)")
+                        
+                        sena.innerHTML = part
+                        sena.style.backgroundColor = "#FFFF66"
+                        sena.style.borderRadius = "25px"
+                        sena.style.cursor = "pointer"
+                        sena.style.padding = "0.25em 0"
+                        paragraph1.innerHTML += sena.outerHTML
+                    }else{
+                        paragraph1.innerHTML += part == "\n" ? '<br>' : part + ' '
+                    }
+                })
+                data2.map((part,i) => {
+
+                    if (indexB.includes(i)){
+                        var senb = document.createElement("span");
+                        senb.className = "senB_" + vm2.$data.list[ii]
+                        senb.setAttribute("onclick","click_b(this)")
+                        senb.setAttribute("onmouseover","onmouse(this)")
+                        senb.setAttribute("onmouseout","outmouse(this)")
+                    
+                        senb.innerHTML = part
+                        senb.style.backgroundColor = "#FFFF66"
+                        senb.style.borderRadius = "25px"
+                        senb.style.cursor = "pointer"
+                        senb.style.padding = "0.25em 0"
+                        paragraph2.innerHTML += senb.outerHTML
+                    }else{
+                        paragraph2.innerHTML += part == "\n" ? '<br>' : part + ' '
+                    }	
                 
-                senbword = document.getElementById(senb[n].id)
-                let senbcontent = senbword.innerHTML
-                let brokensenb = senbcontent.split(" ");
-                
-                senbword.innerHTML = ''
-                brokensenb.map((part,i) => {
-                    var word = document.createElement("span");
-                    var space = document.createElement("span");
-                    word.className = "senbwords_" + vm2.$data.list[ii]
-                    word.innerHTML = part
-                    space.className = "senbwords_" + vm2.$data.list[ii]
-                    space.innerHTML = ' '
-                    //console.log(word)
-                    senbword.innerHTML += i+1==brokensenb.length ? word.outerHTML : word.outerHTML + space.outerHTML
                 })
                 
-                for(var m=0;m<(brokensenb.length*2-1);m++){
-                    let senbword1 = document.querySelectorAll('#'+senb[n].id+ ' .senbwords_' + vm2.$data.list[ii])
+                
+                
+                senaid = "senA_" + vm2.$data.list[ii]
+                senbid = "senB_" + vm2.$data.list[ii]
+                var senb = document.getElementsByClassName(senbid);
+                var sena = document.getElementsByClassName(senaid);
+                //console.log(sena[1])
+                
+                
+                senb_item[vm2.$data.list[ii]] = []
+                sena_item[vm2.$data.list[ii]] = []
+                
+                sendic_b2a[vm2.$data.list[ii]] = {}
+                sendic_a2b[vm2.$data.list[ii]] = {}
+                //highlight words in sen
+                for (var n= 0; n < result.length; n++) {
+                    senb[n].id = "senb_" + vm2.$data.list[ii] + "_" + n;
+                    sena[n].id = "sena_" + vm2.$data.list[ii] + "_" + n;
                     
-                    senbword1[m].id = senb[n].id + "_" + m
-                    //console.log(senbword1[m])
-                }
+                    
+                    
+                    senbword = document.getElementById(senb[n].id)
+                    let senbcontent = senbword.innerHTML
+                    let brokensenb = senbcontent.split(" ");
+                    
+                    senbword.innerHTML = ''
+                    brokensenb.map((part,i) => {
+                        var word = document.createElement("span");
+                        var space = document.createElement("span");
+                        word.className = "senbwords_" + vm2.$data.list[ii]
+                        word.innerHTML = part
+                        space.className = "senbwords_" + vm2.$data.list[ii]
+                        space.innerHTML = ' '
+                        //console.log(word)
+                        senbword.innerHTML += i+1==brokensenb.length ? word.outerHTML : word.outerHTML + space.outerHTML
+                    })
+                    
+                    for(var m=0;m<(brokensenb.length*2-1);m++){
+                        let senbword1 = document.querySelectorAll('#'+senb[n].id+ ' .senbwords_' + vm2.$data.list[ii])
+                        
+                        senbword1[m].id = senb[n].id + "_" + m
+                        //console.log(senbword1[m])
+                    }
 
+                    
+                    senb_item[vm2.$data.list[ii]].push(senb[n].id)
+                    
+                    sena_item[vm2.$data.list[ii]].push(sena[n].id)
+                    
+                    //adjust
+                    
+                    sendic_b2a[vm2.$data.list[ii]][senb[n].id] = sena[n].id;
+                    sendic_a2b[vm2.$data.list[ii]][sena[n].id] = senb[n].id;
+                }
+                let name = ".senB_" + vm2.$data.list[ii]
                 
-                senb_item[vm2.$data.list[ii]].push(senb[n].id)
-                
-                sena_item[vm2.$data.list[ii]].push(sena[n].id)
-                
-                //adjust
-                
-                sendic_b2a[vm2.$data.list[ii]][senb[n].id] = sena[n].id;
-                sendic_a2b[vm2.$data.list[ii]][sena[n].id] = senb[n].id;
+                $(name).hover(function(){
+                    $(name).css("transition-duration","0.3s");
+                    $(name).css("opacity","1")
+                    $(name).css("fontSize","18.075px")
+                    $(name).css("box-shadow","0 5px 15px 0px rgba(0,0,0,0.125)")
+                },function(){
+                    
+                    $(name).css("opacity","1")
+                    $(name).css("fontSize","18")
+                    $(name).css("box-shadow","0 0 0 0 rgba(0,0,0,0)")
+                })
             }
-            let name = ".senB_" + vm2.$data.list[ii]
             
-            $(name).hover(function(){
-                $(name).css("transition-duration","0.3s");
-                $(name).css("opacity","1")
-                $(name).css("fontSize","18.075px")
-                $(name).css("box-shadow","0 5px 15px 0px rgba(0,0,0,0.125)")
-            },function(){
-               
-                $(name).css("opacity","1")
-                $(name).css("fontSize","18")
-                $(name).css("box-shadow","0 0 0 0 rgba(0,0,0,0)")
-            })
         }
-        
-        //console.log(givevalue(givevalue(result1,curryear),item))
-        //console.log(result1)
-        
-        
-        //for every item
-        
-        
- 
     });
    
 
@@ -669,7 +683,7 @@
             //count++;
             //console.log(a,b=="",c)
             if (a!="" && b!="" && c!="") {
-                console.log("werqwerqwerqewr")
+                //console.log("werqwerqwerqewr")
                 $("#submit1").removeAttr("disabled")
             }
             
