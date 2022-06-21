@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@700&display=swap');
+body {
+    background-image: url("../pic&gif/indexhtml_background.jpg");
+    
+    
+}
 #topselect {
     position: relative;
     left: 60px;
