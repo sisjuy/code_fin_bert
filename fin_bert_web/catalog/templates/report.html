@@ -32,6 +32,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/scroll.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/submit.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/submit2.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/itemlist.css' %}">
     <script src="{% static 'js/create_report.js' %}"></script>
     <script src="{% static 'js/sentence_effect.js' %}"></script>
     <script src="{% static 'js/sentence_color.js' %}"></script>
@@ -98,54 +99,84 @@
         <!--end selectrow-->
         
         <!--info row-->
-        <div class="row">
+        <div class="row" style="margin-bottom:50px"
+        >
             <div class="col-sm">
                 <div class="ui list" id="leftinfo">
                     <div class="item">
-                      <div class="header">Year</div>
+                        <div class="header" id="leftinfo_company" style="font-size:40px; margin-bottom:10px"></div>
+                    </div>
+                    
+                    <div class="item">
                       <div id="leftinfo_year"></div>
-                    </div>
-                    <div class="item">
-                      <div class="header">Company</div>
-                      <div id="leftinfo_company"></div>
-                    </div>
-                    <div class="item">
-                        <div class="header">Item</div>
-                        <div id="leftinfo_item"></div>
-                        <div class=itembutton id="itemlist1">
-                            
-                            <button class="left_itembutton" :value="item" v-for="(item,index) in list" >
-                                [[item]]
-                            </button>
-                        </div>
                     </div>
                 </div>
             </div>
             <div class="col-sm">
                 <div class="ui list" id="rightinfo">
                     <div class="item">
-                      <div class="header">Year</div>
+                        <div class="header" id="rightinfo_company" style="font-size:40px;margin-bottom:10px"></div>
+                    </div>
+                    <div class="item">
                       <div id="rightinfo_year"></div>
-                    </div>
-                    <div class="item">
-                      <div class="header">Company</div>
-                      <div id="rightinfo_company"></div>
-                    </div>
-                    <div class="item">
-                      <div class="header">Item</div>
-                      <div id="rightinfo_item"></div>
-                      <div class=itembutton id="itemlist2">
-                            
-                        <button  class="right_itembutton" :value="item" v-for="(item,index) in list" >
-                            [[item]]
-                        </button>
-                    </div>
                     </div>
                 </div>
             </div>
             
         </div>
         <!--info row end-->
+        
+        <!--itemlist row-->
+        <div class="row">
+            <div class="tabs">
+                <input class=leftbutton type="radio" id="radio-1" name="tabs" checked />
+                <label class="tab" for="radio-1">Item1</label>
+                
+                <input class=leftbutton type="radio" id="radio-2" name="tabs" />
+                <label class="tab" for="radio-2">Item1A</label>
+                <input type="radio" id="radio-3" name="tabs" />
+                <label class="tab" for="radio-3">Item1B</label>
+                <input type="radio" id="radio-4" name="tabs" />
+                <label class="tab" for="radio-4">Item2</label>
+                <input type="radio" id="radio-5" name="tabs" />
+                <label class="tab" for="radio-5">Item3</label>
+                
+                <input type="radio" id="radio-6" name="tabs" />
+                <label class="tab" for="radio-6">Item4</label>
+                
+                <input type="radio" id="radio-7" name="tabs" />
+                <label class="tab" for="radio-7">Item5</label>
+                
+                <input type="radio" id="radio-8" name="tabs" />
+                <label class="tab" for="radio-8">Item6</label>
+                
+                <input type="radio" id="radio-9" name="tabs" />
+                <label class="tab" for="radio-9">Item7</label>
+                
+                <input type="radio" id="radio-10" name="tabs" />
+                <label class="tab" for="radio-10">Item7A</label>
+                
+                <input type="radio" id="radio-11" name="tabs" />
+                <label class="tab" for="radio-11">Item8</label>
+                
+                <input type="radio" id="radio-12" name="tabs" />
+                <label class="tab" for="radio-12">Item9</label>
+                <span class="glider"></span>
+            </div>
+        </div>
+
+
+
+        <div class="header">Item</div>
+        <div id="leftinfo_item"></div>
+        <div class=itembutton id="itemlist1">
+            
+            <button class="left_itembutton" :value="item" v-for="(item,index) in list" >
+                [[item]]
+            </button>
+        </div>
+        
+
 
         <div class="row" id="report_outline">
 
@@ -187,6 +218,10 @@
         <!--last & next year buttom end-->
         
 
+        
+
+
+
     </div>
     
     
@@ -204,8 +239,8 @@
             for(var i=0;i<20;i++){
                 s[i].id = "left_itembutton_" + i
                 s[i].setAttribute("onclick","click_item(this)")
-                t[i].id = "right_itembutton_" + i
-                t[i].setAttribute("onclick","click_item(this)")
+                //t[i].id = "right_itembutton_" + i
+                //t[i].setAttribute("onclick","click_item(this)")
             }
         })
         function anchor_submit_left(){
@@ -225,7 +260,7 @@
                 //localstorage has to change
                 localStorage.setItem("yearnow",year)    
                 document.getElementById("leftinfo_item").innerHTML = item
-                document.getElementById("rightinfo_item").innerHTML = item
+                //document.getElementById("rightinfo_item").innerHTML = item
                 //submit
                 document.getElementById("leftform").setAttribute('method',"post");
                 document.getElementById("leftform").submit();
@@ -250,7 +285,7 @@
                 //localstorage has to change
                 localStorage.setItem("yearnow",year)
                 document.getElementById("leftinfo_item").innerHTML = item
-                document.getElementById("rightinfo_item").innerHTML = item
+                //document.getElementById("rightinfo_item").innerHTML = item
                 //submit
                 document.getElementById("rightform").setAttribute('method',"post");
                 document.getElementById("rightform").submit();
@@ -276,7 +311,7 @@
             
             let item1 = localStorage.getItem("itemnow")
             document.getElementById("leftinfo_item").innerHTML = item1
-            document.getElementById("rightinfo_item").innerHTML = item1
+            //document.getElementById("rightinfo_item").innerHTML = item1
             curritemid = "reportrow_" + item1
             curritem = document.getElementById(curritemid)
             curritem.style.display = "flex"
@@ -304,7 +339,7 @@
                 return True;
             }
             document.getElementById("leftinfo_item").innerHTML = item
-            document.getElementById("rightinfo_item").innerHTML = item
+            //document.getElementById("rightinfo_item").innerHTML = item
             
         }
         function rightsubmit(){
@@ -326,7 +361,7 @@
                 //return True;
             }
             document.getElementById("leftinfo_item").innerHTML = item
-            document.getElementById("rightinfo_item").innerHTML = item
+            //document.getElementById("rightinfo_item").innerHTML = item
         }
         
         //console.log(localStorage.getItem("yearnow"))
@@ -425,12 +460,12 @@
             let item = localStorage.getItem("itemnow")
             let leftyear = (parseInt(rightyear) - 1).toString()
             //console.log(document.getElementById("leftinfo_year"))
-            document.getElementById("leftinfo_year").innerHTML = leftyear
-            document.getElementById("leftinfo_company").innerHTML = vm1.$data.list[company].name + " " + "(" + company + ")"
+            document.getElementById("leftinfo_year").innerHTML = "from " + leftyear
+            document.getElementById("leftinfo_company").innerHTML = vm1.$data.list[company].name //+ " " + "(" + company + ")"
             document.getElementById("leftinfo_item").innerHTML = item
-            document.getElementById("rightinfo_year").innerHTML = rightyear
-            document.getElementById("rightinfo_company").innerHTML = vm1.$data.list[company].name + " " + "(" + company + ")"
-            document.getElementById("rightinfo_item").innerHTML = item
+            document.getElementById("rightinfo_year").innerHTML = "from " + rightyear
+            document.getElementById("rightinfo_company").innerHTML = vm1.$data.list[company].name //+ " " + "(" + company + ")"
+            //document.getElementById("rightinfo_item").innerHTML = item
         });
     </script>
     

@@ -158,3 +158,4 @@ def report(request):
     
     return render(request, 'report.html')
 
+print(textdic["1417663_11_ITEM1_P0_S0"])
