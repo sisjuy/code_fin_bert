@@ -40,7 +40,7 @@ body {
 #report_outline{
     justify-content: center;
     align-items: center;
-    margin-top:100px;
+    margin-top:50px;
 }
 
 #reportrow {
@@ -133,14 +133,14 @@ body {
 
 #leftform {
     position: absolute;
-    left: 10px;
-    
+    left: 100px;
+    top:-27px;
     z-index: 2;
 }
 #rightform {
     position: absolute;
-    right: 10px;
-    
+    right: 100px;
+    top:-27px;
     z-index: 2;
 }
 

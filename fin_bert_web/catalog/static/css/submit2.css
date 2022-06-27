@@ -30,11 +30,11 @@
 #arrow_2 .arrow span {
   font-family: Righteous;
   display: block;
-  width: 3em;
   opacity: 0;
   -webkit-transition: opacity 0.3s 0s;
   transition: opacity 0.3s 0s;
   padding: 0 0.5em;
+  font-size: 25px;
 }
 
 #arrow_2 .arrow:hover span {
@@ -50,8 +50,8 @@
   border-width: 2px 2px 0 0;
   position: absolute;
   top: 4px;
-  width: 10px;
-  height: 10px;
+  width: 15px;
+  height: 15px;
 }
 
 #arrow_2 .arrow.arrow--left:before {

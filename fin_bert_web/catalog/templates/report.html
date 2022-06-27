@@ -98,34 +98,7 @@
         </div>
         <!--end selectrow-->
         
-        <!--info row-->
-        <div class="row" style="margin-bottom:50px"
-        >
-            <div class="col-sm">
-                <div class="ui list" id="leftinfo">
-                    <div class="item">
-                        <div class="header" id="leftinfo_company" style="font-size:40px; margin-bottom:10px"></div>
-                    </div>
-                    
-                    <div class="item">
-                      <div id="leftinfo_year"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm">
-                <div class="ui list" id="rightinfo">
-                    <div class="item">
-                        <div class="header" id="rightinfo_company" style="font-size:40px;margin-bottom:10px"></div>
-                    </div>
-                    <div class="item">
-                      <div id="rightinfo_year"></div>
-                    </div>
-                </div>
-            </div>
-            
-        </div>
-        <!--info row end-->
-        
+
         <!--itemlist row-->
         <div class="row">
             <div class="tabs">
@@ -165,8 +138,6 @@
             </div>
         </div>
 
-
-
         <div class="header">Item</div>
         <div id="leftinfo_item"></div>
         <div class=itembutton id="itemlist1">
@@ -175,9 +146,36 @@
                 [[item]]
             </button>
         </div>
+
+
+        <!--info row-->
+        <div class="row" style="margin-bottom:50px"
+        >
+            <div class="col-sm">
+                <div class="ui list" id="leftinfo">
+                    <div class="item">
+                        <div class="header" id="leftinfo_company" style="font-size:40px; margin-bottom:10px"></div>
+                    </div>
+                    
+                    <div class="item">
+                      <div id="leftinfo_year"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm">
+                <div class="ui list" id="rightinfo">
+                    <div class="item">
+                        <div class="header" id="rightinfo_company" style="font-size:40px;margin-bottom:10px"></div>
+                    </div>
+                    <div class="item">
+                      <div id="rightinfo_year"></div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <!--info row end-->
         
-
-
         <div class="row" id="report_outline">
 
 
@@ -192,7 +190,7 @@
                 <input type="hidden" id="left_item" name="item" value=''/>
                 <div id="arrow_2" class="arrow-wrapper" onclick="anchor_submit_left()">
                     <div class="arrow arrow--left">
-                      <span>Prev</span>
+                      <span id="lastyear"></span>
                     </div>
                 </div>
                 <!--
@@ -208,7 +206,7 @@
                 <input type="hidden" id="right_item" name="item" value=''/>
                 <div id="arrow_2" class="arrow-wrapper" onclick="anchor_submit_right()">
                     <div class="arrow arrow--right">
-                      <span>Next</span>
+                      <span id="nextyear"></span>
                     </div>
                 </div>
                 
@@ -466,6 +464,11 @@
             document.getElementById("rightinfo_year").innerHTML = "from " + rightyear
             document.getElementById("rightinfo_company").innerHTML = vm1.$data.list[company].name //+ " " + "(" + company + ")"
             //document.getElementById("rightinfo_item").innerHTML = item
+            let lastyear = parseInt(leftyear)-1
+            let nextyear = parseInt(rightyear)+1
+            document.getElementById("lastyear").innerHTML = lastyear.toString() + " vs " + leftyear
+            document.getElementById("nextyear").innerHTML = rightyear + " vs " + nextyear.toString()
+            
         });
     </script>
     
