@@ -58,8 +58,8 @@ function click_a(ele){
 
     senb = document.getElementById(sendic_a2b[item][ele.id])
     sena = document.getElementById(ele.id); // <-- Scroll to here within ".box"
-    scrollToElm(leftreport,sena,600); 
-    scrollToElm(rightreport,senb,600)
+    scrollToElm(rightreport,sena,600); 
+    scrollToElm(leftreport,senb,600)
     
 
     function scrollToElm(container, elm, duration){
@@ -179,8 +179,8 @@ function click_b(ele){
     sena = document.getElementById(sendic_b2a[item][ele.id]); // <-- Scroll to here within ".box"
         
         //console.log(senb)
-    scrollToElm(rightreport,senb,600)
-    scrollToElm(leftreport,sena,600);   
+    scrollToElm(leftreport,senb,600)
+    scrollToElm(rightreport,sena,600);   
     /*
     if(window.pageYOffset>120){
         window.scrollTo({

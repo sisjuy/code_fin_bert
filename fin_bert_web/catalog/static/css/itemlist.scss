@@ -162,6 +162,48 @@ input[id="radio-4"] {
 		}
 	}
 }
+#radio-13 {
+	&:checked {
+		& ~ .glider {
+			transform: translateX(1200%);
+		}
+	}
+}
+#radio-14 {
+	&:checked {
+		& ~ .glider {
+			transform: translateX(1300%);
+		}
+	}
+}
+#radio-15 {
+	&:checked {
+		& ~ .glider {
+			transform: translateX(1400%);
+		}
+	}
+}
+#radio-16 {
+	&:checked {
+		& ~ .glider {
+			transform: translateX(1500%);
+		}
+	}
+}
+#radio-17 {
+	&:checked {
+		& ~ .glider {
+			transform: translateX(1600%);
+		}
+	}
+}
+#radio-18 {
+	&:checked {
+		& ~ .glider {
+			transform: translateX(1700%);
+		}
+	}
+}
 .glider {
 	position: absolute;
 	display: flex;
@@ -173,7 +215,7 @@ input[id="radio-4"] {
 	transition: 0.25s ease-out;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 1000px) {
 	.tabs {
 		transform: scale(0.6);
 	}

@@ -32,7 +32,7 @@ function create_reportrow(item){
     //reportrow.style.top = "50px"
     //reportrow.style.height = "900px"
     //reportrow.style.marginTop = "100px"
-    reportrow.style.display = "none";
+    //reportrow.style.display = "none";
 
 
     parent_leftreport.className = "col-md"

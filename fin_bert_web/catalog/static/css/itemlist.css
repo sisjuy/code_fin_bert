@@ -157,6 +157,36 @@ input[id="radio-4"]:checked ~ .glider {
           transform: translateX(1100%);
 }
 
+#radio-13:checked ~ .glider {
+  -webkit-transform: translateX(1200%);
+          transform: translateX(1200%);
+}
+
+#radio-14:checked ~ .glider {
+  -webkit-transform: translateX(1300%);
+          transform: translateX(1300%);
+}
+
+#radio-15:checked ~ .glider {
+  -webkit-transform: translateX(1400%);
+          transform: translateX(1400%);
+}
+
+#radio-16:checked ~ .glider {
+  -webkit-transform: translateX(1500%);
+          transform: translateX(1500%);
+}
+
+#radio-17:checked ~ .glider {
+  -webkit-transform: translateX(1600%);
+          transform: translateX(1600%);
+}
+
+#radio-18:checked ~ .glider {
+  -webkit-transform: translateX(1700%);
+          transform: translateX(1700%);
+}
+
 .glider {
   position: absolute;
   display: -webkit-box;
@@ -171,7 +201,7 @@ input[id="radio-4"]:checked ~ .glider {
   transition: 0.25s ease-out;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 1000px) {
   .tabs {
     -webkit-transform: scale(0.6);
             transform: scale(0.6);
