@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 import random
+from . import read_allitem_function, read_item7_function
 # Create your views here.
 def index(request):
     names = ["abc", "dan", "jack", "lizzy", "susan"]
@@ -21,25 +22,25 @@ def teammate():
     {
     "Item1":
     [
-        {"senA":"Item 1 . We are an emerging global regenerative medicine company focused on the development and commercialization of non-invasive, biological response activating devices for the repair and regeneration of tissue, musculoskeletal and vascular structures.","senB":"Item 1 . We are an emerging global regenerative medicine company focused on the development and commercialization of noninvasive, biological response activating devices for the repair and regeneration of tissue, musculoskeletal and vascular structures.","keywordsA":[],"keywordsB":["structures"],"labels":[0,0,0,1]},
-        {"senA":"The Company was incorporated on May 6, 2004.","senB":"The patients in the study were followed for a total of 24 weeks.","keywordsA":[],"keywordsB":["patients","weeks"],"labels":[0,0,0,1,0,0.67,0.5,0,1,0,0,0,0]},
-        {"senA":"Of these 28 full-time employees, 12 were engaged in research and development, including clinical, regulatory and quality. None of our employees are represented by a labor union or covered by a collective bargaining agreement. We believe our relationship with our employees is good.","senB":"Treatment with dermaPACE increased the proportion of diabetic foot ulcers that closed within 12 weeks by 36%, although the rate of complete wound closure between dermaPACE and Sham-control at 12 weeks in the Intent-to-Treat ( ITT ) population was not statistically significant at the 95% confidence level used throughout the study (p=0.363).","labels":[0,0,0,0.5,0.3,0.4,0.8,0.9,0.1,0.5,0.3,0.4,0.8,0.9,0.1,0.5,0.3,0.4,0.8,0.9,0.1,0.5,0.3,0.4,0.8,0.9,0.1,0.3,0.4,0.8,0.9,0.1,0.3,0.4,0.8,0.9,0.1,0.3,0.4,0.8,0.9,0.1,0.9,0.1,0.3,0.4,0.8,0.9,0.1,0.3,0.4,0.8]},
-        {"senA":"However, we cannot predict the impact and costs those future statutes, regulations and policies will have on our business.","senB":"Some of these statutes and regulations impose strict liability for the costs of cleaning up, and for damages resulting from, sites of spills, disposals, or other releases of contaminants, hazardous substances and other materials and for the investigation and remediation of environmental contamination at properties leased or operated by us and at off-site locations where we have arranged for the disposal of hazardous substances.","labels":[1,0,0,0.4,0.3]}
+        {"senA":"Item 1 . We are an emerging global regenerative medicine company focused on the development and commercialization of non-invasive, biological response activating devices for the repair and regeneration of tissue, musculoskeletal and vascular structures.","senB":"Item 1 . We are an emerging global regenerative medicine company focused on the development and commercialization of noninvasive, biological response activating devices for the repair and regeneration of tissue, musculoskeletal and vascular structures.","keywordsA":[],"keywordsB":["structures"],"prob":[0,0,0,1]},
+        {"senA":"The Company was incorporated on May 6, 2004.","senB":"The patients in the study were followed for a total of 24 weeks.","keywordsA":[],"keywordsB":["patients","weeks"],"prob":[0,0,0,1,0,0.67,0.5,0,1,0,0,0,0]},
+        {"senA":"Of these 28 full-time employees, 12 were engaged in research and development, including clinical, regulatory and quality. None of our employees are represented by a labor union or covered by a collective bargaining agreement. We believe our relationship with our employees is good.","senB":"Treatment with dermaPACE increased the proportion of diabetic foot ulcers that closed within 12 weeks by 36%, although the rate of complete wound closure between dermaPACE and Sham-control at 12 weeks in the Intent-to-Treat ( ITT ) population was not statistically significant at the 95% confidence level used throughout the study (p=0.363).","prob":[0,0,0,0.5,0.3,0.4,0.8,0.9,0.1,0.5,0.3,0.4,0.8,0.9,0.1,0.5,0.3,0.4,0.8,0.9,0.1,0.5,0.3,0.4,0.8,0.9,0.1,0.3,0.4,0.8,0.9,0.1,0.3,0.4,0.8,0.9,0.1,0.3,0.4,0.8,0.9,0.1,0.9,0.1,0.3,0.4,0.8,0.9,0.1,0.3,0.4,0.8]},
+        {"senA":"However, we cannot predict the impact and costs those future statutes, regulations and policies will have on our business.","senB":"Some of these statutes and regulations impose strict liability for the costs of cleaning up, and for damages resulting from, sites of spills, disposals, or other releases of contaminants, hazardous substances and other materials and for the investigation and remediation of environmental contamination at properties leased or operated by us and at off-site locations where we have arranged for the disposal of hazardous substances.","prob":[1,0,0,0.4,0.3]}
     ],
     "Item1A":
     [
-        {"senA":"Current economic conditions could adversely affect our operations.","senB":"Current economic conditions could adversely affect our operations.","labels":[0,0,0,0,1,1,0.5,1]}
+        {"senA":"Current economic conditions could adversely affect our operations.","senB":"Current economic conditions could adversely affect our operations.","prob":[0,0,0,0,1,1,0.5,1]}
     ],
     "Item1B":
     [
-        {"senA":"there is no Item1B in 2011","senB":"there is no Item1B in 2012","labels":[0,0,0,0,1,1]}
+        {"senA":"there is no Item1B in 2011","senB":"there is no Item1B in 2012","prob":[0,0,0,0,1,1]}
     ]},
 
     "2013":
     {
         "Item1":
     [
-        {"senA":"Item 1 . We are an emerging global regenerative medicine company focused on the development and commercialization of noninvasive, biological response activating devices for the repair and regeneration of tissue, musculoskeletal and vascular structures.","senB":"Item 1 . We are a shockwave technology company using noninvasive, high-energy, acoustic shockwaves for regenerative medicine and other applications.","labels":[1,0,0,0,1]}
+        {"senA":"Item 1 . We are an emerging global regenerative medicine company focused on the development and commercialization of noninvasive, biological response activating devices for the repair and regeneration of tissue, musculoskeletal and vascular structures.","senB":"Item 1 . We are a shockwave technology company using noninvasive, high-energy, acoustic shockwaves for regenerative medicine and other applications.","prob":[1,0,0,0,1]}
     ]
     }
     
@@ -67,15 +68,17 @@ def filecontent(textdic,company,year,item):
     
     textkeys = list(textdic.keys())
     lastone = textkeys[len(textkeys)-1]
+    lastcompany = lastone.split("_")[0]
     lastyear = lastone.split("_")[1]
-    lastitem = lastone.split("_")[2]
+    lastitem = lastone.split("_")[2].upper()
     id = company+"_"+str(year).split("20")[1]+"_"+item.upper()+"_P"+str(0)+"_S"+str(0)
     if (id not in textkeys):
         return ["there is no "+str(item)+" in "+str(year)]
     else:
         articleid=[]
         article=[]
-        if (item==lastitem and year==lastyear):
+        if (item.upper()==lastitem and str(year).split("20")[1]==lastyear and company==lastcompany):
+            print("here")
             id1 = company+"_"+str(year).split("20")[1]+"_"+item.upper()+"_P"+str(0)+"_S"+str(0)
             textkeys = list(textdic.keys())
             for i in range(textkeys.index(id1),len(textkeys)):    
@@ -113,7 +116,6 @@ def filecontent(textdic,company,year,item):
         return article
 
 
-
 def report(request):
     if request.method == "POST":
         module_dir = os.path.dirname(__file__)
@@ -134,8 +136,7 @@ def report(request):
         testarti = {}
         for year in range(year1,year2+1):
             testarti[str(year)] = {}
-            for item in itemlist:
-                testarti[str(year)][item] = filecontent(textdic, company, year, item)
+            testarti[str(year)][item] = filecontent(textdic, company, year, item)
         #print(testarti)
         #filename = company + '.txt'
         #file_path1 = os.path.join(module_dir,"dataset",str(year1),filename)   #full path to text.
@@ -158,4 +159,39 @@ def report(request):
     
     return render(request, 'report.html')
 
-print(textdic["1417663_11_ITEM1_P0_S0"])
+def report_revised(request):
+    if request.method == "POST":
+        module_dir = os.path.dirname(__file__)
+        company = request.POST.get("company")
+        #print(company)
+        #print(type(company))
+        year2 = int(request.POST.get("year"))
+        year1 = year2-1
+        #item = request.POST.get("item")
+        #print(year2,item)
+        
+        #article1 = filecontent(module_dir,company,year1,item)
+        #article2 = filecontent(module_dir,company,year2,item)
+        #2011~2018
+        #arti = {}
+        #for year in range(2011,2012):
+        #    arti["year"+str(year)] = filecontent(module_dir, company, year, item)
+        testarti = {}
+        for year in range(year1,year2+1):
+            
+            testarti[str(year)] = {}
+            testarti[str(year)] = read_allitem_function.read_allitem_fun(textdic,company,year)
+        #testarti[str(year)] = readitem7fun(textdic, company, year, "item7")[0]
+         
+        #highlight
+        result = teammate()
+        #senA = result['senA']
+        #senB = result['senB']
+        #keywordsB = result['keywordsB']
+        #labels = result['labels']
+        #'senA':senA, 'senB':senB, 'keywordsB':keywordsB,'labels':labels
+        #'arti':arti
+        context = {'result':result, 'testarti' :testarti, 'id2sen':textdic}
+        return render(request, 'report1.html',context)
+    
+    return render(request, 'report1.html')

@@ -379,7 +379,7 @@
     var sena_item = {};
     var sendic_a2b = {};
     var sendic_b2a = {};
-    var score = {}
+    var score = {} //score of the words
     localStorage.setItem("lastclick",0)
     
     //let a = "{{ company|safe }}"
@@ -453,7 +453,7 @@
 
             //collect all of highlight sentence's index
             for (var j=0; j < result.length;j++){
-                let label = result[j].labels;
+                let label = result[j].prob;
                 
                 id = "senb_" + item + "_" + j
                 score[id] = label
@@ -487,6 +487,7 @@
                     paragraph1.innerHTML += part == "\n" ? '<br>' : part + ' '
                 }
             })
+            
             data2.map((part,i) => {
 
                 if (indexB.includes(i)){
@@ -567,12 +568,12 @@
             $(name).hover(function(){
                 $(name).css("transition-duration","0.3s");
                 $(name).css("opacity","1")
-                $(name).css("fontSize","18.075px")
+                //$(name).css("fontSize","18.075px")
                 $(name).css("box-shadow","0 5px 15px 0px rgba(0,0,0,0.125)")
             },function(){
                 
                 $(name).css("opacity","1")
-                $(name).css("fontSize","18")
+                //$(name).css("fontSize","18")
                 $(name).css("box-shadow","0 0 0 0 rgba(0,0,0,0)")
             })
         }
@@ -815,3 +816,4 @@
     }) 
 </script>
 -->
+
