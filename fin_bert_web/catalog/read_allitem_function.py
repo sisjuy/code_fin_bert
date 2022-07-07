@@ -3,12 +3,13 @@ data = open("rand100_collections.txt",'r')
 
 #company = "26076"
 #year = "2018"
-
+'''
 itemlist = ["Item1","Item1A","Item1B","Item2",
             "Item3","Item4","Item5","Item6","Item7",
             "Item7A","Item8","Item9","Item9A","Item9B",
             "Item10","Item11","Item12","Item13","Item14",
             "Item15"]
+'''
 textdic = {}
 for line in data.readlines():
     line1 = line.split("\t")
@@ -21,6 +22,7 @@ def read_allitem_fun(textdic,company,year):
     #find the first one id
     articleid = []
     article = []
+    sen2id = {}
     textkeys = list(textdic.keys())
     firstidx = company+"_"+str(year).split("20")[1]+"_"+"item1".upper()+"_P"+str(0)+"_S"+str(0)
     if firstidx not in textkeys:
@@ -58,7 +60,9 @@ def read_allitem_fun(textdic,company,year):
                         break
     if firstline_item != itemlist[0]:
         for item in itemlist[:itemlist.index(firstline_item)]:
-            article.append("There is no "+str(item)+" in "+str(year))
+            s = "There is no "+str(item)+" in "+str(year)
+            article.append(s)
+            sen2id[s] = s
             article.append("\\n")
             article.append("\\n")
     #print(textdic[articleid[404]])
@@ -66,7 +70,9 @@ def read_allitem_fun(textdic,company,year):
 
     for i in range(0,len(articleid)):
         if articleid[i] == "no item":
-            article.append("There is no "+str(item)+" in "+str(year))
+            s = "There is no "+str(item)+" in "+str(year)
+            article.append(s)
+            sen2id[s] = s
             article.append("\\n")
             article.append("\\n")
         else:
@@ -74,6 +80,7 @@ def read_allitem_fun(textdic,company,year):
             a = a.replace('"',"")
             a = a.replace("'","")
             article.append(a)
+            sen2id[a] = articleid[i]
             nowp = articleid[i].split("_")[3]
             if (i!=(len(articleid)-1)):
                 if articleid[i+1] == "no item":
@@ -85,10 +92,4 @@ def read_allitem_fun(textdic,company,year):
                         article.append("\\n")
                         article.append("\\n")
 
-    return article
-    #append id in the articleid
-    #build up article
-        #if firstitem != item1
-        #insert "there is no item in year" in the beginning of the list
-    #return article
-#print(read_allitem_fun(textdic,company,year))
+    return [article, sen2id]

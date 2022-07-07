@@ -78,7 +78,7 @@ def filecontent(textdic,company,year,item):
         articleid=[]
         article=[]
         if (item.upper()==lastitem and str(year).split("20")[1]==lastyear and company==lastcompany):
-            print("here")
+            #print("here")
             id1 = company+"_"+str(year).split("20")[1]+"_"+item.upper()+"_P"+str(0)+"_S"+str(0)
             textkeys = list(textdic.keys())
             for i in range(textkeys.index(id1),len(textkeys)):    
@@ -167,7 +167,55 @@ def report_revised(request):
         #print(type(company))
         year2 = int(request.POST.get("year"))
         year1 = year2-1
-        #item = request.POST.get("item")
+        item = request.POST.get("item")
+        #print(year2,item)
+        
+        #article1 = filecontent(module_dir,company,year1,item)
+        #article2 = filecontent(module_dir,company,year2,item)
+        #2011~2018
+        #arti = {}
+        #for year in range(2011,2012):
+        #    arti["year"+str(year)] = filecontent(module_dir, company, year, item)
+        testarti = {}
+        sen2id = {}
+        for year in range(year1,year2+1):
+            #testarti[str(year)] = read_allitem_function.read_allitem_fun(textdic,company,str(year))[0]
+            sen2id[str(year)] = read_allitem_function.read_allitem_fun(textdic,company,str(year))[1]
+        
+        for year in range(year1,year2+1):
+            testarti[str(year)] = {}
+            for item in itemlist:
+                testarti[str(year)][item] = filecontent(textdic, company, year, item)
+        
+        #testarti[str(year)] = readitem7fun(textdic, company, year, "item7")[0]
+        #print(testarti)
+        #highlight
+        result = teammate()
+        #senA = result['senA']
+        #senB = result['senB']
+        #keywordsB = result['keywordsB']
+        #labels = result['labels']
+        #'senA':senA, 'senB':senB, 'keywordsB':keywordsB,'labels':labels
+        #'arti':arti
+
+        
+        
+        context = {'result':result, 'testarti' :testarti, 'sen2id':sen2id}
+        return render(request, 'report1.html',context)
+    
+    return render(request, 'report1.html')
+
+
+
+def report_switch_between_items(request):
+    if request.method == "POST":
+        module_dir = os.path.dirname(__file__)
+        company = request.POST.get("company")
+        #print(company)
+        #print(type(company))
+        year2 = int(request.POST.get("year"))
+        year1 = year2-1
+        item = request.POST.get("item")
         #print(year2,item)
         
         #article1 = filecontent(module_dir,company,year1,item)
@@ -178,11 +226,19 @@ def report_revised(request):
         #    arti["year"+str(year)] = filecontent(module_dir, company, year, item)
         testarti = {}
         for year in range(year1,year2+1):
-            
             testarti[str(year)] = {}
-            testarti[str(year)] = read_allitem_function.read_allitem_fun(textdic,company,year)
-        #testarti[str(year)] = readitem7fun(textdic, company, year, "item7")[0]
-         
+            for item in itemlist:
+                testarti[str(year)][item] = filecontent(textdic, company, year, item)
+        print(testarti)
+        #print(testarti)
+        #filename = company + '.txt'
+        #file_path1 = os.path.join(module_dir,"dataset",str(year1),filename)   #full path to text.
+        #file_path2 = os.path.join(module_dir,"dataset",str(year2),filename)
+        #data_file1 = open(file_path1,'r')
+        #data_file2 = open(file_path2,'r')
+        #data1 = data_file1.read() #selected year-1
+        #data2 = data_file2.read() #selected year 
+
         #highlight
         result = teammate()
         #senA = result['senA']
@@ -191,7 +247,7 @@ def report_revised(request):
         #labels = result['labels']
         #'senA':senA, 'senB':senB, 'keywordsB':keywordsB,'labels':labels
         #'arti':arti
-        context = {'result':result, 'testarti' :testarti, 'id2sen':textdic}
-        return render(request, 'report1.html',context)
+        context = {'result':result, 'testarti' :testarti, 'curryear':year2, 'company':company, 'item':item}
+        return render(request, 'report2.html',context)
     
-    return render(request, 'report1.html')
+    return render(request, 'report2.html')
