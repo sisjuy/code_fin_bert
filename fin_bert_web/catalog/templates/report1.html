@@ -291,7 +291,10 @@
     var sendic_b2a = {};
     var score = {} //score of the words
     localStorage.setItem("lastclick",0)
-    
+    var curryear = localStorage.getItem("yearnow")
+    var company = localStorage.getItem("companynow")
+    var item = localStorage.getItem("itemnow").toString()
+    var lastyear = (parseInt(curryear) - 1).toString()
     //let a = "{{ company|safe }}"
     //console.log("get value from view.py",a)
     //localStorage.setItem("companynow",a)
@@ -299,22 +302,21 @@
     //console.log("localstorage:",c)
     testarti = "{{ testarti|safe }}";
     sen2id = "{{ sen2id|safe }}";
+    ar = "{{ ar|safe }}";
     //console.log(id2sen)
-        //console.log(testarti)
+    //console.log(testarti)
+    
     testarti = testarti.replace(/'/g,"\"");
     sen2id = sen2id.replace(/'/g,"\"");
-    
+    ar = ar.replace(/'/g,"\"");
+    console.log(givevalue(ar,curryear))
     const test1 = JSON.parse(testarti);
     const textdic = JSON.parse(sen2id);
-    console.log(textdic)
+    const arr = JSON.parse(ar);
+    //console.log(arr)
+    //console.log(textdic)
     
-    var curryear = localStorage.getItem("yearnow")
-    var company = localStorage.getItem("companynow")
-    var item = localStorage.getItem("itemnow").toString()
-
-
-
-    var lastyear = (parseInt(curryear) - 1).toString()
+    
     //console.log(givevalue(givevalue(test1,curryear),item))
     result =  "{{ result|safe }}";
     result = result.replace(/'/g,"\"");
@@ -324,92 +326,128 @@
     //maybe I should give "type" to any every sentence
     ////////////////////////////////////
     
-    /*
-    let data1 = givevalue(test1,lastyear)
-    let data2 = givevalue(test1,curryear)
-
-    let sen2id1 = givevalue(textdic,lastyear)
-    let sen2id2 = givevalue(textdic,curryear)
     
-    create_reportrow(item)
-    
-    let id1 = "report1_" + item
-    let id2 = "report2_" + item
-    var indexA = []
-    var indexB = []
-    let paragraph1 = document.getElementById(id2);
-    let paragraph2 = document.getElementById(id1);
-    //console.log(paragraph1)
-    data1.map((part,i) => {
-        if (part=="\n"){
-            paragraph1.innerHTML += part == "\n" ? '<br>' : part + ' '
-        }
-        else{
-            var sena = document.createElement("span");
-            //sena.id = givevalue(sen2id1,part);
-            sena.innerHTML = part
-            paragraph1.innerHTML += sena.outerHTML
-        }
-
-    })
-    data2.map((part,i) => {
-        
-        if (part=="\n"){
-            paragraph2.innerHTML += part == "\n" ? '<br>' : part + ' '
-        }
-        else{
-            var senb = document.createElement("span");
-            //senb.id = givevalue(sen2id2,part);
-            senb.innerHTML = part
-            paragraph2.innerHTML += senb.outerHTML
-        }
-        
-        
-    })*/
-    create_reportrow(item)
     $(document).ready(function() {
-        for (var ii=0; ii < 20;ii++){
-            let data1 = givevalue(givevalue(test1,lastyear),vm2.$data.list[ii])
-            let data2 = givevalue(givevalue(test1,curryear),vm2.$data.list[ii])
-            let id1 = "report1_" + item
-            let id2 = "report2_" + item
-            var indexA = []
-            var indexB = []
 
-            
-            
-            let paragraph1 = document.getElementById(id1);
-            let paragraph2 = document.getElementById(id2);
-            //console.log(paragraph1)
-            data1.map((part,i) => {
-                if (part=="\n"){
-                    paragraph1.innerHTML += part == "\n" ? '<br>' : part + ' '
-                }
-                else{
-                    var sena = document.createElement("span");
-                    //sena.id = givevalue(sen2id1,part);
-                    sena.innerHTML = part
-                    paragraph1.innerHTML += sena.outerHTML
-                }
-            })
-            data2.map((part,i) => {
-                if (part=="\n"){
-                    paragraph2.innerHTML += part == "\n" ? '<br>' : part + ' '
-                }
-                else{
-                    var senb = document.createElement("span");
-                    //senb.id = givevalue(sen2id2,part);
-                    senb.innerHTML = part
-                    paragraph2.innerHTML += senb.outerHTML
-                }
-                
-            
-            })
+        let data1 = givevalue(test1,lastyear)
+        let data2 = givevalue(test1,curryear)
 
+        let sen2id1 = givevalue(textdic,lastyear)
+        let sen2id2 = givevalue(textdic,curryear)
+
+        let arr1 = givevalue(arr,lastyear)
+        let arr2 = givevalue(arr,curryear)
+        //console.log(Object.keys(sen2id1))
+        create_reportrow(item)
+        
+        let id1 = "report1_" + item
+        let id2 = "report2_" + item
+        var indexA = []
+        var indexB = []
+        let paragraph1 = document.getElementById(id2);
+        let paragraph2 = document.getElementById(id1);
+        //console.log(arr1)
+        arr1 = arr1.replaceAll('\n', '<br>')
+        arr2 = arr2.replaceAll('\n', '<br>')
+        paragraph1.innerHTML = arr1
+        paragraph2.innerHTML = arr2
+
+
+
+        //highlight
+        for(var i=0;i<=50;i++){
+            id1 = Object.keys(sen2id1)[i]
+            //console.log(id)
+            text1 = sen2id1[id1]
+            id2 = Object.keys(sen2id2)[i]
+            //console.log(id)
+            text2 = sen2id2[id2]
+            highlight2(id2,text2)
+            highlight1(id1,text1)
+            
         }
+        function highlight1(id,text){
+            //this year
+            //console.log(text)
+            var para1 = paragraph1.innerHTML;
+            var index = para1.indexOf(text);
+            var sena = document.createElement("span");
+            sena.id = id
+            sena.className = "senA"
+            sena.innerHTML = para1.substring(index,index+text.length)
+            
+            if (index >= 0) { 
+                para1 = para1.substring(0,index) + sena.outerHTML + para1.substring(index + text.length);
+                paragraph1.innerHTML = para1;
+            }
+        }
+        function highlight2(id,text){
+            //last year
+            //console.log(text)
+            var para2 = paragraph2.innerHTML;
+            var index = para2.indexOf(text);
+            var senb = document.createElement("span");
+            senb.id = id
+            senb.className = "senB"
+            senb.innerHTML = para2.substring(index,index+text.length)
+            
+            if (index >= 0) { 
+                para2 = para2.substring(0,index) + senb.outerHTML + para2.substring(index + text.length);
+                paragraph2.innerHTML = para2;
+            }
+        }
+        $(".highlight").css('backgroundColor', "#FFFF66")
+        //a.style.backgroundColor = "#FFFF66"
+        //console.log(paragraph1)
+        ////type2////
+        for(var i=0; i<result1.type2.length;i++){
+            if (typeof(result1.type2[i].senA)=='object'){
+                for(var j=0; j<result1.type2[i].senA.length;j++){
+                    let a = document.getElementById(result1.type2[i].senA[j])
+                    a.className = a.className + " type2 " + i + " " + j
+                }
+            }
+            else{
+                console.log(result1.type2[i].senA)
+                let a = document.getElementById(result1.type2[i].senA)
+                a.className = a.className + " type2 " + i + " " + "0"
+            }
+            let b = document.getElementById(result1.type2[i].senB)
+            b.className = b.className + " type2 " + i
+        
+        }
+        ////type3////
+        for(var i=0; i<result1.type3.length;i++){
+            if (typeof(result1.type3[i].senA)=='object'){
+                for(var j=0; j<result1.type3[i].senA.length;j++){
+                    let a = document.getElementById(result1.type3[i].senA[j])
+                    a.className = a.className + " type3 " + i + " " + j
+                }
+            }
+            else{
+                let a = document.getElementById(result1.type3[i].senA)
+                a.className = a.className + " type3 " + i + " " + "0"
+            }
+            let b = document.getElementById(result1.type3[i].senB)
+            b.className = b.className + " type3 " + i
+        }
+        for(var i=0; i<result1.type1.length;i++){
+            
+            let a = document.getElementById(result1.type1[i].senA)
+            a.className = a.className + " type1 " + i + " " + "0"
+            
+    
+            let b = document.getElementById(result1.type1[i].senB)
+            b.className = b.className + " type1 " + i
+            
+        }   
+            
+            
+
+        
 
         /*
-        result = givevalue(givevalue(result1,curryear),item)
+       
         
             
         if(result==null){

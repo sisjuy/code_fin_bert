@@ -47,6 +47,11 @@ def teammate():
     }
     
     return sen
+
+
+def result():
+    a = {'type1': [{'senA': '26076_11_ITEM1_P0_S0', 'senB': '26076_12_ITEM1_P0_S0', 'prob': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]}], 'type2': [{'senA': '26076_11_ITEM1_P0_S1', 'senB': '26076_12_ITEM1_P0_S1', 'prob': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]}, {'senA': ['26076_11_ITEM1_P2_S2', '26076_11_ITEM1_P2_S3'], 'senB': '26076_12_ITEM1_P2_S2', 'prob': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]}], 'type3': [{'senA': '26076_11_ITEM1_P2_S2', 'senB': '26076_12_ITEM1_P2_S2', 'prob': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]}]}
+    return a
 # create test article
 
 module_dir = os.path.dirname(__file__)
@@ -178,19 +183,17 @@ def report_revised(request):
         #    arti["year"+str(year)] = filecontent(module_dir, company, year, item)
         testarti = {}
         sen2id = {}
+        ar = {}
         for year in range(year1,year2+1):
-            #testarti[str(year)] = read_allitem_function.read_allitem_fun(textdic,company,str(year))[0]
+            testarti[str(year)] = " ".join(read_allitem_function.read_allitem_fun(textdic,company,str(year))[0])
             sen2id[str(year)] = read_allitem_function.read_allitem_fun(textdic,company,str(year))[1]
+            ar[str(year)] = read_allitem_function.read_allitem_fun(textdic,company,str(year))[2]
         
-        for year in range(year1,year2+1):
-            testarti[str(year)] = {}
-            for item in itemlist:
-                testarti[str(year)][item] = filecontent(textdic, company, year, item)
         
         #testarti[str(year)] = readitem7fun(textdic, company, year, "item7")[0]
         #print(testarti)
         #highlight
-        result = teammate()
+        result1 = result()
         #senA = result['senA']
         #senB = result['senB']
         #keywordsB = result['keywordsB']
@@ -200,7 +203,7 @@ def report_revised(request):
 
         
         
-        context = {'result':result, 'testarti' :testarti, 'sen2id':sen2id}
+        context = {'result':result1, 'testarti' :testarti, 'sen2id':sen2id, 'ar':ar}
         return render(request, 'report1.html',context)
     
     return render(request, 'report1.html')
@@ -229,7 +232,7 @@ def report_switch_between_items(request):
             testarti[str(year)] = {}
             for item in itemlist:
                 testarti[str(year)][item] = filecontent(textdic, company, year, item)
-        print(testarti)
+        #print(testarti)
         #print(testarti)
         #filename = company + '.txt'
         #file_path1 = os.path.join(module_dir,"dataset",str(year1),filename)   #full path to text.

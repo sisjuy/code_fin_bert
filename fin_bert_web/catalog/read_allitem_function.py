@@ -23,6 +23,7 @@ def read_allitem_fun(textdic,company,year):
     articleid = []
     article = []
     sen2id = {}
+    ar = ""
     textkeys = list(textdic.keys())
     firstidx = company+"_"+str(year).split("20")[1]+"_"+"item1".upper()+"_P"+str(0)+"_S"+str(0)
     if firstidx not in textkeys:
@@ -44,7 +45,8 @@ def read_allitem_fun(textdic,company,year):
         for item in itemlist[itemlist.index(firstline_item):len(itemlist)]:
             idx = company+"_"+str(year).split("20")[1]+"_"+item.upper()+"_P"+str(0)+"_S"+str(0)
             if idx not in textkeys:
-                articleid.append("no item")
+                #print(idx)
+                articleid.append("no item"+"_"+item+"_"+str(year))
             else:
                 for i in range(textkeys.index(idx),len(textkeys)):
                     articleid.append(textkeys[i])
@@ -52,44 +54,62 @@ def read_allitem_fun(textdic,company,year):
         for item in itemlist[itemlist.index(firstline_item):len(itemlist)]:
             idx = company+"_"+str(year).split("20")[1]+"_"+item.upper()+"_P"+str(0)+"_S"+str(0)
             if idx not in textkeys:
-                articleid.append("no item")
+                #print(idx)
+                #a="no item"+"_"+item+"_"+str(year)
+                #print(a.split("_"))
+                articleid.append("no item"+"_"+item+"_"+str(year))
             else:
                 for i in range(textkeys.index(idx),len(textkeys)):
                     articleid.append(textkeys[i])
                     if (textkeys[i+1].split("_")[2]!=item.upper()):
                         break
     if firstline_item != itemlist[0]:
-        for item in itemlist[:itemlist.index(firstline_item)]:
+        for item in itemlist[0:itemlist.index(firstline_item)]:
             s = "There is no "+str(item)+" in "+str(year)
             article.append(s)
             sen2id[s] = s
             article.append("\\n")
             article.append("\\n")
+            ar += s
+            ar += '\\n\\n'
     #print(textdic[articleid[404]])
     #textdic["no item"] ==?
 
     for i in range(0,len(articleid)):
-        if articleid[i] == "no item":
+        if articleid[i].split("_")[0] == "no item":
+            item = articleid[i].split("_")[1]
+            year = articleid[i].split("_")[2]
             s = "There is no "+str(item)+" in "+str(year)
             article.append(s)
             sen2id[s] = s
             article.append("\\n")
             article.append("\\n")
+            ar += s 
+            ar += '\\n\\n'
         else:
             a = textdic[articleid[i]].strip("\n")
             a = a.replace('"',"")
             a = a.replace("'","")
             article.append(a)
-            sen2id[a] = articleid[i]
+            ar += a + " "
+            sen2id[str(articleid[i])] = a
             nowp = articleid[i].split("_")[3]
+            nowi = articleid[i].split("_")[2]
             if (i!=(len(articleid)-1)):
-                if articleid[i+1] == "no item":
+                nexti = articleid[i+1].split("_")[2]
+                if articleid[i+1].split("_")[0] == "no item":
                     article.append("\\n")
                     article.append("\\n")
+                    ar += '\\n\\n'
+                elif nexti != nowi:
+                    article.append("\\n")
+                    article.append("\\n")
+                    ar += '\\n\\n'
                 else:
                     nextp = articleid[i+1].split("_")[3]
                     if(nextp!=nowp):
                         article.append("\\n")
                         article.append("\\n")
+                        ar += '\\n\\n'
 
-    return [article, sen2id]
+    return [article, sen2id, ar]

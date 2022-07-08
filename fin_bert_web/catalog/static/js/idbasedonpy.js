@@ -34,7 +34,7 @@ for (i in result.type3.length){
 
 */
 
-let textdic = JSON.parse(id2sen);
+
 let id1 = "report1_" + item
 let id2 = "report2_" + item
 var indexA = []
@@ -43,14 +43,24 @@ let paragraph1 = document.getElementById(id1);
 let paragraph2 = document.getElementById(id2);
 //console.log(paragraph1)
 data1.map((part,i) => {
-    var sena = document.createElement("span");
-    sena.id = 
-    paragraph1.innerHTML += part == "\n" ? '<br>' : part + ' '
+    if (part=="\n"){
+        paragraph1.innerHTML += part == "\n" ? '<br>' : part + ' '
+    }
+    else{
+        var sena = document.createElement("span");
+        sena.id = givevalue(sen2id1,part);
+    }
 
 })
 data2.map((part,i) => {
-
-    paragraph2.innerHTML += part == "\n" ? '<br>' : part + ' '
-
-
+    
+    if (part=="\n"){
+        paragraph2.innerHTML += part == "\n" ? '<br>' : part + ' '
+    }
+    else{
+        var senb = document.createElement("span");
+        senb.id = givevalue(sen2id2,part);
+    }
+    
+    
 })
