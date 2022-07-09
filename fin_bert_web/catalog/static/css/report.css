@@ -1,9 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@700&display=swap');
+/*
 body {
     background-image: url("../pic&gif/indexhtml_background.jpg");
     
     
-}
+}*/
 #topselect {
     position: relative;
     left: 60px;
@@ -100,7 +101,7 @@ body {
 .senB:hover{
     transition-duration: 0.3s;
     opacity:1;
-    font-size: 18.075px;
+    
     box-shadow:0 5px 15px 0px rgba(0,0,0,0.125);
 }
 

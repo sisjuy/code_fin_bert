@@ -33,15 +33,13 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/submit.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/submit2.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/itemlist.css' %}">
-    <script src="{% static 'js/create_report.js' %}"></script>
-    <script src="{% static 'js/sentence_effect.js' %}"></script>
+    <script src="{% static 'js_report1/create_report_report1.js' %}"></script>
+    <script src="{% static 'js_report1/sentence_effect.js' %}"></script>
     <script src="{% static 'js/sentence_color.js' %}"></script>
     <script src="{% static 'js/topselect_vue.js' %}"></script>
     <script src="{% static 'js/yearchange.js' %}"></script>
     
-    <style>
-        
-    </style>
+    
     
     
     
@@ -97,7 +95,16 @@
             
         </div>
         <!--end selectrow-->
-    
+        
+        <button class="state active" id="button2" style="background-Color:rgb(255, 190, 64)">
+        show type2
+        </button>
+        <button class="state active" style="background-Color:rgb(243, 231, 255)" id="button3">
+        show type3
+        </button>
+        <button class="state active" style="background-Color:rgb(223, 250, 206)" id="button1">
+            show type1
+        </button>
         <div class="row" id="report_outline">
 
 
@@ -144,8 +151,15 @@
 
     </div>
     
+    <script>
+
+
+    </script>    
+
+
+
     
-    
+    <!--itemlist, vue, so on-->
     <script>
         $(document).ready(function(){
             $('#topword').click(function(){
@@ -340,11 +354,13 @@
         //console.log(Object.keys(sen2id1))
         create_reportrow(item)
         
-        let id1 = "report1_" + item
-        let id2 = "report2_" + item
+        let id1 = "report1"
+        let id2 = "report2" 
         var indexA = []
         var indexB = []
+        //lastyear
         let paragraph1 = document.getElementById(id2);
+        //curryear
         let paragraph2 = document.getElementById(id1);
         //console.log(arr1)
         arr1 = arr1.replaceAll('\n', '<br>')
@@ -354,97 +370,243 @@
 
 
 
-        //highlight
-        for(var i=0;i<=50;i++){
-            id1 = Object.keys(sen2id1)[i]
-            //console.log(id)
-            text1 = sen2id1[id1]
-            id2 = Object.keys(sen2id2)[i]
-            //console.log(id)
-            text2 = sen2id2[id2]
-            highlight2(id2,text2)
-            highlight1(id1,text1)
-            
-        }
-        function highlight1(id,text){
-            //this year
-            //console.log(text)
-            var para1 = paragraph1.innerHTML;
-            var index = para1.indexOf(text);
-            var sena = document.createElement("span");
-            sena.id = id
-            sena.className = "senA"
-            sena.innerHTML = para1.substring(index,index+text.length)
-            
-            if (index >= 0) { 
-                para1 = para1.substring(0,index) + sena.outerHTML + para1.substring(index + text.length);
-                paragraph1.innerHTML = para1;
+       
+        //create span and give classname
+        function createspan(id,text,para2){
+            if (para2==1){
+                var para2 = paragraph2.innerHTML;
+                var index = para2.indexOf(text);
+                var senb = document.createElement("span");
+                senb.id = id
+                senb.className = "senB"
+                senb.setAttribute("onclick","click_b(this)")
+                senb.setAttribute("onmouseover","onmouse(this)")
+                senb.setAttribute("onmouseout","outmouse(this)")
+                senb.style.borderRadius = "25px"
+                senb.style.cursor = "pointer"
+                senb.style.padding = "0.02em 0"
+                senb.innerHTML = para2.substring(index,index+text.length)
+                
+                if (index >= 0) { 
+                    para2 = para2.substring(0,index) + senb.outerHTML + para2.substring(index + text.length);
+                    paragraph2.innerHTML = para2;
+                }
+            }
+            else{
+                var para1 = paragraph1.innerHTML;
+                var index = para1.indexOf(text);
+                var sena = document.createElement("span");
+                sena.id = id
+                sena.className = "senA"
+                sena.setAttribute("onclick","click_a(this)")
+                sena.style.borderRadius = "25px"
+                sena.style.cursor = "pointer"
+                sena.style.padding = "0.02em 0"
+                sena.innerHTML = para1.substring(index,index+text.length)
+                
+                if (index >= 0) { 
+                    para1 = para1.substring(0,index) + sena.outerHTML + para1.substring(index + text.length);
+                    paragraph1.innerHTML = para1;
+                }
             }
         }
-        function highlight2(id,text){
-            //last year
-            //console.log(text)
-            var para2 = paragraph2.innerHTML;
-            var index = para2.indexOf(text);
-            var senb = document.createElement("span");
-            senb.id = id
-            senb.className = "senB"
-            senb.innerHTML = para2.substring(index,index+text.length)
-            
-            if (index >= 0) { 
-                para2 = para2.substring(0,index) + senb.outerHTML + para2.substring(index + text.length);
-                paragraph2.innerHTML = para2;
-            }
-        }
-        $(".highlight").css('backgroundColor', "#FFFF66")
+
+       
+       
         //a.style.backgroundColor = "#FFFF66"
         //console.log(paragraph1)
+
+        /* give id of every type */
         ////type2////
         for(var i=0; i<result1.type2.length;i++){
             if (typeof(result1.type2[i].senA)=='object'){
                 for(var j=0; j<result1.type2[i].senA.length;j++){
+                    senaid = result1.type2[i].senA[j]
+                    senatext = sen2id1[senaid]
+                    createspan(senaid,senatext,0)
                     let a = document.getElementById(result1.type2[i].senA[j])
-                    a.className = a.className + " type2 " + i + " " + j
+                    a.className = a.className + " type2 "// + i + " " + j
                 }
             }
             else{
-                console.log(result1.type2[i].senA)
+                //console.log(result1.type2[i].senA)
+                senaid = result1.type2[i].senA
+                senatext = sen2id1[senaid]
+                createspan(senaid,senatext,0)
                 let a = document.getElementById(result1.type2[i].senA)
-                a.className = a.className + " type2 " + i + " " + "0"
+                a.className = a.className + " type2 "// + i + " " + "0"
             }
+            senbid = result1.type2[i].senB
+            senbtext = sen2id2[senbid]
+            createspan(senbid,senbtext,1)
             let b = document.getElementById(result1.type2[i].senB)
-            b.className = b.className + " type2 " + i
+            b.className = b.className + " type2 "// + i
         
         }
         ////type3////
         for(var i=0; i<result1.type3.length;i++){
             if (typeof(result1.type3[i].senA)=='object'){
                 for(var j=0; j<result1.type3[i].senA.length;j++){
+                    senaid = result1.type3[i].senA[j]
+                    senatext = sen2id1[senaid]
+                    createspan(senaid,senatext,0)
                     let a = document.getElementById(result1.type3[i].senA[j])
-                    a.className = a.className + " type3 " + i + " " + j
+                    a.className = a.className + " type3 "// + i + " " + j
                 }
             }
             else{
+                senaid = result1.type3[i].senA
+                senatext = sen2id1[senaid]
+                createspan(senaid,senatext,0)
                 let a = document.getElementById(result1.type3[i].senA)
-                a.className = a.className + " type3 " + i + " " + "0"
+                a.className = a.className + " type3 "// + i + " " + "0"
             }
+            senbid = result1.type3[i].senB
+            senbtext = sen2id2[senbid]
+            createspan(senbid,senbtext,1)
             let b = document.getElementById(result1.type3[i].senB)
-            b.className = b.className + " type3 " + i
+            b.className = b.className + " type3 "// + i
         }
+        ////type1////
         for(var i=0; i<result1.type1.length;i++){
-            
+            senaid = result1.type1[i].senA
+            senatext = sen2id1[senaid]
+            createspan(senaid,senatext,0)
             let a = document.getElementById(result1.type1[i].senA)
-            a.className = a.className + " type1 " + i + " " + "0"
+            a.className = a.className + " type1 "// + i + " " + "0"
             
-    
+            senbid = result1.type1[i].senB
+            senbtext = sen2id2[senbid]
+            createspan(senbid,senbtext,1)
             let b = document.getElementById(result1.type1[i].senB)
-            b.className = b.className + " type1 " + i
+            b.className = b.className + " type1 "// + i
             
         }   
+        
+        
+        $(".type2").css('backgroundColor', "#ffbe40")
+        $(".type3").css('backgroundColor', "#f3e7ff")
+        $(".type1").css('backgroundColor', "#dfface")
+
+
+        /////////remove onclick effect ??? senB or senA/////
+        let type1color = "rgb(223, 250, 206)"
+        let type2color = "rgb(255, 190, 64)"
+        let type3color = "rgb(243, 231, 255)"
+        let nocolor = "rgba(0, 0, 0, 0)"
+        $('#button1').on('click', function(){
+            //console.log($(".type1").css('backgroundColor'))
+            let state1 = $('#button1').hasClass("active")
+            if(state1==false){
+                //not active
+                $('#button1').css('backgroundColor', type1color)
+                $('#button1').addClass("active")
+                $(".type1").css('backgroundColor', type1color)
+            }
+            else{
+                //active
+                $('#button1').css('backgroundColor', nocolor)
+                $('#button1').removeClass("active")
+                $(".type1").css('backgroundColor', nocolor)
+            }
             
+            console.log($('.type1'))
+            //let color = $(".type1").css('backgroundColor')=="rgba(0, 0, 0, 0)" ? "rgb(223, 250, 206)" : "rgba(0, 0, 0, 0)"
+            //$(".type1").css('backgroundColor', color)
+
+        })
+        $('#button2').on('click', function(){
+            //console.log($(".type2").css('backgroundColor'))
+            let state2 = $('#button2').hasClass("active")
+            let state3 = $('#button3').hasClass("active")
+            if (state2==true & state3==true){
+                //type2 type3 show -> click type2 -> type2 disappear & some type3 show their color
+                $('#button2').removeClass("active")
+                $('#button2').css('backgroundColor', nocolor)
+                $(".type2").css('backgroundColor', nocolor)
+                $(".type2.type3").css('backgroundColor', type3color) //type3 color
+            }
+            else if(state2==true & state3==false){
+                //type2 show, type3 non show -> click type2 -> type2 disappear
+                $('#button2').removeClass("active")
+                $('#button2').css('backgroundColor', nocolor)
+                $(".type2").css('backgroundColor', nocolor)
+            }
+            else if(state2==false & state3==true){
+                //type2 no show, type3 show -> click type2 -> some type3 disapear, type2 show
+                $('#button2').addClass("active")
+                $('#button2').css('backgroundColor', type2color)
+                $(".type2.type3").css('backgroundColor', type2color)
+                $(".type2").css('backgroundColor', type2color)
+            }
+            else{
+                $('#button2').addClass("active")
+                $('#button2').css('backgroundColor', type2color)
+                $(".type2").css('backgroundColor', type2color)
+            }
+
+
+            /*
+
+            let color = $(".type2").css('backgroundColor')
+            if (color=="rgba(0, 0, 0, 0)" | color=="rgb(243, 231, 255)"){
+                color = "rgb(255, 190, 64)"
+            }
+            else{
+                color = "rgba(0, 0, 0, 0)"
+            }
+            $(".type2").css('backgroundColor', color)
+            $(".type2.type3").css('backgroundColor', color)*/
+        })
+        $('#button3').on('click', function(){
+            let state2 = $('#button2').hasClass("active")
+            let state3 = $('#button3').hasClass("active")
             
+            if (state2==true & state3==true){
+                //type2 type3 show -> click type3 -> type3 disappear & some type3 show type2 color
+                $('#button3').removeClass("active")
+                $('#button3').css('backgroundColor', nocolor)
+                $(".type3").css('backgroundColor', nocolor)
+                $(".type2.type3").css('backgroundColor', type2color) //type2 color
+            }
+            else if(state2==true & state3==false){
+                //type2 show, type3 non show -> click type3 -> type3 show some type3 show type2 color
+                $('#button3').addClass("active")
+                $('#button3').css('backgroundColor', type3color)
+                $(".type3").css('backgroundColor', type3color)
+                $(".type2.type3").css('backgroundColor', type2color) //type2 color
+            }
+            else if(state2==false & state3==true){
+                //type2 no show, type3 show -> click type3 -> all type3 disapear
+                $('#button3').removeClass("active")
+                $('#button3').css('backgroundColor', nocolor)
+                $(".type3").css('backgroundColor', nocolor)
+            }
+            else{
+                $('#button3').addClass("active")
+                $('#button3').css('backgroundColor', type3color)
+                $(".type3").css('backgroundColor', type3color)
+            }
+
+            /*
+            let color = $(".type3").css('backgroundColor')
+            if (color=="rgba(0, 0, 0, 0)" | color=="rgb(255, 190, 64)"){
+                color = "rgb(243, 231, 255)"
+            }
+            else{
+                color = "rgba(0, 0, 0, 0)"
+            }
+            
+            $(".type3").css('backgroundColor', color)
+            $(".type2.type3").css('backgroundColor', color)*/
+        })
 
         
+        //sendic_b2a
+        
+        //sendic_a2b
+
+
 
         /*
        

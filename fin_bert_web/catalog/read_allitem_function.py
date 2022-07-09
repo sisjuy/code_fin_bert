@@ -67,7 +67,7 @@ def read_allitem_fun(textdic,company,year):
         for item in itemlist[0:itemlist.index(firstline_item)]:
             s = "There is no "+str(item)+" in "+str(year)
             article.append(s)
-            sen2id[s] = s
+            sen2id[company+"_"+str(year).split("20")[1]+"_"+item.upper()+"_P"+str(0)+"_S"+str(0)] = s
             article.append("\\n")
             article.append("\\n")
             ar += s
@@ -79,9 +79,10 @@ def read_allitem_fun(textdic,company,year):
         if articleid[i].split("_")[0] == "no item":
             item = articleid[i].split("_")[1]
             year = articleid[i].split("_")[2]
+            sid = company+"_"+str(year).split("20")[1]+"_"+item.upper()+"_P"+str(0)+"_S"+str(0)
             s = "There is no "+str(item)+" in "+str(year)
             article.append(s)
-            sen2id[s] = s
+            sen2id[sid] = s
             article.append("\\n")
             article.append("\\n")
             ar += s 
