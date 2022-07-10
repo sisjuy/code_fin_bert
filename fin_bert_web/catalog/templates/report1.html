@@ -368,8 +368,30 @@
         paragraph1.innerHTML = arr1
         paragraph2.innerHTML = arr2
 
-
-
+        
+        function createspan_4firstlineitem(id,text,para2){
+            if (para2==1){
+                //para2 for senb
+                var para2 = paragraph2.innerHTML;
+                var index = para2.indexOf(text);
+                var senb = document.createElement("span");
+                senb.id = id
+                senb.innerHTML = para2.substring(index,index+text.length)
+                para2 = para2.substring(0,index) + senb.outerHTML + para2.substring(index + text.length);
+                paragraph2.innerHTML = para2
+            }
+            else{
+                //para1 for sena
+                var para2 = paragraph1.innerHTML;
+                var index = para2.indexOf(text);
+                var senb = document.createElement("span");
+                senb.id = id
+                senb.innerHTML = para2.substring(index,index+text.length)
+                para2 = para2.substring(0,index) + senb.outerHTML + para2.substring(index + text.length);
+                paragraph1.innerHTML = para2
+            }
+            
+        }
        
         //create span and give classname
         function createspan(id,text,para2){
@@ -411,12 +433,17 @@
             }
         }
 
-       
-       
-        //a.style.backgroundColor = "#FFFF66"
-        //console.log(paragraph1)
 
-        /* give id of every type */
+        /* give id of every type + build sendic*/
+        let sendic_b2a = {}
+        sendic_b2a['type1'] = {}
+        sendic_b2a['type2'] = {}
+        sendic_b2a['type3'] = {}
+        let sendic_a2b = {}
+        sendic_a2b['type1'] = {}
+        sendic_a2b['type2'] = {}
+        sendic_a2b['type3'] = {}
+
         ////type2////
         for(var i=0; i<result1.type2.length;i++){
             if (typeof(result1.type2[i].senA)=='object'){
@@ -426,6 +453,8 @@
                     createspan(senaid,senatext,0)
                     let a = document.getElementById(result1.type2[i].senA[j])
                     a.className = a.className + " type2 "// + i + " " + j
+                    
+                    sendic_a2b['type2'][result1.type2[i].senA[j]] = result1.type2[i].senB
                 }
             }
             else{
@@ -435,12 +464,18 @@
                 createspan(senaid,senatext,0)
                 let a = document.getElementById(result1.type2[i].senA)
                 a.className = a.className + " type2 "// + i + " " + "0"
+                sendic_a2b['type2'][result1.type2[i].senA] = result1.type2[i].senB
             }
             senbid = result1.type2[i].senB
             senbtext = sen2id2[senbid]
             createspan(senbid,senbtext,1)
             let b = document.getElementById(result1.type2[i].senB)
             b.className = b.className + " type2 "// + i
+
+
+            //sendic_b2a
+            sendic_b2a['type2'][result1.type2[i].senB] = result1.type2[i].senA
+            
         
         }
         ////type3////
@@ -452,6 +487,8 @@
                     createspan(senaid,senatext,0)
                     let a = document.getElementById(result1.type3[i].senA[j])
                     a.className = a.className + " type3 "// + i + " " + j
+
+                    sendic_a2b['type3'][result1.type3[i].senA[j]] = result1.type3[i].senB
                 }
             }
             else{
@@ -460,12 +497,16 @@
                 createspan(senaid,senatext,0)
                 let a = document.getElementById(result1.type3[i].senA)
                 a.className = a.className + " type3 "// + i + " " + "0"
+
+                sendic_a2b['type3'][result1.type3[i].senA[j]] = result1.type3[i].senB
             }
             senbid = result1.type3[i].senB
             senbtext = sen2id2[senbid]
             createspan(senbid,senbtext,1)
             let b = document.getElementById(result1.type3[i].senB)
             b.className = b.className + " type3 "// + i
+
+            sendic_b2a['type3'][result1.type3[i].senB] = result1.type3[i].senA
         }
         ////type1////
         for(var i=0; i<result1.type1.length;i++){
@@ -481,7 +522,29 @@
             let b = document.getElementById(result1.type1[i].senB)
             b.className = b.className + " type1 "// + i
             
+            sendic_a2b['type1'][result1.type1[i].senA] = result1.type1[i].senB
+            sendic_b2a['type1'][result1.type1[i].senB] = result1.type1[i].senA
         }   
+        
+        //give first line of item id
+        for(var i=0; i<20; i++){
+            id1 = company+"_"+lastyear.split("20")[1]+"_"+vm2.$data.list[i].toUpperCase()+"_P0_S0"
+            id2 = company+"_"+curryear.split("20")[1]+"_"+vm2.$data.list[i].toUpperCase()+"_P0_S0"
+            //console.log(sen2id1[id1],sen2id2[id2])
+            let check1 = document.getElementById(id1)
+            let check2 = document.getElementById(id2)
+            if (check1==null){
+                createspan_4firstlineitem(id1,sen2id1[id1],0)
+            }
+            if (check2==null){
+                createspan_4firstlineitem(id2,sen2id2[id2],1)
+            }
+            //createspan_4firstlineitem(id1,sen2id1[id1],0)
+            //createspan_4firstlineitem(id2,sen2id2[id2],1)
+
+            
+        }
+
         
         
         $(".type2").css('backgroundColor', "#ffbe40")
@@ -602,6 +665,28 @@
         })
 
         
+        //scroll to first line of item
+        let firstlineaid = company+"_"+lastyear.split("20")[1]+"_"+item.toUpperCase()+"_P0_S0"
+        let firstlinebid = company+"_"+curryear.split("20")[1]+"_"+item.toUpperCase()+"_P0_S0"
+        let firstlinea = document.getElementById(firstlineaid)
+        let firstlineb = document.getElementById(firstlinebid)
+        scrollToElm(rightreport,firstlinea,600)
+        scrollToElm(leftreport,firstlineb,600)
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         //sendic_b2a
         
         //sendic_a2b
