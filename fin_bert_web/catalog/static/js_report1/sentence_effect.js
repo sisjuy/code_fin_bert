@@ -40,6 +40,8 @@ function scrollTo(element, to, duration, onDone) {
     animateScroll();
 }
 function easeInOutQuad(t){ return t<.5 ? 2*t*t : -1+(4-2*t)*t };
+
+//0711 ok
 function click_a(ele){
 /* --------------------------------------------*/
 /* jump to corresponding senA if clicking senB */
@@ -53,82 +55,26 @@ function click_a(ele){
     
     var sena = document.getElementById(ele.id)
     var senatype = $('#'+ele.id).hasClass('type1') ? 'type1' : $('#'+ele.id).hasClass('type2') & $('#'+ele.id).hasClass('type3')  ? 'type2type3' : $('#'+ele.id).hasClass('type2') ? 'type2' : 'type3'
-    //type1
-    console.log(sendic_a2b,ele.id,senatype)
+
     if(senatype=='type2type3'){
         //check which button is active
-        let state2 = $('button2').hasClass('active')
+        let state2 = $('#button2').hasClass('active')
         senatype = state2 ? 'type2' : 'type3'
         senb = document.getElementById(sendic_a2b[senatype][ele.id])
     }
     else{
         senb = document.getElementById(sendic_a2b[senatype][ele.id])
     }
-    console.log(sena,senatype,senb)
+    
     //type2
     //type3
     
     scrollToElm(rightreport,sena,600); 
     scrollToElm(leftreport,senb,600)
-    
-
-    function scrollToElm(container, elm, duration){
-        var pos = getRelativePos(elm);
-        scrollTo( container, pos.top , 0.87);  // duration in seconds
-    }
-    function getRelativePos(elm){
-        var pPos = elm.parentNode.getBoundingClientRect(), // parent pos leftreport
-        cPos = elm.getBoundingClientRect(); // target pos senb
-    
-        winy = window.pageYOffset;
-        //console.log(winy)
-        pos = {};
-
-        pos.top    = cPos.top    - pPos.top + elm.parentNode.scrollTop,
-        pos.right  = cPos.right  - pPos.right,
-        pos.bottom = cPos.bottom - pPos.bottom,
-        pos.left   = cPos.left   - pPos.left;
-
-
-        return pos;
-    }
-    
-    function scrollTo(element, to, duration, onDone) {
-        var start = element.scrollTop,
-        change = to - start,
-        startTime = performance.now(),
-        val, now, elapsed, t;
-    
-        function animateScroll(){
-            now = performance.now();
-            elapsed = (now - startTime)/1000;
-            t = (elapsed/duration);
-
-            element.scrollTop = start + change * easeInOutQuad(t);
-
-            if( t < 1 )
-                window.requestAnimationFrame(animateScroll);
-            else
-                onDone && onDone();
-        };
-
-        animateScroll();
-    }
-    function easeInOutQuad(t){ return t<.5 ? 2*t*t : -1+(4-2*t)*t };
-
-    /* ---------------------------*/
-    /* words color change in senB */
-    
-    
-    
-    //get the score
-    //console.log(result1.labels)
-    //console.log(senbcontent)
-    
-    //the order should be true or it will cause problem
-    //changecolor(ele.id)
 
 }
+
+
 function click_b(ele){
 
     /* --------------------------------------------*/
@@ -139,146 +85,55 @@ function click_b(ele){
     let rightreportid = '#rightreport'
     var leftreport = document.querySelector(leftreportid);
     var rightreport = document.querySelector(rightreportid)
-    //console.log(leftreport)
-        
-        
-        
+
     var lastclick = localStorage.getItem("lastclick")
+    var lastactive = localStorage.getItem("lastactive")
     
-    //console.log(lastclick,eleid)
-    if (lastclick == 0){
-        localStorage.setItem("lastclick",ele.id)
-        senb = document.getElementById(ele.id)
-        sena = document.getElementById(sendic_b2a[item][ele.id]);
-        senb.style.backgroundColor = "#ed4264"
-        senb.style.padding = "0.25em 0"
-        sena.style.backgroundColor = "#ed4264"
-        sena.style.padding = "0.25em 0"
-    }
-    else if(lastclick != ele.id & lastclick != sendic_b2a[item][ele.id]){
-        
-        //lastclick cancel color
-        var lastitem = lastclick.split('_')[1];
-        //console.log(lastitem)
-        var lastsen = lastclick.split('_')[0];
-        if(lastsen == "senb"){
-            lastsena = document.getElementById(sendic_b2a[lastitem][lastclick])
-            lastsenb = document.getElementById(lastclick)
-        }else{
-            lastsena = document.getElementById(lastclick)
-            lastsenb = document.getElementById(sendic_a2b[lastitem][lastclick])
-        }
-        localStorage.setItem("lastclick",ele.id)
-        lastsenb.style.backgroundColor = "#FFFF66"
-        lastsenb.style.padding = "0.25em 0"
-        lastsena.style.backgroundColor = "#FFFF66"
-        lastsena.style.padding = "0.25em 0"
-        //eleid change color
-        senb = document.getElementById(ele.id)
-        sena = document.getElementById(sendic_b2a[item][ele.id]);
-        senb.style.backgroundColor = "#ed4264"
-        senb.style.padding = "0.25em 0"
-        sena.style.backgroundColor = "#ed4264"
-        sena.style.padding = "0.25em 0"
-    }
-    else{
-        event.preventDefault()
-    }
         
     senb = document.getElementById(ele.id)
-    sena = document.getElementById(sendic_b2a[item][ele.id]); // <-- Scroll to here within ".box"
-        
-        //console.log(senb)
+    var senbtype = $('#'+ele.id).hasClass('type1') ? 'type1' : $('#'+ele.id).hasClass('type2') & $('#'+ele.id).hasClass('type3')  ? 'type2type3' : $('#'+ele.id).hasClass('type2') ? 'type2' : 'type3'
+    
+    if(senbtype=='type2type3'){
+        //check which button is active
+        let state2 = $('#button2').hasClass('active')
+        senbtype = state2 ? 'type2' : 'type3'
+    }
+    
+    if (typeof(sendic_b2a[senbtype][ele.id])=='object'){
+        if(lastclick==0){
+            sena = document.getElementById(sendic_b2a[senbtype][ele.id][0])
+            localStorage.setItem("lastclick",sendic_b2a[senbtype][ele.id][0])
+            localStorage.setItem("lastactive",$('#button2').hasClass('active'))
+        }
+        else{
+            if(sendic_b2a[senbtype][ele.id].includes(lastclick) & lastactive=='true'){
+                console.log("here")
+                let idx = sendic_b2a[senbtype][ele.id].indexOf(lastclick)
+                idxx = idx==(sendic_b2a[senbtype][ele.id].length-1) ? 0 : idx+1
+                sena = document.getElementById(sendic_b2a[senbtype][ele.id][idxx])
+                
+                localStorage.setItem("lastclick",sendic_b2a[senbtype][ele.id][idxx])
+                localStorage.setItem("lastactive",$('#button2').hasClass('active'))
+            }
+            
+            else{
+                
+                sena = document.getElementById(sendic_b2a[senbtype][ele.id][0])
+                localStorage.setItem("lastclick",sendic_b2a[senbtype][ele.id][0])
+                localStorage.setItem("lastactive",$('#button2').hasClass('active'))
+            }
+            
+       
+        }
+    }
+    else{
+        sena = document.getElementById(sendic_b2a[senbtype][ele.id]); // <-- Scroll to here within ".box"
+        localStorage.setItem("lastclick",sendic_b2a[senbtype][ele.id])
+        localStorage.setItem("lastactive",$('#button2').hasClass('active'))
+    }
+
     scrollToElm(leftreport,senb,600)
     scrollToElm(rightreport,sena,600);   
-    /*
-    if(window.pageYOffset>120){
-        window.scrollTo({
-            top : 120,
-            behavior : "smooth"
-        });
-    }*/
-        
-
-
-    function scrollToElm(container, elm, duration){
-        var pos = getRelativePos(elm);
-        //console.log(pos.top)
-        scrollTo( container, pos.top , 0.87);  // duration in seconds
-        
-    }
-    function getRelativePos(elm){
-        var pPos = elm.parentNode.getBoundingClientRect(), // parent pos report1
-        cPos = elm.getBoundingClientRect(); // target pos senb
-        //console.log(elm.parentNode)
-        //console.log(pPos)
-        //console.log(cPos)
-        //console.log("parent's scrollTop:",elm.parentNode.scrollTop)
-        winy = window.pageYOffset;
-        //console.log(winy)
-        pos = {};
-
-        pos.top    = cPos.top   + elm.parentNode.scrollTop- pPos.top ,
-        pos.right  = cPos.right  - pPos.right,
-        pos.bottom = cPos.bottom - pPos.bottom,
-        pos.left   = cPos.left   - pPos.left;
-
-
-        return pos;
-    }
-    function scrollwin(element, to, duration){
-        var start = window.pageYOffset;
-        change = to - start;
-        startTime = performance.now();
-        function animateScroll(){
-            now = performance.now();
-            elapsed = (now - startTime)/1000;
-            t = (elapsed/duration);
-
-            element.scrollTop = start + change * easeInOutQuad(t);
-
-            if( t < 1 )
-                window.requestAnimationFrame(animateScroll);
-            else
-                onDone && onDone();
-        };
-
-        animateScroll();
-    }
-    function scrollTo(element, to, duration, onDone) {
-        var start = element.scrollTop,
-        change = to - start,
-        startTime = performance.now(),
-        val, now, elapsed, t;
-    
-        function animateScroll(){
-            now = performance.now();
-            elapsed = (now - startTime)/1000;
-            t = (elapsed/duration);
-
-            element.scrollTop = start + change * easeInOutQuad(t);
-
-            if( t < 1 )
-                window.requestAnimationFrame(animateScroll);
-            else
-                onDone && onDone();
-        };
-
-        animateScroll();
-    }
-    function easeInOutQuad(t){ return t<.5 ? 2*t*t : -1+(4-2*t)*t };
-
-        /* ---------------------------*/
-        /* words color change in senB */
-        
-        
-        
-        //get the score
-        //console.log(result1.labels)
-        //console.log(senbcontent)
-        
-        //the order should be true or it will cause problem
-        //changecolor(ele.id)
 
 }
 function onmouse(ele){

@@ -305,6 +305,7 @@
     var sendic_b2a = {};
     var score = {} //score of the words
     localStorage.setItem("lastclick",0)
+    localStorage.setItem("lastactive",0)
     var curryear = localStorage.getItem("yearnow")
     var company = localStorage.getItem("companynow")
     var item = localStorage.getItem("itemnow").toString()
@@ -732,7 +733,7 @@
         scrollToElm(rightreport,firstlinea,600)
         scrollToElm(leftreport,firstlineb,600)
         
-        console.log(sendic_a2b)
+        console.log(sendic_b2a)
 
 
 
