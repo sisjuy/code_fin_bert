@@ -51,54 +51,23 @@ function click_a(ele){
     var leftreport = document.querySelector(leftreportid);
     var rightreport = document.querySelector(rightreportid)
     
-    //click change sentence's color
-    var lastclick = localStorage.getItem("lastclick")
-    
-    //console.log(lastclick,eleid)
-    if (lastclick == 0){
-        localStorage.setItem("lastclick",ele.id)
-        sena = document.getElementById(ele.id)
-        senb = document.getElementById(sendic_a2b[item][ele.id]);
-        senb.style.backgroundColor = "#ed4264"
-        senb.style.padding = "0.25em 0"
-        sena.style.backgroundColor = "#ed4264"
-        sena.style.padding = "0.25em 0"
-    }
-    else if(lastclick != ele.id & lastclick != sendic_a2b[item][ele.id]){
-        
-        //lastclick cancel color
-        
-        var lastitem = lastclick.split('_')[1];
-        //console.log(lastitem)
-        var lastsen = lastclick.split('_')[0];
-        if(lastsen == "senb"){
-            lastsena = document.getElementById(sendic_b2a[lastitem][lastclick])
-            lastsenb = document.getElementById(lastclick)
-        }else{
-            lastsena = document.getElementById(lastclick)
-            lastsenb = document.getElementById(sendic_a2b[lastitem][lastclick])
-        }
-        localStorage.setItem("lastclick",ele.id)
-        lastsenb.style.backgroundColor = "#FFFF66"
-        lastsenb.style.padding = "0.25em 0"
-        lastsena.style.backgroundColor = "#FFFF66"
-        lastsena.style.padding = "0.25em 0"
-        //eleid change color
-        sena = document.getElementById(ele.id)
-        senb = document.getElementById(sendic_a2b[item][ele.id]);
-        senb.style.backgroundColor = "#ed4264"
-        senb.style.padding = "0.25em 0"
-        sena.style.backgroundColor = "#ed4264"
-        sena.style.padding = "0.25em 0"
+    var sena = document.getElementById(ele.id)
+    var senatype = $('#'+ele.id).hasClass('type1') ? 'type1' : $('#'+ele.id).hasClass('type2') & $('#'+ele.id).hasClass('type3')  ? 'type2type3' : $('#'+ele.id).hasClass('type2') ? 'type2' : 'type3'
+    //type1
+    console.log(sendic_a2b,ele.id,senatype)
+    if(senatype=='type2type3'){
+        //check which button is active
+        let state2 = $('button2').hasClass('active')
+        senatype = state2 ? 'type2' : 'type3'
+        senb = document.getElementById(sendic_a2b[senatype][ele.id])
     }
     else{
-        event.preventDefault()
+        senb = document.getElementById(sendic_a2b[senatype][ele.id])
     }
-
-
-
-    senb = document.getElementById(sendic_a2b[item][ele.id])
-    sena = document.getElementById(ele.id); // <-- Scroll to here within ".box"
+    console.log(sena,senatype,senb)
+    //type2
+    //type3
+    
     scrollToElm(rightreport,sena,600); 
     scrollToElm(leftreport,senb,600)
     
