@@ -1,20 +1,32 @@
-function scrollToElm(container, elm, duration){
+function scrollToElm(container, elm, elm1,duration){
+    var pPos1 = elm1.parentNode.getBoundingClientRect() // parent pos leftreport
+    cPos1 = elm1.getBoundingClientRect()
+    console.log("senb:",cPos1.top,pPos1.top,cPos1.top - pPos1.top,elm1.parentNode.scrollTop)
+
+    var leftreport = document.getElementById("leftreport");
+    senbchange = cPos1.top - pPos1.top - leftreport.scrollTop
+
+    
     var pos = getRelativePos(elm);
-    scrollTo( container, pos.top , 0.87);  // duration in seconds
+    //console.log(elm1.scrollTop)
+    //rightreport, sena's pos.top, duration
+    scrollTo( container, pos.top-senbchange, 0.87);  // duration in seconds
+    //pos1.top - leftreport.scrolltop 
 }
 function getRelativePos(elm){
-    var pPos = elm.parentNode.getBoundingClientRect(), // parent pos leftreport
+    var pPos = elm.parentNode.getBoundingClientRect() // parent pos leftreport
+    //console.log(elm.parentNode,pPos)
     cPos = elm.getBoundingClientRect(); // target pos senb
-
+    //console.log(elm,cPos)
     winy = window.pageYOffset;
     //console.log(winy)
     pos = {};
-
+    console.log("sena:",cPos.top,pPos.top,cPos.top - pPos.top, elm.parentNode.scrollTop)
     pos.top    = cPos.top    - pPos.top + elm.parentNode.scrollTop,
     pos.right  = cPos.right  - pPos.right,
     pos.bottom = cPos.bottom - pPos.bottom,
     pos.left   = cPos.left   - pPos.left;
-
+    
 
     return pos;
 }
@@ -102,6 +114,7 @@ function click_b(ele){
     if (typeof(sendic_b2a[senbtype][ele.id])=='object'){
         if(lastclick==0){
             sena = document.getElementById(sendic_b2a[senbtype][ele.id][0])
+            sena.style.opacity = 1 
             localStorage.setItem("lastclick",sendic_b2a[senbtype][ele.id][0])
             localStorage.setItem("lastactive",$('#button2').hasClass('active'))
         }
@@ -114,6 +127,10 @@ function click_b(ele){
                 
                 localStorage.setItem("lastclick",sendic_b2a[senbtype][ele.id][idxx])
                 localStorage.setItem("lastactive",$('#button2').hasClass('active'))
+
+                sena.style.opacity = 1 
+                lastsen = document.getElementById(lastclick)
+                lastsen.style.opacity = 0.5
             }
             
             else{
@@ -121,19 +138,42 @@ function click_b(ele){
                 sena = document.getElementById(sendic_b2a[senbtype][ele.id][0])
                 localStorage.setItem("lastclick",sendic_b2a[senbtype][ele.id][0])
                 localStorage.setItem("lastactive",$('#button2').hasClass('active'))
+                sena.style.opacity = 1 
+                lastsen = document.getElementById(lastclick)
+                lastsen.style.opacity = 0.5
             }
             
        
         }
     }
     else{
-        sena = document.getElementById(sendic_b2a[senbtype][ele.id]); // <-- Scroll to here within ".box"
-        localStorage.setItem("lastclick",sendic_b2a[senbtype][ele.id])
-        localStorage.setItem("lastactive",$('#button2').hasClass('active'))
+        if(lastclick==0){
+            sena = document.getElementById(sendic_b2a[senbtype][ele.id]); // <-- Scroll to here within ".box"
+            localStorage.setItem("lastclick",sendic_b2a[senbtype][ele.id])
+            localStorage.setItem("lastactive",$('#button2').hasClass('active'))
+            sena.style.opacity = 1
+        }
+        else if(lastclick == sendic_b2a[senbtype][ele.id]){
+            sena = document.getElementById(sendic_b2a[senbtype][ele.id]); // <-- Scroll to here within ".box"
+            localStorage.setItem("lastclick",sendic_b2a[senbtype][ele.id])
+            localStorage.setItem("lastactive",$('#button2').hasClass('active'))
+            sena.style.opacity = 1
+        }
+        else{
+            sena = document.getElementById(sendic_b2a[senbtype][ele.id]); // <-- Scroll to here within ".box"
+            localStorage.setItem("lastclick",sendic_b2a[senbtype][ele.id])
+            localStorage.setItem("lastactive",$('#button2').hasClass('active'))
+            sena.style.opacity = 1
+            lastsen = document.getElementById(lastclick)
+            lastsen.style.opacity = 0.5
+        }
+         
+        
     }
 
-    scrollToElm(leftreport,senb,600)
-    scrollToElm(rightreport,sena,600);   
+    //scrollToElm(leftreport,senb,600)
+    scrollToElm(rightreport,sena,senb,600);  
+    
 
 }
 function onmouse(ele){

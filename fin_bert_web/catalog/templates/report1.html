@@ -109,7 +109,12 @@
 
 
         </div>
-
+        <div id=itemlist2 style="width: 10px; height:700px">
+            
+            <p  v-for="n in splitresult">[[n]]</p>
+                                
+        
+        </div>
         <!--last & next year buttom-->
         <div class="row" id="year_button">
             <form id="leftform" method="POST" action="{% url 'report1' %}" enctype="multipart/form-data" role="form">
@@ -219,19 +224,30 @@
             ],
             },
         });
-        new Vue({
+        var itemlist2 = new Vue({
             el: '#itemlist2',
             delimiters: ['[[',']]'],
             data: {
-            list:[
-            "Item1","Item1A","Item1B","Item2",
-            "Item3","Item4","Item5","Item6","Item7",
-            "Item7A","Item8","Item9","Item9A","Item9B",
-            "Item10","Item11","Item12","Item13","Item14",
-            "Item15"
-            ],
+                itemlist:[
+                "Item1","Item1A","Item1B","Item2",
+                "Item3","Item4","Item5","Item6","Item7",
+                "Item7A","Item8","Item9","Item9A","Item9B",
+                "Item10","Item11","Item12","Item13","Item14",
+                "Item15"
+                ],
             },
+            computed:{
+                splitresult: function () {
+                    return this.itemlist.filter(function (i) {
+                        console.log(i,typeof(i),i.split("Item")[1])
+                        let a = i.split("Item")[1]
+                        return a
+                    })
+                }
+            }
+            
         });
+        console.log(itemlist2)
     </script>
 
     
@@ -421,10 +437,11 @@
                 var sena = document.createElement("span");
                 sena.id = id
                 sena.className = "senA"
-                sena.setAttribute("onclick","click_a(this)")
+                //sena.setAttribute("onclick","click_a(this)")
                 sena.style.borderRadius = "25px"
-                sena.style.cursor = "pointer"
+                //sena.style.cursor = "pointer"
                 sena.style.padding = "0.02em 0"
+                sena.style.opacity = 0.5
                 sena.innerHTML = para1.substring(index,index+text.length)
                 
                 if (index >= 0) { 
@@ -569,14 +586,17 @@
         let nocolor = "rgba(0, 0, 0, 0)"
         $('#button1').on('click', function(){
             //console.log($(".type1").css('backgroundColor'))
+            
+
             let state1 = $('#button1').hasClass("active")
             if(state1==false){
                 //not active
                 $('#button1').css('backgroundColor', type1color)
                 $('#button1').addClass("active")
                 $(".type1").css('backgroundColor', type1color)
+                $('.senA.type1').css("opacity",0.5)
                 
-                $(".senA.type1").attr('onclick','click_a(this)')
+                //$(".senA.type1").attr('onclick','click_a(this)')
                 $(".senB.type1").attr('onclick','click_b(this)')
                 
                 $(".type1").css('cursor',"pointer")
@@ -586,6 +606,7 @@
                 $('#button1').css('backgroundColor', nocolor)
                 $('#button1').removeClass("active")
                 $(".type1").css('backgroundColor', nocolor)
+                $('.senA.type1').css("opacity",1)
                 $(".type1").removeAttr('onclick')
                 $(".type1").css('cursor','default')
                 //senb.style.cursor = "pointer"
@@ -598,6 +619,7 @@
 
         })
         $('#button2').on('click', function(){
+            
             //console.log($(".type2").css('backgroundColor'))
             let state2 = $('#button2').hasClass("active")
             let state3 = $('#button3').hasClass("active")
@@ -606,10 +628,14 @@
                 $('#button2').removeClass("active")
                 $('#button2').css('backgroundColor', nocolor)
                 $(".type2").css('backgroundColor', nocolor)
+                
                 $(".type2.type3").css('backgroundColor', type3color) //type3 color
 
+                $('.senA.type2').css("opacity",1)
+                $('.senA.type2.type3').css("opacity",0.5)
+
                 $(".type2").removeAttr('onclick')
-                $(".senA.type2.type3").attr('onclick','click_a(this)')
+                //$(".senA.type2.type3").attr('onclick','click_a(this)')
                 $(".senB.type2.type3").attr('onclick','click_b(this)')
 
                 $(".type2").css('cursor','default')
@@ -621,6 +647,8 @@
                 $('#button2').removeClass("active")
                 $('#button2').css('backgroundColor', nocolor)
                 $(".type2").css('backgroundColor', nocolor)
+                $('.senA.type2').css("opacity",1)
+                
                 $(".type2").removeAttr('onclick')
 
                 $(".type2").css('cursor','default')
@@ -633,7 +661,11 @@
                 $(".type2.type3").css('backgroundColor', type2color)
                 $(".type2").css('backgroundColor', type2color)
 
-                $(".senA.type2").attr('onclick','click_a(this)')
+                
+                $('.senA.type2.type3').css("opacity",0.5)
+                $('.senA.type2').css("opacity",0.5)
+
+                //$(".senA.type2").attr('onclick','click_a(this)')
                 $(".senB.type2").attr('onclick','click_b(this)')
 
                 $(".type2").css('cursor',"pointer")
@@ -642,7 +674,10 @@
                 $('#button2').addClass("active")
                 $('#button2').css('backgroundColor', type2color)
                 $(".type2").css('backgroundColor', type2color)
-                $(".senA.type2").attr('onclick','click_a(this)')
+                
+                $('.senA.type2').css("opacity",0.5)
+
+                //$(".senA.type2").attr('onclick','click_a(this)')
                 $(".senB.type2").attr('onclick','click_b(this)')
 
                 $(".type2").css('cursor',"pointer")
@@ -662,6 +697,7 @@
             $(".type2.type3").css('backgroundColor', color)*/
         })
         $('#button3').on('click', function(){
+            
             let state2 = $('#button2').hasClass("active")
             let state3 = $('#button3').hasClass("active")
             
@@ -672,8 +708,12 @@
                 $(".type3").css('backgroundColor', nocolor)
                 $(".type2.type3").css('backgroundColor', type2color) //type2 color
 
+                $('.senA.type3').css("opacity",1)
+                $('.senA.type2.type3').css("opacity",0.5)
+
+
                 $(".type3").removeAttr('onclick')
-                $(".senA.type2.type3").attr('onclick','click_a(this)')
+                //$(".senA.type2.type3").attr('onclick','click_a(this)')
                 $(".senB.type2.type3").attr('onclick','click_b(this)')
 
                 $(".type3").css('cursor','default')
@@ -686,7 +726,11 @@
                 $(".type3").css('backgroundColor', type3color)
                 $(".type2.type3").css('backgroundColor', type2color) //type2 color
 
-                $(".senA.type3").attr('onclick','click_a(this)')
+                $('.senA.type3').css("opacity",0.5)
+                $('.senA.type2.type3').css("opacity",0.5)
+
+
+                //$(".senA.type3").attr('onclick','click_a(this)')
                 $(".senB.type3").attr('onclick','click_b(this)')
 
                 $(".type3").css('cursor',"pointer")
@@ -697,6 +741,10 @@
                 $('#button3').css('backgroundColor', nocolor)
                 $(".type3").css('backgroundColor', nocolor)
 
+                
+                $('.senA.type3').css("opacity",1)
+
+
                 $(".type3").removeAttr('onclick')
                 $(".type3").css('cursor','default')
             }
@@ -704,8 +752,11 @@
                 $('#button3').addClass("active")
                 $('#button3').css('backgroundColor', type3color)
                 $(".type3").css('backgroundColor', type3color)
+                
+                $('.senA.type3').css("opacity",0.5)
 
-                $(".senA.type3").attr('onclick','click_a(this)')
+
+                //$(".senA.type3").attr('onclick','click_a(this)')
                 $(".senB.type3").attr('onclick','click_b(this)')
 
                 $(".type3").css('cursor',"pointer")
@@ -725,6 +776,10 @@
         })
 
         
+
+
+
+
         //scroll to first line of item
         let firstlineaid = company+"_"+lastyear.split("20")[1]+"_"+item.toUpperCase()+"_P0_S0"
         let firstlinebid = company+"_"+curryear.split("20")[1]+"_"+item.toUpperCase()+"_P0_S0"
@@ -733,23 +788,18 @@
         scrollToElm(rightreport,firstlinea,600)
         scrollToElm(leftreport,firstlineb,600)
         
-        console.log(sendic_b2a)
-
-
-
-
-
-
-
-
-
-
-
-
-
-        //sendic_b2a
         
-        //sendic_a2b
+
+
+
+
+
+
+
+
+
+
+
 
 
 
