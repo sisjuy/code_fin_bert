@@ -204,13 +204,13 @@ function changecolor(eleid){
         c = score2color(score[eleid][j])
         color.push(c)
     }
-    //console.log(color[1])
+    console.log(color)
     
     
     
     //console.log('.'+ele.id +' .senbwords')
-    let senbword1 = document.querySelectorAll('#'+eleid+ ' .senbwords_' + item)
-    
+    let senbword1 = document.getElementById(eleid).getElementsByClassName("senbwords")
+    //console.log(senbword1)
     //float up? 
     //senbword1.style.transform = "rotate(7deg)"
 
@@ -227,7 +227,7 @@ function changecolor(eleid){
         //console.log(c1)
         senbword1[i*2].style.transitionDuration = "0.5s"
         senbword1[i*2].style.backgroundColor = "#"+color[i];
-        senbword1[i*2].style.padding = '0.25em 0'
+        senbword1[i*2].style.padding = '0.02em 0'
         senbword1[i*2].style.borderRadius = '0px' 
         if(i==0){
             senbword1[i*2].style.borderTopLeftRadius = '25px' 
@@ -237,7 +237,7 @@ function changecolor(eleid){
         if(i*2+1 < 2*color.length-2){
             senbword1[i*2+1].style.transitionDuration = "0.5s"
             senbword1[i*2+1].style.background =  'linear-gradient(to right, ' + c1 + ' 50%, ' + c2 + ' 50%)';
-            senbword1[i*2+1].style.padding = '0.25em 0'
+            senbword1[i*2+1].style.padding = '0.02em 0'
             senbword1[i*2+1].style.borderRadius = '0px' 
         }
         if(i==(color.length-1)){
@@ -264,7 +264,7 @@ function changecolor(eleid){
 function cancelcolor(eleid){
     var item = localStorage.getItem("itemnow").toString()
     var lastclick = localStorage.getItem("lastclick")
-    let senbword1 = document.querySelectorAll('#'+eleid+ ' .senbwords_' + item)
+    let senbword1 = document.getElementById(eleid).getElementsByClassName("senbwords")
     //console.log(senbword1.length)
     for (var i=0; i < senbword1.length;i++){
         senbword1[i].style.transitionDuration = "0.5s"
@@ -295,16 +295,12 @@ function cancelcolor(eleid){
         //console.log(senbword1[i])
     }
     let senb = document.getElementById(eleid)
-    var lastitem = lastclick.split('_')[1];
+    
     var lastsen = lastclick.split('_')[0];
     //lastclick : sena
     //hover : senb
-    if(lastsen == "sena"){
-        var last = sendic_a2b[lastitem][lastclick]
-    }else{
-        var last = lastclick
-    }
-
+    
+    /*
     if(last == eleid){
         //senb keep red color
         senb.style.backgroundColor = "#ed4264"
@@ -316,5 +312,5 @@ function cancelcolor(eleid){
         senb.style.borderRadius = "25px"
         senb.style.cursor = "pointer"
         senb.style.padding = "0.25em 0"
-    }
+    }*/
 }

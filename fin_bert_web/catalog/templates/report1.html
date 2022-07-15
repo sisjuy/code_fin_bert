@@ -502,8 +502,6 @@
                 senb.id = id
                 senb.className = "senB"
                 senb.setAttribute("onclick","click_b(this)")
-                senb.setAttribute("onmouseover","onmouse(this)")
-                senb.setAttribute("onmouseout","outmouse(this)")
                 senb.style.borderRadius = "25px"
                 senb.style.cursor = "pointer"
                 senb.style.padding = "0.02em 0"
@@ -554,7 +552,7 @@
                     createspan(senaid,senatext,0)
                     let a = document.getElementById(result1.type2[i].senA[j])
                     a.className = a.className + " type2 "// + i + " " + j
-                    
+    
                     sendic_a2b['type2'][result1.type2[i].senA[j]] = result1.type2[i].senB
                 }
             }
@@ -565,6 +563,8 @@
                 createspan(senaid,senatext,0)
                 let a = document.getElementById(result1.type2[i].senA)
                 a.className = a.className + " type2 "// + i + " " + "0"
+            
+
                 sendic_a2b['type2'][result1.type2[i].senA] = result1.type2[i].senB
             }
             senbid = result1.type2[i].senB
@@ -572,6 +572,35 @@
             createspan(senbid,senbtext,1)
             let b = document.getElementById(result1.type2[i].senB)
             b.className = b.className + " type2 "// + i
+
+            b.setAttribute("onmouseover","onmouse(this)")
+            b.setAttribute("onmouseout","outmouse(this)")
+
+
+            //token
+            //prob = result1.type2[i].prob
+            score[senbid] = result1.type2[i].prob
+            //type2 with type3 => onmouseover take off
+            let senbcontent = b.innerHTML
+            let brokensenb = senbcontent.split(" ");
+            
+            b.innerHTML = ''
+            brokensenb.map((part,i) => {
+                var word = document.createElement("span");
+                var space = document.createElement("span");
+                word.className = "senbwords" 
+                word.innerHTML = part
+                space.className = "senbwords" 
+                space.innerHTML = ' '
+                b.innerHTML += i+1==brokensenb.length ? word.outerHTML : word.outerHTML + space.outerHTML
+            })
+            let senbword1 = document.getElementById(senbid).getElementsByClassName("senbwords")
+            
+            for(var m=0;m<(brokensenb.length*2-1);m++){
+                senbword1[m].id = senbid + "_" + m
+                //console.log(senbword1[m])
+            }
+
 
 
             //sendic_b2a
@@ -667,6 +696,18 @@
         let type2color = "rgb(255, 190, 64)"
         let type3color = "rgb(243, 231, 255)"
         let nocolor = "rgba(0, 0, 0, 0)"
+        /*
+        $('.senB.type2').hover(
+            function(){
+                $(".type2").css("transition-duration","0.3s");
+                $(".type2").css("box-shadow","1px 5px 15px 0px rgba(0,0,0,0.25)");
+            },
+            function(){
+                $(".type2").css("box-shadow","");
+            
+            })
+        $('.senB.type2').hover(
+        */
         $('#button1').on('click', function(){
             //console.log($(".type1").css('backgroundColor'))
             
@@ -718,7 +759,9 @@
                 $('.senA.type2.type3').css("opacity",0.5)
 
                 $(".type2").removeAttr('onclick')
-                //$(".senA.type2.type3").attr('onclick','click_a(this)')
+                
+                $(".senB.type2").removeAttr('onmouseover')
+                
                 $(".senB.type2.type3").attr('onclick','click_b(this)')
 
                 $(".type2").css('cursor','default')
@@ -733,6 +776,8 @@
                 $('.senA.type2').css("opacity",1)
                 
                 $(".type2").removeAttr('onclick')
+                $(".senB.type2").removeAttr('onmouseover')
+                
 
                 $(".type2").css('cursor','default')
                 
@@ -750,6 +795,9 @@
 
                 //$(".senA.type2").attr('onclick','click_a(this)')
                 $(".senB.type2").attr('onclick','click_b(this)')
+                
+                $('.senB.type2').attr('onmouseover',"onmouse(this)")
+                $('.senB.type2').attr('onmouseout',"outmouse(this)")
 
                 $(".type2").css('cursor',"pointer")
             }
@@ -762,6 +810,8 @@
 
                 //$(".senA.type2").attr('onclick','click_a(this)')
                 $(".senB.type2").attr('onclick','click_b(this)')
+                $('.senB.type2').attr('onmouseover',"onmouse(this)")
+                $('.senB.type2').attr('onmouseout',"outmouse(this)")
 
                 $(".type2").css('cursor',"pointer")
             }
@@ -859,7 +909,9 @@
         })
 
         
+        //token
 
+        
 
 
 
