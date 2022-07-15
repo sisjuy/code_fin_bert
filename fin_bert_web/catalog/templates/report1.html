@@ -109,9 +109,15 @@
 
 
         </div>
-        <div id=itemlist2 style="width: 10px; height:700px">
+        <div id=itemlist2_curr style="width: 10px; height:700px">
             
-            <p  v-for="n in splitresult">[[n]]</p>
+            <p class="report_itemlist_curr" :id="[item + '_curr']" onclick="reportitemfun_curr(this)" v-for="(item,index,key) in splitresult">[[item]]</p>
+                                
+        
+        </div>
+        <div id=itemlist2_last style="width: 10px; height:700px">
+            
+            <p class="report_itemlist_last" :id="[item + '_last']" onclick="reportitemfun_last(this)" v-for="(item,index,key) in splitresult">[[item]]</p>
                                 
         
         </div>
@@ -224,8 +230,8 @@
             ],
             },
         });
-        var itemlist2 = new Vue({
-            el: '#itemlist2',
+        var itemlist2_curr = new Vue({
+            el: '#itemlist2_curr',
             delimiters: ['[[',']]'],
             data: {
                 itemlist:[
@@ -238,8 +244,8 @@
             },
             computed:{
                 splitresult: function () {
-                    return this.itemlist.filter(function (i) {
-                        console.log(i,typeof(i),i.split("Item")[1])
+                    return this.itemlist.map(function (i) {
+                        
                         let a = i.split("Item")[1]
                         return a
                     })
@@ -247,7 +253,78 @@
             }
             
         });
-        console.log(itemlist2)
+        var itemlist2_last = new Vue({
+            el: '#itemlist2_last',
+            delimiters: ['[[',']]'],
+            data: {
+                itemlist:[
+                "Item1","Item1A","Item1B","Item2",
+                "Item3","Item4","Item5","Item6","Item7",
+                "Item7A","Item8","Item9","Item9A","Item9B",
+                "Item10","Item11","Item12","Item13","Item14",
+                "Item15"
+                ],
+            },
+            computed:{
+                splitresult: function () {
+                    return this.itemlist.map(function (i) {
+                        
+                        let a = i.split("Item")[1]
+                        return a
+                    })
+                }
+            }
+            
+        });
+        
+
+        function reportitemfun_curr(ele1){
+            var itembutton1 = document.getElementById(ele1.id)
+            var lastclick_reportitem1 = localStorage.getItem("lastclick_reportitem_curr")
+            console.log("curr:",lastclick_reportitem1)
+            if(lastclick_reportitem1==0){
+                itembutton1.style.color = "yellow"
+                localStorage.setItem("lastclick_reportitem_curr",ele1.id)
+            }
+            else{
+                var lastitembutton1 = document.getElementById(lastclick_reportitem1)
+                lastitembutton1.style.color = ""
+                itembutton1.style.color = "yellow"
+                localStorage.setItem("lastclick_reportitem_curr",ele1.id)
+            }
+
+            
+            var idd1 = company+"_"+curryear.split("20")[1]+"_ITEM"+ele1.id.split("_")[0]            +"_P0_S0"
+            var firstlineb = document.getElementById(idd1)
+            scrollToElm(leftreport,firstlineb,600)
+        }
+        function reportitemfun_last(ele){
+            var itembutton = document.getElementById(ele.id)
+            var lastclick_reportitem = localStorage.getItem("lastclick_reportitem_last")
+            console.log("last:",lastclick_reportitem)
+            if(lastclick_reportitem==0){
+                itembutton.style.color = "yellow"
+                localStorage.setItem("lastclick_reportitem_last",ele.id)
+            }
+            else{
+                var lastitembutton = document.getElementById(lastclick_reportitem)
+                lastitembutton.style.color = ""
+                itembutton.style.color = "yellow"
+                localStorage.setItem("lastclick_reportitem_last",ele.id)
+            }
+
+            
+            var idd = company+"_"+lastyear.split("20")[1]+"_ITEM"+ele.id.split("_")[0]+"_P0_S0"
+            var firstlinea = document.getElementById(idd)
+            scrollToElm(rightreport,firstlinea,600)
+        }
+
+
+
+        $(".report_itemlist_last").css("cursor","pointer")
+        $(".report_itemlist_curr").css("cursor","pointer")
+
+
     </script>
 
     
@@ -320,8 +397,14 @@
     var sendic_a2b = {};
     var sendic_b2a = {};
     var score = {} //score of the words
+
+    //lastclick => sentence
+    //lastactive => button active
+    //lastclick_reportitem => reportitem
     localStorage.setItem("lastclick",0)
     localStorage.setItem("lastactive",0)
+    localStorage.setItem("lastclick_reportitem_curr",0)
+    localStorage.setItem("lastclick_reportitem_last",0)
     var curryear = localStorage.getItem("yearnow")
     var company = localStorage.getItem("companynow")
     var item = localStorage.getItem("itemnow").toString()

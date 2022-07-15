@@ -1,4 +1,11 @@
-function scrollToElm(container, elm, elm1,duration){
+//for report first line
+function scrollToElm(container, elm, duration){
+    var pos = getRelativePos(elm);
+    scrollTo( container, pos.top , 0.87);  // duration in seconds
+}
+
+//for sentence
+function scrollToElm1(container, elm, elm1,duration){
     var pPos1 = elm1.parentNode.getBoundingClientRect() // parent pos leftreport
     cPos1 = elm1.getBoundingClientRect()
     console.log("senb:",cPos1.top,pPos1.top,cPos1.top - pPos1.top,elm1.parentNode.scrollTop)
@@ -21,7 +28,7 @@ function getRelativePos(elm){
     winy = window.pageYOffset;
     //console.log(winy)
     pos = {};
-    console.log("sena:",cPos.top,pPos.top,cPos.top - pPos.top, elm.parentNode.scrollTop)
+    //console.log("sena:",cPos.top,pPos.top,cPos.top - pPos.top, elm.parentNode.scrollTop)
     pos.top    = cPos.top    - pPos.top + elm.parentNode.scrollTop,
     pos.right  = cPos.right  - pPos.right,
     pos.bottom = cPos.bottom - pPos.bottom,
@@ -172,7 +179,7 @@ function click_b(ele){
     }
 
     //scrollToElm(leftreport,senb,600)
-    scrollToElm(rightreport,sena,senb,600);  
+    scrollToElm1(rightreport,sena,senb,600);  
     
 
 }
