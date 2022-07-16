@@ -95,32 +95,86 @@
             
         </div>
         <!--end selectrow-->
+        <div class="row" id="companyname_typebutton">
+            <div id="companyname" style="font-size:50px"></div>
+            <div id="typebutton" >
+                
+                
+                
+                
+                <div class="state active" id="button2" style="display:inline;cursor: pointer;">
+                    <svg height="15" width="15" style="align-items: center";>
+                        <circle cx="7.5" cy="7.5" r="5" fill="rgb(255, 190, 64)" />
+                    </svg> 
+                    show type2
+                </div>
+                <div class="state active" id="button3" style="display:inline;cursor: pointer;">
+                    <svg height="15" width="15">
+                        <circle cx="7.5" cy="7.5" r="5" fill="rgb(243, 231, 255)" />
+                    </svg> 
+                    show type3
+                </div>
+                <div class="state active" id="button1" style="display:inline;cursor: pointer;">
+                    <svg height="15" width="15">
+                        <circle cx="7.5" cy="7.5" r="5" fill="rgb(223, 250, 206)" />
+                    </svg> 
+                    show type1
+                </div>
+                
+                
+                <!--
+                    <button class="state active" style="background-Color:rgb(223, 250, 206)" id="button1">
+                    show type1
+                    </button>
+                
+                -->
+                
+            </div>
+            
+            
+        </div>
         
-        <button class="state active" id="button2" style="background-Color:rgb(255, 190, 64)">
-        show type2
-        </button>
-        <button class="state active" style="background-Color:rgb(243, 231, 255)" id="button3">
-        show type3
-        </button>
-        <button class="state active" style="background-Color:rgb(223, 250, 206)" id="button1">
-            show type1
-        </button>
+
         <div class="row" id="report_outline">
-
-
-        </div>
-        <div id=itemlist2_curr style="width: 10px; height:700px">
+            <div class="row" id="reportrow">
+                <div class="col-md" id="parent_leftreport">
+                    <div id="reportyear_curr" style="margin-bottom:25px;font-size: 20px;margin-left:13px"></div>
+                    <div class="row" id="itemlist_leftreport">
+                        <div id=itemlist2_curr >
             
-            <p class="report_itemlist_curr" :id="[item + '_curr']" onclick="reportitemfun_curr(this)" v-for="(item,index,key) in splitresult">[[item]]</p>
-                                
+                            <p class="report_itemlist_curr" :id="[item + '_curr']" onclick="reportitemfun_curr(this)" v-for="(item,index,key) in splitresult">[[item]]</p>
+                                                
+                        
+                        </div>
+                        <div class="col-md" id="leftreport">
+                            <div id="report1"></div>
         
-        </div>
-        <div id=itemlist2_last style="width: 10px; height:700px">
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="col-md" id="parent_rightreport">
+                    <div id="reportyear_last" style="margin-bottom:25px;font-size: 20px;margin-left:13px"></div>
+                    <div class="row" id="itemlist_rightreport">
+                        <div id=itemlist2_last >
             
-            <p class="report_itemlist_last" :id="[item + '_last']" onclick="reportitemfun_last(this)" v-for="(item,index,key) in splitresult">[[item]]</p>
-                                
-        
+                            <p class="report_itemlist_last" :id="[item + '_last']" onclick="reportitemfun_last(this)" v-for="(item,index,key) in splitresult">[[item]]</p>
+                                                
+                        
+                        </div>
+                        <div class="col-md" id="rightreport">
+                            <div id="report2"></div>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                
+            </div>
+
         </div>
+        
+        
         <!--last & next year buttom-->
         <div class="row" id="year_button">
             <form id="leftform" method="POST" action="{% url 'report1' %}" enctype="multipart/form-data" role="form">
@@ -133,9 +187,7 @@
                       <span id="lastyear"></span>
                     </div>
                 </div>
-                <!--
-                    <input type="submit" id="year_submit"  style="margin-top:1vw;" value="<" />
-                -->
+                
                 
             </form>
             <form id="rightform" method="POST" action="{% url 'report1' %}" enctype="multipart/form-data" role="form">
@@ -281,7 +333,7 @@
         function reportitemfun_curr(ele1){
             var itembutton1 = document.getElementById(ele1.id)
             var lastclick_reportitem1 = localStorage.getItem("lastclick_reportitem_curr")
-            console.log("curr:",lastclick_reportitem1)
+            //console.log("curr:",lastclick_reportitem1)
             if(lastclick_reportitem1==0){
                 itembutton1.style.color = "yellow"
                 localStorage.setItem("lastclick_reportitem_curr",ele1.id)
@@ -379,7 +431,9 @@
             let nextyear = parseInt(rightyear)+1
             document.getElementById("lastyear").innerHTML = lastyear.toString() + " vs " + leftyear
             document.getElementById("nextyear").innerHTML = rightyear + " vs " + nextyear.toString()
-            
+            document.getElementById("reportyear_curr").innerHTML = "from " + rightyear
+            document.getElementById("reportyear_last").innerHTML = "from " + leftyear
+            document.getElementById("companyname").innerHTML = vm1.$data.list[company].name
         });
     </script>
     
@@ -452,7 +506,7 @@
         let arr1 = givevalue(arr,lastyear)
         let arr2 = givevalue(arr,curryear)
         //console.log(Object.keys(sen2id1))
-        create_reportrow()
+        //create_reportrow()
         
         let id1 = "report1"
         let id2 = "report2" 
@@ -666,6 +720,11 @@
             sendic_b2a['type1'][result1.type1[i].senB] = result1.type1[i].senA
         }   
         
+
+        itemdis_curr = []
+        itemdis_last = []
+        itembetwdis_curr = []
+        itembetwdis_last = []
         //give first line of item id
         for(var i=0; i<20; i++){
             id1 = company+"_"+lastyear.split("20")[1]+"_"+vm2.$data.list[i].toUpperCase()+"_P0_S0"
@@ -682,8 +741,54 @@
             //createspan_4firstlineitem(id1,sen2id1[id1],0)
             //createspan_4firstlineitem(id2,sen2id2[id2],1)
 
-            
+            //calculate the distance between items
+            let d1 = document.getElementById(id1).getBoundingClientRect().top + window.pageYOffset
+            itemdis_last.push(d1)
+            let d2 = document.getElementById(id2).getBoundingClientRect().top + window.pageYOffset
+            itemdis_curr.push(d2)
         }
+
+        console.log(itemdis_curr,itemdis_last)
+
+        //distance between items
+        for(var i=0;i<19;i++){
+            /*itembetwdis_curr.push(itemdis_curr[i+1]-itemdis_curr[i])
+            itembetwdis_last.push(itemdis_last[i+1]-itemdis_last[i])*/
+            itembetwdis_curr.push(itemdis_curr[i+1]-itemdis_curr[0])
+            itembetwdis_last.push(itemdis_last[i+1]-itemdis_last[0])
+        }
+        let sum_curr=0
+        let sum_last=0
+        itembetwdis_curr.forEach(function(element) {
+            sum_curr+=element;
+        });
+        itembetwdis_last.forEach(function(element) {
+            sum_last+=element;
+        });
+
+        let report1 = document.getElementById("report1").scrollHeight
+        let report2 = document.getElementById("report2").scrollHeight
+        unitdis_curr = []
+        unitdis_last = []
+        itembetwdis_curr.forEach(function(element){
+            unitdis_curr.push(element / report1 *700)
+        })
+        itembetwdis_last.forEach(function(element){
+            unitdis_last.push(element / report1*700)
+        })
+        
+        console.log(unitdis_curr)
+
+        //give marginbottom 
+        let itemlist_curr = document.getElementById("itemlist2_curr").getElementsByTagName("p")
+        let itemlist_last = document.getElementById("itemlist2_last").getElementsByTagName("p")
+        for(var i=1;i<20;i++){
+            itemlist_curr[i].style.top = unitdis_curr[i-1] + "px"
+            itemlist_last[i].style.top = unitdis_last[i-1] + "px"
+        }
+
+        
+        //////////////////////////////////
 
         
         $(".type3").css('backgroundColor', "#f3e7ff")
@@ -715,7 +820,7 @@
             let state1 = $('#button1').hasClass("active")
             if(state1==false){
                 //not active
-                $('#button1').css('backgroundColor', type1color)
+                //$('#button1').css('backgroundColor', type1color)
                 $('#button1').addClass("active")
                 $(".type1").css('backgroundColor', type1color)
                 $('.senA.type1').css("opacity",0.5)
@@ -727,7 +832,7 @@
             }
             else{
                 //active
-                $('#button1').css('backgroundColor', nocolor)
+                //$('#button1').css('backgroundColor', nocolor)
                 $('#button1').removeClass("active")
                 $(".type1").css('backgroundColor', nocolor)
                 $('.senA.type1').css("opacity",1)
@@ -750,7 +855,7 @@
             if (state2==true & state3==true){
                 //type2 type3 show -> click type2 -> type2 disappear & some type3 show their color
                 $('#button2').removeClass("active")
-                $('#button2').css('backgroundColor', nocolor)
+                //$('#button2').css('backgroundColor', nocolor)
                 $(".type2").css('backgroundColor', nocolor)
                 
                 $(".type2.type3").css('backgroundColor', type3color) //type3 color
@@ -771,7 +876,7 @@
             else if(state2==true & state3==false){
                 //type2 show, type3 non show -> click type2 -> type2 disappear
                 $('#button2').removeClass("active")
-                $('#button2').css('backgroundColor', nocolor)
+                //$('#button2').css('backgroundColor', nocolor)
                 $(".type2").css('backgroundColor', nocolor)
                 $('.senA.type2').css("opacity",1)
                 
@@ -785,7 +890,7 @@
             else if(state2==false & state3==true){
                 //type2 no show, type3 show -> click type2 -> some type3 disapear, type2 show
                 $('#button2').addClass("active")
-                $('#button2').css('backgroundColor', type2color)
+                //$('#button2').css('backgroundColor', type2color)
                 $(".type2.type3").css('backgroundColor', type2color)
                 $(".type2").css('backgroundColor', type2color)
 
@@ -803,7 +908,7 @@
             }
             else{
                 $('#button2').addClass("active")
-                $('#button2').css('backgroundColor', type2color)
+                //$('#button2').css('backgroundColor', type2color)
                 $(".type2").css('backgroundColor', type2color)
                 
                 $('.senA.type2').css("opacity",0.5)
@@ -837,7 +942,7 @@
             if (state2==true & state3==true){
                 //type2 type3 show -> click type3 -> type3 disappear & some type3 show type2 color
                 $('#button3').removeClass("active")
-                $('#button3').css('backgroundColor', nocolor)
+                //$('#button3').css('backgroundColor', nocolor)
                 $(".type3").css('backgroundColor', nocolor)
                 $(".type2.type3").css('backgroundColor', type2color) //type2 color
 
@@ -855,7 +960,7 @@
             else if(state2==true & state3==false){
                 //type2 show, type3 non show -> click type3 -> type3 show some type3 show type2 color
                 $('#button3').addClass("active")
-                $('#button3').css('backgroundColor', type3color)
+                //$('#button3').css('backgroundColor', type3color)
                 $(".type3").css('backgroundColor', type3color)
                 $(".type2.type3").css('backgroundColor', type2color) //type2 color
 
@@ -871,7 +976,7 @@
             else if(state2==false & state3==true){
                 //type2 no show, type3 show -> click type3 -> all type3 disapear
                 $('#button3').removeClass("active")
-                $('#button3').css('backgroundColor', nocolor)
+                //$('#button3').css('backgroundColor', nocolor)
                 $(".type3").css('backgroundColor', nocolor)
 
                 
@@ -883,7 +988,7 @@
             }
             else{
                 $('#button3').addClass("active")
-                $('#button3').css('backgroundColor', type3color)
+                //$('#button3').css('backgroundColor', type3color)
                 $(".type3").css('backgroundColor', type3color)
                 
                 $('.senA.type3').css("opacity",0.5)
@@ -926,8 +1031,8 @@
         
 
 
-
-
+        //calculate the distance of each item
+        
 
 
 
