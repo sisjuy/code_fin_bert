@@ -50,13 +50,17 @@ body {
     height: 700px;
     width:700px;
 }
-
+#reportyear_curr{
+    margin-bottom:25px;
+    font-size: 20px;
+    margin-left:13px
+}
 #itemlist_leftreport{
     position:relative;
     left:-3px;
 }
 #itemlist2_curr{
-    position: relative;
+    position: absolute;
     left: -8px;
     justify-content: center;
     display: flex;
@@ -79,16 +83,23 @@ body {
     margin:3px;
 }
 
+/* /////// */
+
 #parent_rightreport{
     height: 700px;
     width:700px;
+}
+#reportyear_last {
+    margin-bottom: 25px;
+    font-size: 20px;
+    margin-left: 35px;
 }
 #itemlist_rightreport{
     position:relative;
     left:20px;
 }
 #itemlist2_last{
-    position: relative;
+    position: absolute;
     left: -8px;
     justify-content: center;
     display: flex;
@@ -173,8 +184,12 @@ body {
 #itemlist2_curr p{
     position: relative;
     font-size: 10px;
+    font-weight: bold;
+    color: grey
 }
 #itemlist2_last p{
     position: relative;
     font-size: 10px;
+    font-weight: bold;
+    color: grey
 }

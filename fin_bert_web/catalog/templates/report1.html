@@ -106,19 +106,19 @@
                     <svg height="15" width="15" style="align-items: center";>
                         <circle cx="7.5" cy="7.5" r="5" fill="rgb(255, 190, 64)" />
                     </svg> 
-                    show type2
+                    Revised sentences
                 </div>
                 <div class="state active" id="button3" style="display:inline;cursor: pointer;">
                     <svg height="15" width="15">
                         <circle cx="7.5" cy="7.5" r="5" fill="rgb(243, 231, 255)" />
                     </svg> 
-                    show type3
+                    Highly similar sentences
                 </div>
                 <div class="state active" id="button1" style="display:inline;cursor: pointer;">
                     <svg height="15" width="15">
                         <circle cx="7.5" cy="7.5" r="5" fill="rgb(223, 250, 206)" />
                     </svg> 
-                    show type1
+                    New sentences
                 </div>
                 
                 
@@ -138,7 +138,7 @@
         <div class="row" id="report_outline">
             <div class="row" id="reportrow">
                 <div class="col-md" id="parent_leftreport">
-                    <div id="reportyear_curr" style="margin-bottom:25px;font-size: 20px;margin-left:13px"></div>
+                    <div id="reportyear_curr"></div>
                     <div class="row" id="itemlist_leftreport">
                         <div id=itemlist2_curr >
             
@@ -154,7 +154,7 @@
                     
                 </div>
                 <div class="col-md" id="parent_rightreport">
-                    <div id="reportyear_last" style="margin-bottom:25px;font-size: 20px;margin-left:13px"></div>
+                    <div id="reportyear_last"></div>
                     <div class="row" id="itemlist_rightreport">
                         <div id=itemlist2_last >
             
@@ -242,16 +242,18 @@
         })
 
         
+        companydic = {"1417663" : {name:"company1"},
+                    "1234123" : {name:"company2"},
+                    "26076" : {name:"company3"}}
+
         var vm1 = new Vue({
             el: '#companylist',
             delimiters: ['[[', ']]'],
-            data: {
-                list: { 
-                    "1417663" : {name:"company1"},
-                    "1234123" : {name:"company2"},
-                    "26076" : {name:"company3"}
+            data(){
+                return {
+                    list: companydic
                 }
-                ,
+                
             },
             });
     //let company = "1417663"
@@ -335,13 +337,13 @@
             var lastclick_reportitem1 = localStorage.getItem("lastclick_reportitem_curr")
             //console.log("curr:",lastclick_reportitem1)
             if(lastclick_reportitem1==0){
-                itembutton1.style.color = "yellow"
+                itembutton1.style["-webkit-text-stroke"] = "0.75px yellow"
                 localStorage.setItem("lastclick_reportitem_curr",ele1.id)
             }
             else{
                 var lastitembutton1 = document.getElementById(lastclick_reportitem1)
-                lastitembutton1.style.color = ""
-                itembutton1.style.color = "yellow"
+                lastitembutton1.style["-webkit-text-stroke"] = ""
+                itembutton1.style["-webkit-text-stroke"] = "0.75px yellow"
                 localStorage.setItem("lastclick_reportitem_curr",ele1.id)
             }
 
@@ -353,15 +355,15 @@
         function reportitemfun_last(ele){
             var itembutton = document.getElementById(ele.id)
             var lastclick_reportitem = localStorage.getItem("lastclick_reportitem_last")
-            console.log("last:",lastclick_reportitem)
+            //console.log("last:",lastclick_reportitem)
             if(lastclick_reportitem==0){
-                itembutton.style.color = "yellow"
+                itembutton.style["-webkit-text-stroke"] = "0.75px yellow"
                 localStorage.setItem("lastclick_reportitem_last",ele.id)
             }
             else{
                 var lastitembutton = document.getElementById(lastclick_reportitem)
-                lastitembutton.style.color = ""
-                itembutton.style.color = "yellow"
+                lastitembutton.style["-webkit-text-stroke"] = ""
+                itembutton.style["-webkit-text-stroke"] = "0.75px yellow"
                 localStorage.setItem("lastclick_reportitem_last",ele.id)
             }
 
@@ -429,8 +431,19 @@
             */
             let lastyear = parseInt(leftyear)-1
             let nextyear = parseInt(rightyear)+1
-            document.getElementById("lastyear").innerHTML = lastyear.toString() + " vs " + leftyear
-            document.getElementById("nextyear").innerHTML = rightyear + " vs " + nextyear.toString()
+            if(lastyear==2010){
+                document.getElementById("lastyear").innerHTML = ""
+                document.getElementById("nextyear").innerHTML = rightyear + " vs " + nextyear.toString()
+            }
+            else if(nextyear==2019){
+                document.getElementById("lastyear").innerHTML = lastyear.toString() + " vs " + leftyear
+                document.getElementById("nextyear").innerHTML = ""
+            }
+            else{
+                document.getElementById("lastyear").innerHTML = lastyear.toString() + " vs " + leftyear
+                document.getElementById("nextyear").innerHTML = rightyear + " vs " + nextyear.toString()
+            }   
+            
             document.getElementById("reportyear_curr").innerHTML = "from " + rightyear
             document.getElementById("reportyear_last").innerHTML = "from " + leftyear
             document.getElementById("companyname").innerHTML = vm1.$data.list[company].name
@@ -457,12 +470,13 @@
     //lastclick_reportitem => reportitem
     localStorage.setItem("lastclick",0)
     localStorage.setItem("lastactive",0)
-    localStorage.setItem("lastclick_reportitem_curr",0)
-    localStorage.setItem("lastclick_reportitem_last",0)
+    
     var curryear = localStorage.getItem("yearnow")
     var company = localStorage.getItem("companynow")
     var item = localStorage.getItem("itemnow").toString()
     var lastyear = (parseInt(curryear) - 1).toString()
+    localStorage.setItem("lastclick_reportitem_curr",item.split("Item")[1]+"_curr")
+    localStorage.setItem("lastclick_reportitem_last",item.split("Item")[1]+"_last")
     //let a = "{{ company|safe }}"
     //console.log("get value from view.py",a)
     //localStorage.setItem("companynow",a)
@@ -751,11 +765,11 @@
         console.log(itemdis_curr,itemdis_last)
 
         //distance between items
-        for(var i=0;i<19;i++){
+        for(var i=0;i<20;i++){
             /*itembetwdis_curr.push(itemdis_curr[i+1]-itemdis_curr[i])
             itembetwdis_last.push(itemdis_last[i+1]-itemdis_last[i])*/
-            itembetwdis_curr.push(itemdis_curr[i+1]-itemdis_curr[0])
-            itembetwdis_last.push(itemdis_last[i+1]-itemdis_last[0])
+            itembetwdis_curr.push(itemdis_curr[i]-itemdis_curr[0])
+            itembetwdis_last.push(itemdis_last[i]-itemdis_last[0])
         }
         let sum_curr=0
         let sum_last=0
@@ -771,10 +785,10 @@
         unitdis_curr = []
         unitdis_last = []
         itembetwdis_curr.forEach(function(element){
-            unitdis_curr.push(element / report1 *700)
+            unitdis_curr.push(element / report1 *500)
         })
         itembetwdis_last.forEach(function(element){
-            unitdis_last.push(element / report1*700)
+            unitdis_last.push(element / report1*500)
         })
         
         console.log(unitdis_curr)
@@ -782,9 +796,24 @@
         //give marginbottom 
         let itemlist_curr = document.getElementById("itemlist2_curr").getElementsByTagName("p")
         let itemlist_last = document.getElementById("itemlist2_last").getElementsByTagName("p")
-        for(var i=1;i<20;i++){
-            itemlist_curr[i].style.top = unitdis_curr[i-1] + "px"
-            itemlist_last[i].style.top = unitdis_last[i-1] + "px"
+        for(var i=0;i<20;i++){
+            console.log(i)
+            /*
+            if(i>0 & unitdis_curr[i]-unitdis_curr[i-1]<14.28){
+                itemlist_curr[i].style.top = unitdis_curr[i-1]+14.28 + "px";
+            }
+            else{
+                itemlist_curr[i].style.top = unitdis_curr[i] + "px"
+            }
+            if(i>0 & unitdis_last[i]-unitdis_last[i-1]<14.28){
+                itemlist_last[i].style.top = unitdis_last[i-1]+14.28 + "px";
+            }
+            else{
+                itemlist_last[i].style.top = unitdis_last[i] + "px"
+            }
+           */
+            itemlist_curr[i].style.top = unitdis_curr[i] + "px"
+            itemlist_last[i].style.top = unitdis_last[i] + "px"
         }
 
         
@@ -821,6 +850,7 @@
             if(state1==false){
                 //not active
                 //$('#button1').css('backgroundColor', type1color)
+                $('#button1').css("opacity", 1)
                 $('#button1').addClass("active")
                 $(".type1").css('backgroundColor', type1color)
                 $('.senA.type1').css("opacity",0.5)
@@ -833,6 +863,7 @@
             else{
                 //active
                 //$('#button1').css('backgroundColor', nocolor)
+                $('#button1').css("opacity", 0.3)
                 $('#button1').removeClass("active")
                 $(".type1").css('backgroundColor', nocolor)
                 $('.senA.type1').css("opacity",1)
@@ -855,6 +886,7 @@
             if (state2==true & state3==true){
                 //type2 type3 show -> click type2 -> type2 disappear & some type3 show their color
                 $('#button2').removeClass("active")
+                $('#button2').css("opacity", 0.3)
                 //$('#button2').css('backgroundColor', nocolor)
                 $(".type2").css('backgroundColor', nocolor)
                 
@@ -876,6 +908,7 @@
             else if(state2==true & state3==false){
                 //type2 show, type3 non show -> click type2 -> type2 disappear
                 $('#button2').removeClass("active")
+                $('#button2').css("opacity", 0.3)
                 //$('#button2').css('backgroundColor', nocolor)
                 $(".type2").css('backgroundColor', nocolor)
                 $('.senA.type2').css("opacity",1)
@@ -890,6 +923,7 @@
             else if(state2==false & state3==true){
                 //type2 no show, type3 show -> click type2 -> some type3 disapear, type2 show
                 $('#button2').addClass("active")
+                $('#button2').css("opacity", 1)
                 //$('#button2').css('backgroundColor', type2color)
                 $(".type2.type3").css('backgroundColor', type2color)
                 $(".type2").css('backgroundColor', type2color)
@@ -908,6 +942,7 @@
             }
             else{
                 $('#button2').addClass("active")
+                $('#button2').css("opacity", 1)
                 //$('#button2').css('backgroundColor', type2color)
                 $(".type2").css('backgroundColor', type2color)
                 
@@ -942,6 +977,7 @@
             if (state2==true & state3==true){
                 //type2 type3 show -> click type3 -> type3 disappear & some type3 show type2 color
                 $('#button3').removeClass("active")
+                $('#button3').css("opacity", 0.3)
                 //$('#button3').css('backgroundColor', nocolor)
                 $(".type3").css('backgroundColor', nocolor)
                 $(".type2.type3").css('backgroundColor', type2color) //type2 color
@@ -958,6 +994,7 @@
                 $(".type2.type3").css('cursor',"pointer")
             }
             else if(state2==true & state3==false){
+                $('#button3').css("opacity", 1)
                 //type2 show, type3 non show -> click type3 -> type3 show some type3 show type2 color
                 $('#button3').addClass("active")
                 //$('#button3').css('backgroundColor', type3color)
@@ -974,6 +1011,7 @@
                 $(".type3").css('cursor',"pointer")
             }
             else if(state2==false & state3==true){
+                $('#button3').css("opacity", 0.3)
                 //type2 no show, type3 show -> click type3 -> all type3 disapear
                 $('#button3').removeClass("active")
                 //$('#button3').css('backgroundColor', nocolor)
@@ -988,6 +1026,7 @@
             }
             else{
                 $('#button3').addClass("active")
+                $('#button3').css("opacity", 1)
                 //$('#button3').css('backgroundColor', type3color)
                 $(".type3").css('backgroundColor', type3color)
                 
@@ -1027,7 +1066,13 @@
         let firstlineb = document.getElementById(firstlinebid)
         scrollToElm(rightreport,firstlinea,600)
         scrollToElm(leftreport,firstlineb,600)
-        
+
+        var item_submit1 = item.split("Item")[1] + "_curr"
+        var item_submit2 = item.split("Item")[1] + "_last"
+        let itembutton1 = document.getElementById(item_submit1)
+        let itembutton2 = document.getElementById(item_submit2)
+        itembutton1.style["-webkit-text-stroke"] = "0.75px yellow"
+        itembutton2.style["-webkit-text-stroke"] = "0.75px yellow"
         
 
 
