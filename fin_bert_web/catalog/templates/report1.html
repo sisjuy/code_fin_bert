@@ -432,12 +432,12 @@
             let lastyear = parseInt(leftyear)-1
             let nextyear = parseInt(rightyear)+1
             if(lastyear==2010){
-                document.getElementById("lastyear").innerHTML = ""
+                document.getElementById("lastyear").innerHTML = "reach boundary"
                 document.getElementById("nextyear").innerHTML = rightyear + " vs " + nextyear.toString()
             }
             else if(nextyear==2019){
                 document.getElementById("lastyear").innerHTML = lastyear.toString() + " vs " + leftyear
-                document.getElementById("nextyear").innerHTML = ""
+                document.getElementById("nextyear").innerHTML = "reach boundary"
             }
             else{
                 document.getElementById("lastyear").innerHTML = lastyear.toString() + " vs " + leftyear
@@ -765,11 +765,11 @@
         console.log(itemdis_curr,itemdis_last)
 
         //distance between items
-        for(var i=0;i<20;i++){
+        for(var i=0;i<19;i++){
             /*itembetwdis_curr.push(itemdis_curr[i+1]-itemdis_curr[i])
             itembetwdis_last.push(itemdis_last[i+1]-itemdis_last[i])*/
-            itembetwdis_curr.push(itemdis_curr[i]-itemdis_curr[0])
-            itembetwdis_last.push(itemdis_last[i]-itemdis_last[0])
+            itembetwdis_curr.push(itemdis_curr[i+1]-itemdis_curr[i])
+            itembetwdis_last.push(itemdis_last[i+1]-itemdis_last[i])
         }
         let sum_curr=0
         let sum_last=0
@@ -785,10 +785,10 @@
         unitdis_curr = []
         unitdis_last = []
         itembetwdis_curr.forEach(function(element){
-            unitdis_curr.push(element / report1 *500)
+            unitdis_curr.push(element / report1)
         })
         itembetwdis_last.forEach(function(element){
-            unitdis_last.push(element / report1*500)
+            unitdis_last.push(element / report2)
         })
         
         console.log(unitdis_curr)
@@ -796,25 +796,45 @@
         //give marginbottom 
         let itemlist_curr = document.getElementById("itemlist2_curr").getElementsByTagName("p")
         let itemlist_last = document.getElementById("itemlist2_last").getElementsByTagName("p")
-        for(var i=0;i<20;i++){
-            console.log(i)
-            /*
-            if(i>0 & unitdis_curr[i]-unitdis_curr[i-1]<14.28){
-                itemlist_curr[i].style.top = unitdis_curr[i-1]+14.28 + "px";
+        
+        function itemlistcal(unitdis){
+            var numless2 = 0
+            var numbig2sum = 0
+            for(var i=0;i<19;i++){
+                if(unitdis[i]*100 < 2){
+                    numless2++
+                }
+                else{
+                    numbig2sum+=unitdis[i]
+                }
             }
-            else{
-                itemlist_curr[i].style.top = unitdis_curr[i] + "px"
-            }
-            if(i>0 & unitdis_last[i]-unitdis_last[i-1]<14.28){
-                itemlist_last[i].style.top = unitdis_last[i-1]+14.28 + "px";
-            }
-            else{
-                itemlist_last[i].style.top = unitdis_last[i] + "px"
-            }
-           */
-            itemlist_curr[i].style.top = unitdis_curr[i] + "px"
-            itemlist_last[i].style.top = unitdis_last[i] + "px"
+            return [numless2, numbig2sum]
         }
+        function itemlist_givestyle(restheight,numbig2sum,unitdis,itemlist){
+            for(var i=0;i<19;i++){
+                if(unitdis[i]*100<2){
+                    itemlist[i].style.height = "2%"
+                }
+                else{
+                    var a = unitdis[i]/numbig2sum*restheight*0.95
+                    if(a<2){
+                        console.log(i)
+                        itemlist[i].style.height = "2%"
+                    }
+                    else{
+                        itemlist[i].style.height = a + "%"
+                    }
+                }
+            }
+        }
+        
+        itemlist_givestyle(100-itemlistcal(unitdis_curr)[0]*2,itemlistcal(unitdis_curr)[1],unitdis_curr,itemlist_curr)
+        itemlist_givestyle(100-itemlistcal(unitdis_last)[0]*2,itemlistcal(unitdis_last)[1],unitdis_last,itemlist_last)
+        
+        
+        
+        
+         
 
         
         //////////////////////////////////

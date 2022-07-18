@@ -16,6 +16,8 @@ function anchor_submit_left(){
         localStorage.setItem("yearnow",year)   
         document.getElementById("reportyear_curr").innerHTML = year
         document.getElementById("reportyear_last").innerHTML = (parseInt(year) - 1).toString()
+
+        
         //document.getElementById("rightinfo_item").innerHTML = item
         //submit
         document.getElementById("leftform").setAttribute('method',"post");
