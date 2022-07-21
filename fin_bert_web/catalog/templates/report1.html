@@ -547,6 +547,7 @@
                 senb.innerHTML = para2.substring(index,index+text.length)
                 para2 = para2.substring(0,index) + senb.outerHTML + para2.substring(index + text.length);
                 paragraph2.innerHTML = para2
+                return index
             }
             else{
                 //para1 for sena
@@ -557,6 +558,7 @@
                 senb.innerHTML = para2.substring(index,index+text.length)
                 para2 = para2.substring(0,index) + senb.outerHTML + para2.substring(index + text.length);
                 paragraph1.innerHTML = para2
+                return index
             }
             
         }
@@ -600,6 +602,14 @@
             }
         }
 
+        //experiment create many span
+        
+        /*
+        for(var i=0;i<50;i++){
+            createspan(Object.keys(sen2id2)[i],sen2id2[Object.keys(sen2id2)[i]],1)
+            createspan(Object.keys(sen2id1)[i],sen2id1[Object.keys(sen2id1)[i]],0)
+        }
+        */
 
         /* give id of every type + build sendic*/
         sendic_b2a = {}
@@ -612,6 +622,8 @@
         sendic_a2b['type3'] = {}
 
         ////type2////
+        
+        
         for(var i=0; i<result1.type2.length;i++){
             if (typeof(result1.type2[i].senA)=='object'){
                 for(var j=0; j<result1.type2[i].senA.length;j++){
@@ -709,7 +721,7 @@
             let check2 = document.getElementById(senbid)
             if (check2==null){
                 senbtext = sen2id2[senbid]
-                createspan(senbid,senbtext,0)  
+                createspan(senbid,senbtext,1)  
             }
             let b = document.getElementById(senbid)
             b.className = b.className + " type3 "// + i
@@ -734,36 +746,58 @@
             sendic_b2a['type1'][result1.type1[i].senB] = result1.type1[i].senA
         }   
         
-
+        var start = Date.now();
         itemdis_curr = []
         itemdis_last = []
         itembetwdis_curr = []
         itembetwdis_last = []
         //give first line of item id
+
+        
         for(var i=0; i<20; i++){
             id1 = company+"_"+lastyear.split("20")[1]+"_"+vm2.$data.list[i].toUpperCase()+"_P0_S0"
             id2 = company+"_"+curryear.split("20")[1]+"_"+vm2.$data.list[i].toUpperCase()+"_P0_S0"
             //console.log(sen2id1[id1],sen2id2[id2])
             let check1 = document.getElementById(id1)
             let check2 = document.getElementById(id2)
+            sen2id1[id1]
+            var para1 = paragraph1.innerHTML;
+            var para2 = paragraph2.innerHTML;
+            
+            itemdis_last.push( check1==null ? createspan_4firstlineitem(id1,sen2id1[id1],0) : para1.indexOf(sen2id1[id1]))
+            itemdis_curr.push( check2==null ? createspan_4firstlineitem(id2,sen2id2[id2],1) : para2.indexOf(sen2id2[id2]))
+            
+
+            /*
             if (check1==null){
-                createspan_4firstlineitem(id1,sen2id1[id1],0)
+                var a = createspan_4firstlineitem(id1,sen2id1[id1],0)
+                itemdis_last.push(a)
             }
             if (check2==null){
                 createspan_4firstlineitem(id2,sen2id2[id2],1)
             }
+            */
+            
             //createspan_4firstlineitem(id1,sen2id1[id1],0)
             //createspan_4firstlineitem(id2,sen2id2[id2],1)
-
+            
             //calculate the distance between items
+            
+            /*
             let d1 = document.getElementById(id1).getBoundingClientRect().top + window.pageYOffset
+            
             itemdis_last.push(d1)
+            
             let d2 = document.getElementById(id2).getBoundingClientRect().top + window.pageYOffset
+            
             itemdis_curr.push(d2)
+            */
         }
-
-        console.log(itemdis_curr,itemdis_last)
-
+        var duration = Date.now() - start;
+        console.log(duration,itemdis_curr)
+        
+        
+        
         //distance between items
         for(var i=0;i<19;i++){
             /*itembetwdis_curr.push(itemdis_curr[i+1]-itemdis_curr[i])
@@ -791,7 +825,7 @@
             unitdis_last.push(element / report2)
         })
         
-        console.log(unitdis_curr)
+        
 
         //give marginbottom 
         let itemlist_curr = document.getElementById("itemlist2_curr").getElementsByTagName("p")
@@ -1094,7 +1128,7 @@
         itembutton1.style["-webkit-text-stroke"] = "0.75px yellow"
         itembutton2.style["-webkit-text-stroke"] = "0.75px yellow"
         
-
+        
 
         //calculate the distance of each item
         

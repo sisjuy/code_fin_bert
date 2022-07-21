@@ -8,7 +8,7 @@ function scrollToElm(container, elm, duration){
 function scrollToElm1(container, elm, elm1,duration){
     var pPos1 = elm1.parentNode.getBoundingClientRect() // parent pos leftreport
     cPos1 = elm1.getBoundingClientRect()
-    console.log("senb:",cPos1.top,pPos1.top,cPos1.top - pPos1.top,elm1.parentNode.scrollTop)
+    //console.log("senb:",cPos1.top,pPos1.top,cPos1.top - pPos1.top,elm1.parentNode.scrollTop)
 
     var leftreport = document.getElementById("leftreport");
     senbchange = cPos1.top - pPos1.top - leftreport.scrollTop
@@ -204,7 +204,7 @@ function changecolor(eleid){
         c = score2color(score[eleid][j])
         color.push(c)
     }
-    console.log(color)
+    //console.log(color)
     
     
     

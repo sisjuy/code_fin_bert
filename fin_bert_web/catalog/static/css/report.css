@@ -156,14 +156,14 @@ body {
 
 #leftform {
     position: absolute;
-    left: 196px;
-    top:-85px;
+    left: -212px;
+    top:-503px;
     z-index: 2;
 }
 #rightform {
     position: absolute;
-    right: 196px;
-    top:-85px;
+    right: -143px;
+    top:-503px;
     z-index: 2;
 }
 
