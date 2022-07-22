@@ -182,10 +182,17 @@
                 <input type="hidden" id="left_year" name="year" value=''/>
                 <input type="hidden" id="left_company" name="company" value=''/>
                 <input type="hidden" id="left_item" name="item" value=''/>
-                <div id="arrow_2" class="arrow-wrapper" onclick="anchor_submit_left()">
-                    <div class="arrow arrow--left">
+                <div style="cursor:pointer" onclick="anchor_submit_left()">
+                    <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd">
+                        <path d="M20 .755l-14.374 11.245 14.374 11.219-.619.781-15.381-12 15.391-12 .609.755z"/>
+                    </svg>
+                    <!--
+                        id="arrow_2" class="arrow-wrapper"
+                        <div class="arrow arrow--left">
                       <span id="lastyear"></span>
                     </div>
+                    -->
+                    
                 </div>
                 
                 
@@ -196,15 +203,22 @@
                 <input type="hidden" id="right_year" name="year" value=''/>
                 <input type="hidden" id="right_company" name="company" value=''/>
                 <input type="hidden" id="right_item" name="item" value=''/>
-                <div id="arrow_2" class="arrow-wrapper" onclick="anchor_submit_right()">
-                    <div class="arrow arrow--right">
-                      <span id="nextyear"></span>
-                    </div>
+                <div style="cursor:pointer" onclick="anchor_submit_right()">
+                    <svg width="24" height="24" fill-rule="evenodd" clip-rule="evenodd" stroke-width="3" >
+                        <path d="M4 .755l14.374 11.245-14.374 11.219.619.781 15.381-12-15.391-12-.609.755z"/>
+                    </svg>
+                    <!--
+                        <div class="arrow arrow--right">
+                            <span id="nextyear"></span>
+                        </div>
+                    -->
+                    
                 </div>
                 
             </form> 
             
         </div>
+        
         <!--last & next year buttom end-->
         
 
@@ -431,6 +445,7 @@
             */
             let lastyear = parseInt(leftyear)-1
             let nextyear = parseInt(rightyear)+1
+            /*
             if(lastyear==2010){
                 document.getElementById("lastyear").innerHTML = "reach boundary"
                 document.getElementById("nextyear").innerHTML = rightyear + " vs " + nextyear.toString()
@@ -442,7 +457,7 @@
             else{
                 document.getElementById("lastyear").innerHTML = lastyear.toString() + " vs " + leftyear
                 document.getElementById("nextyear").innerHTML = rightyear + " vs " + nextyear.toString()
-            }   
+            }*/
             
             document.getElementById("reportyear_curr").innerHTML = "from " + rightyear
             document.getElementById("reportyear_last").innerHTML = "from " + leftyear
@@ -535,6 +550,7 @@
         arr2 = arr2.replaceAll('\n', '<br>')
         paragraph1.innerHTML = arr1
         paragraph2.innerHTML = arr2
+        
 
         
         function createspan_4firstlineitem(id,text,para2){
@@ -875,6 +891,7 @@
 
         
         $(".type3").css('backgroundColor', "#f3e7ff")
+        $(".type3").css('opacity', 0.25)
         $(".type2").css('backgroundColor', "#ffbe40")
         $(".type1").css('backgroundColor', "#dfface")
 
