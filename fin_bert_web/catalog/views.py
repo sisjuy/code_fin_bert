@@ -3,19 +3,23 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 import random
 from . import read_allitem_function, read_item7_function
+import os
+import json
+from os.path import exists
+
 # Create your views here.
 def index(request):
     names = ["abc", "dan", "jack", "lizzy", "susan"]
     return render(request, 'index.html', {'names':names})
 
-import os
+
 #from . import test
 itemlist = ["Item1","Item1A","Item1B","Item2",
             "Item3","Item4","Item5","Item6","Item7",
             "Item7A","Item8","Item9","Item9A","Item9B",
             "Item10","Item11","Item12","Item13","Item14",
             "Item15"]
-# create highlight sentence and score
+
 def teammate():
     sen = {
     "2012":
@@ -47,20 +51,34 @@ def teammate():
     }
     
     return sen
+module_dir = os.path.dirname(__file__)
+def buildtextdic(company):
+    
+        
+    file_path = os.path.join(module_dir,"dataset","bycompany",company,"rand200_collections.txt")
+    data = open(file_path,'r')
 
+    textdic = {}
 
-def result():
-    a = {'type1': [{'senA': '26076_11_ITEM1_P0_S0', 'senB': '26076_12_ITEM1_P0_S0', 'prob': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]}], 'type2': [{'senA': '26076_11_ITEM1_P0_S1', 'senB': '26076_12_ITEM1_P0_S1', 'prob': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]}, {'senA': ['26076_11_ITEM1_P2_S2', '26076_11_ITEM1_P2_S3'], 'senB': '26076_12_ITEM1_P2_S2', 'prob': [1, 1, 1, 1, 1, 1, 1, 1, 1, 0.9, 0.7, 0.4, 0.5, 1, 0.6, 0.7, 1, 0.6, 1, 0.4, 1, 0.1, 1, 1, 0.6,0.5,0.4]}],'type3': [{'senA': '26076_11_ITEM1_P2_S2', 'senB': '26076_12_ITEM1_P2_S2', 'prob': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]},{'senA': '26076_11_ITEM1_P1_S2', 'senB': '26076_12_ITEM1_P1_S2', 'prob': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]}]}
-    return a
+    for line in data.readlines():
+        line1 = line.split("\t")
+        textdic[line1[0]] = line1[1]
+    return textdic
+'''
+with open(file_path) as d:
+    textdic = json.load(d)
+print(textdic)
+'''
+def result(year,company):
+    filename = str(year)+".json"
+    file_path = os.path.join(module_dir,"dataset","resultparse",company,filename)
+    with open(file_path) as d:
+        dictData = json.load(d)
+    #a = {'type1': [{'senA': '1001250_11_ITEM1_P0_S0', 'senB': '1001250_12_ITEM1_P0_S0', 'prob': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]}], 'type2': [{'senA': '1001250_11_ITEM1_P1_S0', 'senB': '1001250_12_ITEM1_P1_S0', 'prob': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]}, {'senA': ['1001250_11_ITEM1_P0_S2', '1001250_11_ITEM1_P0_S1'], 'senB': '1001250_12_ITEM1_P0_S2', 'prob': [1, 1, 1, 1, 1, 1, 1, 1, 1, 0.9, 0.7, 0.4, 0.5, 1, 0.6, 0.7, 1, 0.6, 1, 0.4, 1, 0.1, 1, 1, 0.6,0.5,0.4]}],'type3': [{'senA': '1001250_11_ITEM1A_P1_S1', 'senB': '1001250_12_ITEM1A_P1_S1', 'prob': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]},{'senA': '1001250_11_ITEM1A_P1_S2', 'senB': '1001250_12_ITEM1A_P1_S2', 'prob': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]},{'senA': '1001250_11_ITEM1_P0_S0', 'senB': '1001250_12_ITEM1_P0_S0', 'prob': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]}]}
+    return dictData
 # create test article
 
-module_dir = os.path.dirname(__file__)
-file_path = os.path.join(module_dir,"dataset","rand100_collections.txt")
-data = open(file_path,'r')
-textdic = {}
-for line in data.readlines():
-    line1 = line.split("\t")
-    textdic[line1[0]] = line1[1]
+
     
     
 def filecontent(textdic,company,year,item):
@@ -173,14 +191,12 @@ def report_revised(request):
         year2 = int(request.POST.get("year"))
         year1 = year2-1
         item = request.POST.get("item")
-        #print(year2,item)
         
-        #article1 = filecontent(module_dir,company,year1,item)
-        #article2 = filecontent(module_dir,company,year2,item)
-        #2011~2018
-        #arti = {}
-        #for year in range(2011,2012):
-        #    arti["year"+str(year)] = filecontent(module_dir, company, year, item)
+        
+
+        textdic = buildtextdic(company)
+
+
         testarti = {}
         sen2id = {}
         ar = {}
@@ -193,7 +209,7 @@ def report_revised(request):
         #testarti[str(year)] = readitem7fun(textdic, company, year, "item7")[0]
         #print(testarti)
         #highlight
-        result1 = result()
+        result1 = result(year,company)
         #senA = result['senA']
         #senB = result['senB']
         #keywordsB = result['keywordsB']

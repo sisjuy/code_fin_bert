@@ -38,7 +38,7 @@ def readitem7fun(textdic,company,year,item):
     else:
         articleid=[]
         article=[]
-
+    
         if (item.upper()==lastitem and str(year).split("20")[1]==lastyear and company==lastcompany):
 
             id1 = company+"_"+str(year).split("20")[1]+"_"+item.upper()+"_P"+str(0)+"_S"+str(0)
